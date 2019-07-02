@@ -57,7 +57,7 @@
                                         <label>Di Disposisikan Ke:</label><br>
                                         <ul>
                                         @foreach($surat->disposisis as $disposisi)
-                                        <li>{{$disposisi->employee->nama}} ({{$disposisi->employee->staffGroup->subGroups->nama}})</li>
+                                        <li>{{$disposisi->employee->nama}} ({{$disposisi->employee->kepala_group ? $disposisi->employee->kepala_group->nama : ($disposisi->employee->kepala_sub_group ? $disposisi->employee->kepala_sub_group->nama : ($disposisi->employee->staffGroup ? $disposisi->employee->staffGroup->subGroups->nama : ''))}})</li>
                                         @endforeach
                                         </ul>
                                     </div>
