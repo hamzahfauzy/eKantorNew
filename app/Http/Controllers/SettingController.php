@@ -30,6 +30,7 @@ class SettingController extends Controller
             $model->alamat = "";
             $model->pimpinan_id = 0;
             $model->group_special_role_id = 0;
+            $model->group_special_role_user_id = 0;
             $model->logo = "";
             $model->save();
 
@@ -109,6 +110,7 @@ class SettingController extends Controller
         $setting->alamat = $request->alamat;
         $setting->pimpinan_id = $request->pimpinan_id;
         $setting->group_special_role_id = $request->group_special_role_id;
+        $setting->group_special_role_user_id = $request->group_special_role_user_id;
         $setting->save();
 
         if(!empty($request->file('logo')))

@@ -20,10 +20,12 @@ class CreateEmployeesTable extends Migration
             $table->string('jabatan');
             $table->bigInteger('golongan_id')->unsigned()->nullable();
             $table->bigInteger('eselon_id')->unsigned()->nullable();
+            $table->bigInteger('user_id')->unsigned()->nullable();
             $table->timestamps();
 
             $table->foreign('golongan_id')->references('id')->on('golongans')->onDelete('set null');
             $table->foreign('eselon_id')->references('id')->on('eselons')->onDelete('set null');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 

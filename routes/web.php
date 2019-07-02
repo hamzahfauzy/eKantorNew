@@ -112,7 +112,18 @@ Route::middleware('auth')->group(function(){
 	});
 
 	Route::middleware('pegawai')->group(function(){
-		Route::middleware('special')->group(function(){
+
+		Route::prefix('surat-keluar')->group(function(){
+			Route::get('/','SuratKeluarController@index')->name('pegawai.surat-keluar.index');
+			Route::get('create','SuratKeluarController@create')->name('pegawai.surat-keluar.create');
+			Route::get('edit/{surat}','SuratKeluarController@edit')->name('pegawai.surat-keluar.edit');
+			Route::get('show/{surat}','SuratKeluarController@show')->name('pegawai.surat-keluar.show');
+			Route::post('insert','SuratKeluarController@store')->name('pegawai.surat-keluar.insert');
+			Route::put('update','SuratKeluarController@update')->name('pegawai.surat-keluar.update');
+			Route::delete('delete','SuratKeluarController@destroy')->name('pegawai.surat-keluar.delete');
+		});
+
+		Route::middleware('specialRoleUser')->group(function(){
 			Route::prefix('surat-masuk')->namespace('SpecialRole')->group(function(){
 				Route::get('/','SuratMasukController@index')->name('pegawai.surat-masuk.index');
 				Route::get('create','SuratMasukController@create')->name('pegawai.surat-masuk.create');
@@ -121,16 +132,6 @@ Route::middleware('auth')->group(function(){
 				Route::post('insert','SuratMasukController@store')->name('pegawai.surat-masuk.insert');
 				Route::put('update','SuratMasukController@update')->name('pegawai.surat-masuk.update');
 				Route::delete('delete','SuratMasukController@destroy')->name('pegawai.surat-masuk.delete');
-			});
-
-			Route::prefix('surat-keluar')->namespace('SpecialRole')->group(function(){
-				Route::get('/','SuratKeluarController@index')->name('pegawai.surat-keluar.index');
-				Route::get('create','SuratKeluarController@create')->name('pegawai.surat-keluar.create');
-				Route::get('edit/{surat}','SuratKeluarController@edit')->name('pegawai.surat-keluar.edit');
-				Route::get('show/{surat}','SuratKeluarController@show')->name('pegawai.surat-keluar.show');
-				Route::post('insert','SuratKeluarController@store')->name('pegawai.surat-keluar.insert');
-				Route::put('update','SuratKeluarController@update')->name('pegawai.surat-keluar.update');
-				Route::delete('delete','SuratKeluarController@destroy')->name('pegawai.surat-keluar.delete');
 			});
 		});
 

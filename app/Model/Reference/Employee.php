@@ -17,6 +17,24 @@ class Employee extends Model
     	return $this->hasOne(Golongan::class,'id','golongan_id');
     }
 
+    public function kepala_group()
+    {
+        return $this->hasOne(Group::class,'kepala_id','id');
+    }
+
+    public function kepala_group_special_role()
+    {
+        $setting = Setting::find(1);
+        if($this->kepala_group && $setting->special->group_id == $this->kepala_group->id)
+            return 1;
+        return 0;
+    }
+
+    public function kepala_sub_group()
+    {
+        return $this->hasOne(SubGroup::class,'kepala_id','id');
+    }
+
     public function eselon()
     {
     	return $this->hasOne(Eselon::class,'id','eselon_id');
@@ -39,6 +57,17 @@ class Employee extends Model
             $setting = Setting::find(1);
             if(!empty($setting))
                 return $this->staffGroup->sub_group_id == $setting->group_special_role_id;
+        }
+        return 0;
+    }
+
+    public function inSpecialRoleUser()
+    {
+        if($this->staffGroup)
+        {
+            $setting = Setting::find(1);
+            if(!empty($setting))
+                return $this->staffGroup->sub_group_id == $setting->group_special_role_id && $this->id == $setting->group_special_role_user_id;
         }
         return 0;
     }

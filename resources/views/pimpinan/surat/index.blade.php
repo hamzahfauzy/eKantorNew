@@ -1,6 +1,6 @@
 @extends('bsbmtemplate.admin-template')
 @section('surat-active','active')
-@section('surat-masuk-active','active')
+@section('surat-masuk-pimpinan-active','active')
 @section('content')
 		<div class="container-fluid">
             <div class="block-header">

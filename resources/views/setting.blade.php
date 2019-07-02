@@ -48,8 +48,8 @@
                                     @endif
                                 </div>
                                 <div class="form-group form-float">
+                                    <label>Pimpinan</label>
                                     <select class="form-control show-tick" name="pimpinan_id" required="" data-live-search="true">
-                                        <option value="">Pilih Pimpinan</option>
                                         {{'',$old_pimpinan = old('pimpinan_id') ? old('pimpinan_id') : $model->pimpinan_id}}
                                         @foreach($pimpinan as $data)
                                         <option value="{{$data->id}}" {{$old_pimpinan == $data->id ? 'selected=""' : '' }}>{{$data->nama}}</option>
@@ -63,6 +63,7 @@
                                 </div>
                                 <div class="form-group form-float">
                                     {{'',$old_group = old('group_special_role_id') ? old('group_special_role_id') : $model->group_special_role_id}}
+                                    <label>Group Special Role</label>
                                     <select class="form-control show-tick" name="group_special_role_id" required="" data-live-search="true">
                                         @foreach($groups as $group)
                                             @foreach($group->subGroups as $data)
@@ -73,6 +74,22 @@
                                     @if ($errors->has('group_special_role_id'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('group_special_role_id') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group form-float">
+                                    {{'',$old_group_user_id = old('group_special_role_user_id') ? old('group_special_role_user_id') : $model->group_special_role_user_id}}
+                                    <label>Group Special Role User</label>
+                                    <select class="form-control show-tick" name="group_special_role_user_id" required="" data-live-search="true">
+                                        @if($model->special)
+                                        @foreach($model->special->subGroupStaffs as $data)
+                                        <option value="{{$data->id}}">{{$data->employee->nama}}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                    @if ($errors->has('group_special_role_user_id'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('group_special_role_user_id') }}</strong>
                                         </span>
                                     @endif
                                 </div>

@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\SpecialRole;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Model\Surat\SuratMasuk;
+use App\Model\Surat\SuratKeluar;
+use App\Model\Reference\SubGroup;
 
-class SuratMasukController extends Controller
+class SuratKeluarController extends Controller
 {
-
     public function __construct()
     {
-        $this->model = new SuratMasuk;
+        $this->model = new SuratKeluar;
+        $this->sub_group = SubGroup::get();
     }
     /**
      * Display a listing of the resource.
@@ -22,11 +23,8 @@ class SuratMasukController extends Controller
     public function index()
     {
         //
-        $surat = $this->model->where('pegawai_id',auth()->user()->employee->id)->orderby('id','desc')->get();
-        if(auth()->user()->employee->kepala_group_special_role())
-            $surat = $this->model->orderby('id','desc')->get();
-        return view('special-role.surat-masuk.index',[
-            'surat' => $surat
+        return view('special-role.surat-keluar.index',[
+            'surat' => $this->model->where('pegawai_id',auth()->user()->employee->id)->orderby('id','desc')->get()
         ]);
     }
 
@@ -38,7 +36,9 @@ class SuratMasukController extends Controller
     public function create()
     {
         //
-        return view('special-role.surat-masuk.create');
+        return view('special-role.surat-keluar.create',[
+            'subgroups' => $this->sub_group
+        ]);
     }
 
     /**
@@ -51,11 +51,10 @@ class SuratMasukController extends Controller
     {
         //
         $this->validate($request,[
-            'no_agenda' => 'required|unique:surat_masuks',
             'no_surat' => 'required|unique:surat_masuks',
             'tanggal_surat' => 'required',
-            'tanggal_terima' => 'required',
-            'sumber_surat' => 'required',
+            'sub_group_id' => 'required',
+            'tujuan' => 'required',
             'perihal' => 'required',
             'keterangan' => 'required',
             'file_surat' => 'required',
@@ -65,22 +64,21 @@ class SuratMasukController extends Controller
         if(!empty($request->file('file_surat')))
         {
             $uploadedFile = $request->file('file_surat');
-            $path = $uploadedFile->store('public/surat_masuk');
+            $path = $uploadedFile->store('public/surat_keluar');
         }
 
         $this->model->create([
-            'no_agenda' => $request->no_agenda,
             'no_surat' => $request->no_surat,
-            'tanggal_surat' => $request->tanggal_surat,
-            'tanggal_terima' => $request->tanggal_terima,
-            'sumber_surat' => $request->sumber_surat,
+            'tanggal' => $request->tanggal_surat,
+            'sub_group_id' => $request->sub_group_id,
+            'tujuan' => $request->tujuan,
             'perihal' => $request->perihal,
             'keterangan' => $request->keterangan,
-            'file_url_surat' => $path,
+            'file_surat_url' => $path,
             'pegawai_id' => auth()->user()->employee->id,
         ]);
 
-        return redirect()->route('pegawai.surat-masuk.index')->with(['success'=>'Data berhasil disimpan']);
+        return redirect()->route('pegawai.surat-keluar.index')->with(['success'=>'Data berhasil disimpan']);
     }
 
     /**
@@ -100,11 +98,12 @@ class SuratMasukController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(SuratMasuk $surat)
+    public function edit(SuratKeluar $surat)
     {
         //
-        return view('special-role.surat-masuk.edit',[
-            'surat' => $surat
+        return view('special-role.surat-keluar.edit',[
+            'surat' => $surat,
+            'subgroups' => $this->sub_group
         ]);
     }
 
@@ -119,11 +118,10 @@ class SuratMasukController extends Controller
     {
         //
         $this->validate($request,[
-            'no_agenda' => 'required|unique:surat_masuks,no_agenda,'.$request->id.',id,no_agenda,'.$request->no_agenda,
-            'no_surat' => 'required|unique:surat_masuks,no_surat,'.$request->id.',id,no_surat,'.$request->no_surat,
+            'no_surat' => 'required|unique:surat_keluars,no_surat,'.$request->id.',id,no_surat,'.$request->no_surat,
             'tanggal_surat' => 'required',
-            'tanggal_terima' => 'required',
-            'sumber_surat' => 'required',
+            'sub_group_id' => 'required',
+            'tujuan' => 'required',
             'perihal' => 'required',
             'keterangan' => 'required',
         ]);
@@ -132,24 +130,23 @@ class SuratMasukController extends Controller
         if(!empty($request->file('file_surat')))
         {
             $uploadedFile = $request->file('file_surat');
-            $path = $uploadedFile->store('public/surat_masuk');
+            $path = $uploadedFile->store('public/surat_keluar');
             $this->model->find($request->id)->update([
-                'file_url_surat' => $path,
+                'file_surat_url' => $path,
             ]);
         }
 
         $this->model->find($request->id)->update([
-            'no_agenda' => $request->no_agenda,
             'no_surat' => $request->no_surat,
-            'tanggal_surat' => $request->tanggal_surat,
-            'tanggal_terima' => $request->tanggal_terima,
-            'sumber_surat' => $request->sumber_surat,
+            'tanggal' => $request->tanggal_surat,
+            'sub_group_id' => $request->sub_group_id,
+            'tujuan' => $request->tujuan,
             'perihal' => $request->perihal,
             'keterangan' => $request->keterangan,
             'pegawai_id' => auth()->user()->employee->id,
         ]);
 
-        return redirect()->route('pegawai.surat-masuk.index')->with(['success'=>'Data berhasil diupdate']);
+        return redirect()->route('pegawai.surat-keluar.index')->with(['success'=>'Data berhasil diupdate']);
     }
 
     /**
@@ -162,7 +159,7 @@ class SuratMasukController extends Controller
     {
         //
         $this->model->find($request->id)->delete();
-        return redirect()->route('pegawai.surat-masuk.index')->with(['success'=>'Data berhasil dihapus']);
+        return redirect()->route('pegawai.surat-keluar.index')->with(['success'=>'Data berhasil dihapus']);
 
     }
 }

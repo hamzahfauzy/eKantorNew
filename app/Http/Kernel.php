@@ -55,6 +55,7 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\Admin::class,
         'pegawai' => \App\Http\Middleware\Pegawai::class,
         'special' => \App\Http\Middleware\SpecialRole::class,
+        'specialRoleUser' => \App\Http\Middleware\SpecialRoleUser::class,
         'pimpinan' => \App\Http\Middleware\Pimpinan::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,

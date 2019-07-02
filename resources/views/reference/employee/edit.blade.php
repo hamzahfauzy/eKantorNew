@@ -54,7 +54,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group form-float">
-                                    <select class="form-control show-tick" name="golongan_id" required="">
+                                    <select class="form-control show-tick" name="golongan_id" required="" data-live-search="true">
                                         <option value="">Pilih Golongan</option>
                                         {{'',$old_golongan = old('golongan_id') ? old('golongan_id') : $pegawai->golongan_id }}
                                         @foreach($golongan as $gol)
@@ -68,7 +68,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group form-float">
-                                    <select class="form-control show-tick" name="eselon_id" required="">
+                                    <select class="form-control show-tick" name="eselon_id" required="" data-live-search="true">
                                         <option value="">Pilih Eselon</option>
                                         {{'',$old_eselon = old('eselon_id') ? old('eselon_id') : $pegawai->eselon_id }}
                                         @foreach($eselon as $es)

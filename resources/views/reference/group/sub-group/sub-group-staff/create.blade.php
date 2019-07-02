@@ -29,7 +29,7 @@
                             	{{csrf_field()}}
                             	<input type="hidden" name="sub_group_id" value="{{$sub->id}}">
                                 <div class="form-group form-float">
-                                    <select class="form-control show-tick" name="pegawai_id" required="">
+                                    <select class="form-control show-tick" name="pegawai_id" required="" data-live-search="true">
                                         <option value="">Pilih Pegawai</option>
                                         @foreach($employees as $employee)
                                         <option value="{{$employee->id}}" {{old('pegawai_id') == $employee->id ? 'selected=""' : '' }}>{{$employee->nama}}</option>

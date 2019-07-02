@@ -17,7 +17,7 @@
                         </ul>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
+                            {{csrf_field()}}
                         </form>
                     </div>
                 </div>
@@ -98,35 +98,16 @@
                         </a>
                     </li>
                     @else
-                        @if(auth()->user()->employee->inSpecialRole() && !auth()->user()->employee->isPimpinan())
                         <li class="@yield('surat-active')">
                             <a href="javascript:void(0);" class="menu-toggle">
                                 <i class="material-icons">email</i>
                                 <span>Surat</span>
                             </a>
                             <ul class="ml-menu">
-                                <li class="@yield('surat-masuk-active')">
-                                    <a href="{{route('pegawai.surat-masuk.index')}}">
-                                        Surat Masuk
-                                    </a>
-                                </li>
-                                <li class="@yield('surat-keluar-active')">
-                                    <a href="{{route('pegawai.surat-keluar.index')}}">
-                                        Surat Keluar
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        @elseif(auth()->user()->employee->isPimpinan())
-                        <li class="@yield('surat-active')">
-                            <a href="javascript:void(0);" class="menu-toggle">
-                                <i class="material-icons">email</i>
-                                <span>Surat</span>
-                            </a>
-                            <ul class="ml-menu">
-                                <li class="@yield('surat-masuk-active')">
+                                @if(auth()->user()->employee->isPimpinan())
+                                <li class="@yield('surat-masuk-pimpinan-active')">
                                     <a href="{{route('pimpinan.surat.index')}}">
-                                        Surat Masuk
+                                        Surat
                                     </a>
                                 </li>
                                 <li class="@yield('disposisi-active')">
@@ -134,9 +115,21 @@
                                         Disposisi
                                     </a>
                                 </li>
+                                @endif
+                                @if((auth()->user()->employee->inSpecialRoleUser() && !auth()->user()->employee->isPimpinan()) || auth()->user()->employee->kepala_group_special_role())
+                                <li class="@yield('surat-masuk-active')">
+                                    <a href="{{route('pegawai.surat-masuk.index')}}">
+                                        Surat Masuk
+                                    </a>
+                                </li>
+                                @endif
+                                <li class="@yield('surat-keluar-active')">
+                                    <a href="{{route('pegawai.surat-keluar.index')}}">
+                                        Surat Keluar
+                                    </a>
+                                </li>
                             </ul>
                         </li>
-                        @endif
                         <li class="@yield('spt-sppd-active')">
                             <a href="javascript:void(0);" class="menu-toggle">
                                 <i class="material-icons">dvr</i>

@@ -32,7 +32,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group form-float">
-                                    <select class="form-control show-tick" name="kepala_id" required="">
+                                    <select class="form-control show-tick" name="kepala_id" required="" data-live-search="true">
                                         <option value="">Pilih Pimpinan</option>
                                         {{'',$old_kepala_id = old('kepala_id') ? old('kepala_id') : $model->kepala_id}}
                                         @foreach($employees as $employee)

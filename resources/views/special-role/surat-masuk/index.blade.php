@@ -17,10 +17,12 @@
                                 List Data Surat Masuk
                             </h2>
                             <div class="pull-right">
+                                @if(!auth()->user()->employee->kepala_group_special_role())
                                 <a href="{{route('pegawai.surat-masuk.create')}}" class="btn btn-primary waves-effect">
                                     <i class="material-icons">add</i> 
                                     <span>TAMBAH DATA</span>
                                 </a>
+                                @endif
                             </div>
                         	<div class="clearfix"></div>
                         </div>
@@ -78,6 +80,20 @@
                                                     
                                                 </a>
 
+                                                @if(auth()->user()->employee->kepala_group_special_role())
+                                                <a href="{{route('pegawai.surat-masuk.teruskan')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();teruskanAlert({{$model->id}})">
+                                                    <i class="material-icons">arrow_right_alt</i>
+                                                    
+                                                </a>
+
+                                                <form id="form-teruskan-{{$model->id}}" style="display: none;" method="post" action="{{route('pegawai.surat-masuk.teruskan')}}">
+                                                    {{csrf_field()}}
+                                                    <input type="hidden" name="id" value="{{$model->id}}">
+                                                </form>
+                                                @endif
+
+                                                @if(!auth()->user()->employee->kepala_group_special_role())
+
                                                 <a href="{{route('pegawai.surat-masuk.edit',$model->id)}}" class="btn btn-warning waves-effect">
 				                                    <i class="material-icons">create</i>
 				                                    
@@ -93,6 +109,8 @@
 				                                	<input type="hidden" name="_method" value="DELETE">
 				                                	<input type="hidden" name="id" value="{{$model->id}}">
 				                                </form>
+
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach
@@ -144,6 +162,24 @@ function deleteAlert(id)
             $("#form-delete-"+id).submit()
         }
 	});
+}
+
+function teruskanAlert(id)
+{
+    swal({
+        title: 'Apakah anda yakin akan meneruskan surat ini?',
+        text: "Perubahan tidak dapat dikembalikan!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya!',
+        confirmCancelText: 'Batal!'
+    },function (isConfirm) {
+        if (isConfirm) {
+            $("#form-teruskan-"+id).submit()
+        }
+    });
 }
 </script>
 @endsection
