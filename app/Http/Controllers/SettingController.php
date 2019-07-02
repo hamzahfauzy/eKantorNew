@@ -13,7 +13,7 @@ class SettingController extends Controller
     {
         $this->employees = Employee::get();
         $this->groups = Group::get();
-        $this->model = Setting::find(1);
+        $this->model = Setting::find(1)
     }
     /**
      * Display a listing of the resource.
@@ -23,6 +23,13 @@ class SettingController extends Controller
     public function index()
     {
         //
+        if(empty($this->model))
+        {
+            $model = new Model;
+            $model->save();
+
+            $this->model = $model;
+        }
         return view('setting',[
             'pimpinan' => $this->employees,
             'groups' => $this->groups,
