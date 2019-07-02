@@ -13,7 +13,7 @@ class SettingController extends Controller
     {
         $this->employees = Employee::get();
         $this->groups = Group::get();
-        $this->model = Setting::find(1)
+        $this->model = Setting::find(1);
     }
     /**
      * Display a listing of the resource.
