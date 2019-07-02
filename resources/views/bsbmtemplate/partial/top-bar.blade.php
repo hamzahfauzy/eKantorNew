@@ -36,9 +36,7 @@
                                             </div>
                                         </a>
                                     </li>
-                                    @endif
-
-                                    @if(auth()->user()->employee->kepala_group_special_role())
+                                    @elseif(auth()->user()->employee->kepala_group_special_role())
                                         @if($notification->status_teruskan) continue @endif
                                     <li>
                                         <a href="{{route('detail-surat-masuk',$notification->id)}}">
