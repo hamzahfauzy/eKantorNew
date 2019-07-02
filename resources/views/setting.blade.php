@@ -23,7 +23,7 @@
                               <p></p>
                             @endif
                             <form id="form_validation" method="POST" action="{{route('setting.update')}}" enctype="multipart/form-data">
-                            	@csrf
+                            	{{csrf_field()}}
                                 <input type="hidden" name="_method" value="PUT">
                                 <div class="form-group form-float">
                                     <div class="form-line">

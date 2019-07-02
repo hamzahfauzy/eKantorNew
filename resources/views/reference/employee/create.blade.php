@@ -18,39 +18,39 @@
                         <div class="body">
                             <h2 class="card-inside-title">Personal Information</h2>
                             <form id="form_validation" method="POST" action="{{route('reference.employee.insert')}}">
-                            	@csrf
+                            	{{csrf_field()}}
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="text" class="form-control" name="NIP" required value="{{old('NIP')}}">
                                         <label class="form-label">NIP</label>
                                     </div>
-                                    @error('NIP')
+                                    @if ($errors->has('NIP'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('NIP') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="text" class="form-control" name="nama" required value="{{old('nama')}}">
                                         <label class="form-label">Nama</label>
                                     </div>
-                                    @error('nama')
+                                    @if ($errors->has('nama'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('nama') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="text" class="form-control" name="jabatan" required value="{{old('jabatan')}}">
                                         <label class="form-label">Jabatan</label>
                                     </div>
-                                    @error('jabatan')
+                                    @if ($errors->has('jabatan'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('jabatan') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <select class="form-control show-tick" name="golongan_id" required="">
@@ -59,6 +59,11 @@
                                         <option value="{{$gol->id}}" {{old('golongan_id') == $gol->id ? 'selected=""' : '' }}>{{$gol->nama}} - {{$gol->pangkat}}</option>
                                         @endforeach
                                     </select>
+                                    @if ($errors->has('golongan_id'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('golongan_id') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <select class="form-control show-tick" name="eselon_id" required="">
@@ -67,11 +72,11 @@
                                         <option value="{{$es->id}}" {{old('eselon_id') == $es->id ? 'selected=""' : '' }}>{{$es->nama}}</option>
                                         @endforeach
                                     </select>
-                                    @error('eselon_id')
+                                    @if ($errors->has('eselon_id'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('eselon_id') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <h2 class="card-inside-title">Account Information</h2>
                                 <div class="form-group form-float">
@@ -79,22 +84,22 @@
                                         <input type="email" class="form-control" name="email" required value="{{old('email')}}">
                                         <label class="form-label">E-Mail</label>
                                     </div>
-                                    @error('email')
+                                    @if ($errors->has('email'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('email') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="password" class="form-control" name="password" required>
                                         <label class="form-label">Password</label>
                                     </div>
-                                    @error('password')
+                                    @if ($errors->has('password'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('password') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <select class="form-control show-tick" name="level" required="">
@@ -103,11 +108,11 @@
                                         <option value="{{$level}}" {{old('level') == $level ? 'selected=""' : '' }}>{{$level}}</option>
                                         @endforeach
                                     </select>
-                                    @error('level')
+                                    @if ($errors->has('level'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('level') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
                             </form>

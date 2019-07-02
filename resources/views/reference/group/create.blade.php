@@ -17,17 +17,17 @@
                         </div>
                         <div class="body">
                             <form id="form_validation" method="POST" action="{{route('reference.group.insert')}}">
-                            	@csrf
+                            	{{csrf_field()}}
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="text" class="form-control" name="nama" required value="{{old('nama')}}">
                                         <label class="form-label">Nama</label>
                                     </div>
-                                    @error('nama')
-							            <span class="invalid-feedback" role="alert">
-							                <strong>{{ $message }}</strong>
-							            </span>
-							        @enderror
+                                    @if ($errors->has('nama'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('nama') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <select class="form-control show-tick" name="kepala_id" required="">
@@ -36,11 +36,11 @@
                                         <option value="{{$employee->id}}" {{old('kepala_id') == $employee->id ? 'selected=""' : '' }}>{{$employee->nama}}</option>
                                         @endforeach
                                     </select>
-                                    @error('kepala_id')
-							            <span class="invalid-feedback" role="alert">
-							                <strong>{{ $message }}</strong>
-							            </span>
-							        @enderror
+                                    @if ($errors->has('kepala_id'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('kepala_id') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
                             </form>

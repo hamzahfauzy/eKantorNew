@@ -26,7 +26,7 @@
                         </div>
                         <div class="body">
                             <form id="form_validation" method="POST" action="{{route('reference.group.sub.update',$group->id)}}">
-                            	@csrf
+                            	{{csrf_field()}}
                             	<input type="hidden" name="_method" value="PUT">
                             	<input type="hidden" name="id" value="{{$model->id}}">
                             	<input type="hidden" name="group_id" value="{{$group->id}}">
@@ -35,11 +35,11 @@
                                         <input type="text" class="form-control" name="nama" required value="{{old('nama') ? old('nama') : $model->nama}}">
                                         <label class="form-label">Nama</label>
                                     </div>
-                                    @error('nama')
-							            <span class="invalid-feedback" role="alert">
-							                <strong>{{ $message }}</strong>
-							            </span>
-							        @enderror
+                                    @if ($errors->has('nama'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('nama') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <select class="form-control show-tick" name="kepala_id" required="">
@@ -49,11 +49,11 @@
                                         <option value="{{$employee->id}}" {{$old_kepala_id == $employee->id ? 'selected=""' : '' }}>{{$employee->nama}}</option>
                                         @endforeach
                                     </select>
-                                    @error('kepala_id')
-							            <span class="invalid-feedback" role="alert">
-							                <strong>{{ $message }}</strong>
-							            </span>
-							        @enderror
+                                    @if ($errors->has('kepala_id'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('kepala_id') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
                             </form>

@@ -26,7 +26,7 @@
                         </div>
                         <div class="body">
                             <form id="form_validation" method="POST" action="{{route('reference.group.sub.staff.insert',[$group->id,$sub->id])}}">
-                            	@csrf
+                            	{{csrf_field()}}
                             	<input type="hidden" name="sub_group_id" value="{{$sub->id}}">
                                 <div class="form-group form-float">
                                     <select class="form-control show-tick" name="pegawai_id" required="">
@@ -35,11 +35,11 @@
                                         <option value="{{$employee->id}}" {{old('pegawai_id') == $employee->id ? 'selected=""' : '' }}>{{$employee->nama}}</option>
                                         @endforeach
                                     </select>
-                                    @error('pegawai_id')
-							            <span class="invalid-feedback" role="alert">
-							                <strong>{{ $message }}</strong>
-							            </span>
-							        @enderror
+                                    @if ($errors->has('pegawai_id'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('pegawai_id') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
                             </form>

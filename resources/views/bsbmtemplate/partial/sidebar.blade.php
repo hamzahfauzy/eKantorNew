@@ -1,7 +1,7 @@
         <!-- Left Sidebar -->
         <aside id="leftsidebar" class="sidebar">
             <!-- User Info -->
-            <div class="user-info">
+            <div class="user-info" style="background: url('{{ asset("images/user-img-background.jpg") }}') no-repeat no-repeat;">
                 <div class="image">
                     <img src="{{asset('images/user.png')}}" width="48" height="48" alt="User" />
                 </div>

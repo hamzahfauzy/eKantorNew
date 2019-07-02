@@ -65,7 +65,7 @@
 				                    </a>
 
 				                    <form id="form-deleteSubGroup-{{$group->id}}" style="display: none;" method="post" action="{{route('reference.group.sub.delete',[$group->id,$sub->id])}}">
-				                    	@csrf
+				                    	{{csrf_field()}}
 				                        <input type="hidden" name="_method" value="DELETE">
 				                        <input type="hidden" name="id" value="{{$sub->id}}">
 				                    </form>
@@ -152,7 +152,7 @@
 				                                </a>
 
 				                                <form id="form-delete-{{$model->employee->id}}" style="display: none;" method="post" action="{{route('reference.group.sub.staff.delete',[$group->id,$sub->id])}}">
-				                                	@csrf
+				                                	{{csrf_field()}}
 				                                	<input type="hidden" name="_method" value="DELETE">
 				                                	<input type="hidden" name="id" value="{{$model->id}}">
 				                                </form>

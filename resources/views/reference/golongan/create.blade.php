@@ -17,28 +17,28 @@
                         </div>
                         <div class="body">
                             <form id="form_validation" method="POST" action="{{route('reference.golongan.insert')}}">
-                            	@csrf
+                            	{{csrf_field()}}
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="text" class="form-control" name="nama" required value="{{old('nama')}}">
                                         <label class="form-label">Nama</label>
                                     </div>
-                                    @error('nama')
-							            <span class="invalid-feedback" role="alert">
-							                <strong>{{ $message }}</strong>
-							            </span>
-							        @enderror
+                                    @if ($errors->has('nama'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('nama') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="text" class="form-control" name="pangkat" required value="{{old('pangkat')}}">
                                         <label class="form-label">Pangkat</label>
                                     </div>
-                                    @error('pangkat')
-							            <span class="invalid-feedback" role="alert">
-							                <strong>{{ $message }}</strong>
-							            </span>
-							        @enderror
+                                    @if ($errors->has('pangkat'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('pangkat') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
                             </form>

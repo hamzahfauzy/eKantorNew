@@ -66,7 +66,7 @@
 				                                </a>
 
 				                                <form id="form-delete-{{$model->id}}" style="display: none;" method="post" action="{{route('reference.eselon.delete')}}">
-				                                	@csrf
+				                                	{{csrf_field()}}
 				                                	<input type="hidden" name="_method" value="DELETE">
 				                                	<input type="hidden" name="id" value="{{$model->id}}">
 				                                </form>

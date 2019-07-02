@@ -91,7 +91,7 @@
                         </div>
                         <div class="modal-body">
                             <form id="form_validation" method="POST" action="{{route('pimpinan.surat.set-disposisi',$surat->id)}}">
-                                @csrf
+                                {{csrf_field()}}
                                 <div class="form-group form-float">
                                     <label>Disposisikan Ke:</label>
                                     <select class="form-control show-tick" name="pegawai[]" required="" data-live-search="true" multiple="">

@@ -17,17 +17,17 @@
                         </div>
                         <div class="body">
                             <form id="form_validation" method="POST" action="{{route('reference.eselon.insert')}}">
-                            	@csrf
+                            	{{csrf_field()}}
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="text" class="form-control" name="nama" required value="{{old('nama')}}">
                                         <label class="form-label">Nama</label>
                                     </div>
-                                    @error('nama')
+                                    @if ($errors->has('nama'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('nama') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
                             </form>

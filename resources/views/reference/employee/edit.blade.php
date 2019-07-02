@@ -17,7 +17,7 @@
                         </div>
                         <div class="body">
                             <form id="form_validation" method="POST" action="{{route('reference.employee.update')}}">
-                            	@csrf
+                            	{{csrf_field()}}
                             	<input type="hidden" name="_method" value="PUT">
                             	<input type="hidden" name="id" value="{{$pegawai->id}}">
                                 <div class="form-group form-float">
@@ -25,18 +25,33 @@
                                         <input type="text" class="form-control" name="NIP" required value="{{old('NIP') ? old('NIP') : $pegawai->NIP}}">
                                         <label class="form-label">NIP</label>
                                     </div>
+                                    @if ($errors->has('NIP'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('NIP') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="text" class="form-control" name="nama" required value="{{old('nama') ? old('nama') : $pegawai->nama }}">
                                         <label class="form-label">Nama</label>
                                     </div>
+                                    @if ($errors->has('nama'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('nama') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="text" class="form-control" name="jabatan" required value="{{old('jabatan') ? old('jabatan') : $pegawai->jabatan }}">
                                         <label class="form-label">Jabatan</label>
                                     </div>
+                                    @if ($errors->has('jabatan'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('jabatan') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <select class="form-control show-tick" name="golongan_id" required="">
@@ -46,6 +61,11 @@
                                         <option value="{{$gol->id}}" {{$old_golongan == $gol->id ? 'selected=""' : '' }}>{{$gol->nama}} - {{$gol->pangkat}}</option>
                                         @endforeach
                                     </select>
+                                    @if ($errors->has('golonga_id'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('golonga_id') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <select class="form-control show-tick" name="eselon_id" required="">
@@ -55,6 +75,11 @@
                                         <option value="{{$es->id}}" {{$old_eselon == $es->id ? 'selected=""' : '' }}>{{$es->nama}}</option>
                                         @endforeach
                                     </select>
+                                    @if ($errors->has('eselon_id'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('eselon_id') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <h2 class="card-inside-title">Account Information</h2>
                                 <div class="form-group form-float">
@@ -62,6 +87,11 @@
                                         <input type="email" class="form-control" name="email" required value="{{old('email') ? old('email') : $pegawai->user->email}}">
                                         <label class="form-label">E-Mail</label>
                                     </div>
+                                    @if ($errors->has('email'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <label>*kosongkan password jika tidak diganti</label>
@@ -78,6 +108,11 @@
                                         <option value="{{$level}}" {{$old_level == $level ? 'selected=""' : '' }}>{{$level}}</option>
                                         @endforeach
                                     </select>
+                                    @if ($errors->has('level'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('level') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
                             </form>

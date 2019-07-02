@@ -17,7 +17,7 @@
                         </div>
                         <div class="body">
                             <form id="form_validation" method="POST" action="{{route('reference.golongan.update')}}">
-                            	@csrf
+                            	{{csrf_field()}}
                             	<input type="hidden" name="_method" value="PUT">
                             	<input type="hidden" name="id" value="{{$golongan->id}}">
                                 <div class="form-group form-float">
@@ -25,22 +25,22 @@
                                         <input type="text" class="form-control" name="nama" required value="{{$golongan->nama}}">
                                         <label class="form-label">Nama</label>
                                     </div>
-                                    @error('nama')
-							            <span class="invalid-feedback" role="alert">
-							                <strong>{{ $message }}</strong>
-							            </span>
-							        @enderror
+                                    @if ($errors->has('nama'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('nama') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="text" class="form-control" name="pangkat" required value="{{$golongan->pangkat}}">
                                         <label class="form-label">Pangkat</label>
                                     </div>
-                                    @error('pangkat')
-							            <span class="invalid-feedback" role="alert">
-							                <strong>{{ $message }}</strong>
-							            </span>
-							        @enderror
+                                    @if ($errors->has('pangkat'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('pangkat') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
                             </form>

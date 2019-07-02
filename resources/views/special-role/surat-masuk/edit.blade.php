@@ -17,7 +17,7 @@
                         </div>
                         <div class="body">
                             <form id="form_validation" method="POST" action="{{route('pegawai.surat-masuk.update')}}" enctype="multipart/form-data">
-                            	@csrf
+                            	{{csrf_field()}}
                                 <input type="hidden" name="_method" value="PUT">
                                 <input type="hidden" name="id" value="{{$surat->id}}">
                                 <div class="form-group form-float">
@@ -25,88 +25,88 @@
                                         <input type="text" class="form-control" name="no_agenda" required value="{{old('no_agenda') ? old('no_agenda') : $surat->no_agenda}}">
                                         <label class="form-label">No. Agenda</label>
                                     </div>
-                                    @error('no_agenda')
+                                    @if ($errors->has('no_agenda'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('no_agenda') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="text" class="form-control" name="no_surat" required value="{{old('no_surat') ? old('no_surat') : $surat->no_surat}}">
                                         <label class="form-label">No. Surat</label>
                                     </div>
-                                    @error('no_surat')
+                                    @if ($errors->has('no_surat'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('no_surat') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <label>Tanggal Surat</label>
                                         <input type="text" class="datepicker form-control" name="tanggal_surat" placeholder="Tanggal Surat" required="" value="{{old('tanggal_surat') ? old('tanggal_surat') : $surat->tanggal_surat->format('Y-m-d')}}">
                                     </div>
-                                    @error('tanggal_surat')
+                                    @if ($errors->has('tanggal_surat'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('tanggal_surat') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <label>Tanggal Terima</label>
                                         <input type="text" class="datepicker form-control" name="tanggal_terima" placeholder="Tanggal Terima" required="" value="{{old('tanggal_terima') ? old('tanggal_terima') : $surat->tanggal_terima->format('Y-m-d')}}">
                                     </div>
-                                    @error('tanggal_terima')
+                                    @if ($errors->has('tanggal_terima'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('tanggal_terima') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="text" class="form-control" name="sumber_surat" required value="{{old('sumber_surat') ? old('sumber_surat') : $surat->sumber_surat}}">
                                         <label class="form-label">Sumber Surat</label>
                                     </div>
-                                    @error('sumber_surat')
+                                    @if ($errors->has('sumber_surat'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('sumber_surat') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="text" class="form-control" name="perihal" required value="{{old('perihal') ? old('perihal') : $surat->perihal}}">
                                         <label class="form-label">Perihal</label>
                                     </div>
-                                    @error('perihal')
+                                    @if ($errors->has('perihal'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('perihal') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <textarea class="form-control" name="keterangan" required>{{old('keterangan') ? old('keterangan') : $surat->keterangan}}</textarea>
                                         <label class="form-label">Keterangan</label>
                                     </div>
-                                    @error('keterangan')
+                                    @if ($errors->has('keterangan'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('keterangan') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <label>File Surat (*Kosongkan jika tidak diubah)</label>
                                     <br>
                                     <a href="{{Storage::url($surat->file_url_surat)}}">Lihat Surat</a>
                                     <input type="file" name="file_surat" class="form-control" style="height: auto;">
-                                    @error('file_surat')
+                                    @if ($errors->has('file_surat'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('file_surat') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
                             </form>
