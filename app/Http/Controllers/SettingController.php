@@ -25,7 +25,7 @@ class SettingController extends Controller
         //
         if(empty($this->model))
         {
-            $model = new Model;
+            $model = new Setting;
             $model->save();
 
             $this->model = $model;
