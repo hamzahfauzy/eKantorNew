@@ -26,6 +26,10 @@ class SettingController extends Controller
         if(empty($this->model))
         {
             $model = new Setting;
+            $model->nama = "";
+            $model->alamat = "";
+            $model->pimpinan_id = 0;
+            $model->group_special_role_id = 0;
             $model->save();
 
             $this->model = $model;
