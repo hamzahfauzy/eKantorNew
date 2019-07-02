@@ -41,6 +41,15 @@ class SuratMasukController extends Controller
         return view('special-role.surat-masuk.create');
     }
 
+    public function teruskan(Request $request)
+    {
+        $this->model->find($request->id)->update([
+            'status_teruskan' => 1
+        ]);
+
+        return redirect()->route('pegawai.surat-masuk.index')->with(['success'=>'Surat sudah diteruskan']);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

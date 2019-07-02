@@ -82,8 +82,10 @@ class Employee extends Model
 
     public function notifications()
     {
-        if($this->isPimpinan())
-            $ret = SuratMasuk::get();
+        if($this->kepala_group_special_role())
+            $ret = SuratMasuk::whereNull('status_teruskan')->get();
+        elseif($this->isPimpinan())
+            $ret = SuratMasuk::where('status_teruskan',1)->get();
         else
             $ret = Disposisi::where('pegawai_id',$this->id)->get();
         

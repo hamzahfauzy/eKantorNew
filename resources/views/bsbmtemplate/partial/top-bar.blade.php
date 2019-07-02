@@ -22,8 +22,26 @@
                                     @if(auth()->user()->level == 'pegawai')
                                     @foreach(auth()->user()->employee->notifications() as $notification)
                                     @if(auth()->user()->employee->isPimpinan())
+                                        @if(empty($notification->status_teruskan)) continue @endif
                                     <li>
                                         <a href="{{route('pimpinan.surat.show',$notification->id)}}">
+                                            <div class="icon-circle bg-light-green">
+                                                <i class="material-icons">comment</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4>Surat Masuk - {{$notification->perihal}}</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> {{$notification->created_at}}
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    @endif
+
+                                    @if(auth()->user()->employee->kepala_group_special_role())
+                                        @if($notification->status_teruskan) continue @endif
+                                    <li>
+                                        <a href="{{route('detail-surat-masuk',$notification->id)}}">
                                             <div class="icon-circle bg-light-green">
                                                 <i class="material-icons">comment</i>
                                             </div>

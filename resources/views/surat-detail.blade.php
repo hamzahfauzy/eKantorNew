@@ -70,11 +70,23 @@
                                 <i class="material-icons">visibility</i>
                                 <span>Lihat Surat</span>
                             </a>
-                            @if(empty($surat->disposisis) || count($surat->disposisis) == 0)
+                            @if((empty($surat->disposisis) || count($surat->disposisis) == 0) && auth()->user()->employee->isPimpinan())
                             <a href="javascript:void(0)" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#defaultModal">
                                 <i class="material-icons">arrow_forward</i>
                                 <span>Disposisi</span>
                             </a>
+                            @endif
+
+                            @if(empty($surat->status_teruskan) && auth()->user()->employee->kepala_group_special_role())
+                            <a href="{{route('pegawai.surat-masuk.teruskan')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();teruskanAlert({{$surat->id}})">
+                                <i class="material-icons">arrow_forward</i>
+                                <span>Teruskan</span>
+                            </a>
+
+                            <form id="form-teruskan-{{$surat->id}}" style="display: none;" method="post" action="{{route('pegawai.surat-masuk.teruskan')}}">
+                                {{csrf_field()}}
+                                <input type="hidden" name="id" value="{{$surat->id}}">
+                            </form>
                             @endif
                         </div>
                     </div>
@@ -82,4 +94,29 @@
             </div>
             <!-- #END# Basic Examples -->
         </div>
+@endsection
+
+@section('script')
+<!-- Sweet Alert Plugin Js -->
+<script src="{{asset('template/bsbm/plugins/sweetalert/sweetalert.min.js')}}"></script>
+<script type="text/javascript">
+
+function teruskanAlert(id)
+{
+    swal({
+        title: 'Apakah anda yakin akan meneruskan surat ini?',
+        text: "Perubahan tidak dapat dikembalikan!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya!',
+        confirmCancelText: 'Batal!'
+    },function (isConfirm) {
+        if (isConfirm) {
+            $("#form-teruskan-"+id).submit()
+        }
+    });
+}
+</script>
 @endsection

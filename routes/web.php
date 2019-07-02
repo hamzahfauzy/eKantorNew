@@ -130,6 +130,7 @@ Route::middleware('auth')->group(function(){
 				Route::get('edit/{surat}','SuratMasukController@edit')->name('pegawai.surat-masuk.edit');
 				Route::get('show/{surat}','SuratMasukController@show')->name('pegawai.surat-masuk.show');
 				Route::post('insert','SuratMasukController@store')->name('pegawai.surat-masuk.insert');
+				Route::post('teruskan','SuratMasukController@teruskan')->name('pegawai.surat-masuk.teruskan');
 				Route::put('update','SuratMasukController@update')->name('pegawai.surat-masuk.update');
 				Route::delete('delete','SuratMasukController@destroy')->name('pegawai.surat-masuk.delete');
 			});

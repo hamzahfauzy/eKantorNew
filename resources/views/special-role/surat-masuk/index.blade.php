@@ -80,9 +80,14 @@
                                                     
                                                 </a>
 
-                                                @if(auth()->user()->employee->kepala_group_special_role())
+                                                <a href="{{route('detail-surat-masuk',$model->id)}}" class="btn btn-secondary waves-effect">
+                                                    <i class="material-icons">visibility</i>
+                                                    
+                                                </a>
+
+                                                @if(auth()->user()->employee->kepala_group_special_role() && empty($model->status_teruskan))
                                                 <a href="{{route('pegawai.surat-masuk.teruskan')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();teruskanAlert({{$model->id}})">
-                                                    <i class="material-icons">arrow_right_alt</i>
+                                                    <i class="material-icons">arrow_forward</i>
                                                     
                                                 </a>
 

@@ -27,7 +27,7 @@ class SuratController extends Controller
     {
         //
         return view('pimpinan.surat.index',[
-            'surat' => $this->model->orderby('id','desc')->get()
+            'surat' => $this->model->where('status_teruskan',1)->orderby('id','desc')->get()
         ]);
     }
 
