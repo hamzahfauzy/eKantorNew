@@ -30,22 +30,22 @@
                                         <input type="text" class="form-control" name="nama" required value="{{old('nama') ? old('nama') : $model->nama}}">
                                         <label class="form-label">Nama Instansi</label>
                                     </div>
-                                    @error('nama')
+                                    @if ($errors->has('nama'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('nama') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="text" class="form-control" name="alamat" required value="{{old('alamat') ? old('alamat') : $model->alamat}}">
                                         <label class="form-label">Alamat</label>
                                     </div>
-                                    @error('alamat')
+                                    @if ($errors->has('alamat'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('alamat') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <select class="form-control show-tick" name="pimpinan_id" required="" data-live-search="true">
@@ -55,11 +55,11 @@
                                         <option value="{{$data->id}}" {{$old_pimpinan == $data->id ? 'selected=""' : '' }}>{{$data->nama}}</option>
                                         @endforeach
                                     </select>
-                                    @error('pimpinan_id')
+                                    @if ($errors->has('pimpinan_id'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('pimpinan_id') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     {{'',$old_group = old('group_special_role_id') ? old('group_special_role_id') : $model->group_special_role_id}}
@@ -70,11 +70,11 @@
                                             @endforeach
                                         @endforeach
                                     </select>
-                                    @error('group_special_role_id')
+                                    @if ($errors->has('group_special_role_id'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('group_special_role_id') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <label>Logo</label>
@@ -82,11 +82,11 @@
                                     <img src="{{Storage::url($model->logo)}}" class="img-responsive" width="250px">
                                     @endif
                                     <input type="file" name="logo" class="form-control" style="height: auto;">
-                                    @error('logo')
+                                    @if ($errors->has('logo'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{ $errors->first('logo') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                                 <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
                             </form>
