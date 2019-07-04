@@ -136,12 +136,12 @@
                                 <span>SPT & SPPD</span>
                             </a>
                             <ul class="ml-menu">
-                                <li class="@yield('surat-masuk-active')">
+                                <li class="@yield('spt-active')">
                                     <a href="#">
                                         SPT
                                     </a>
                                 </li>
-                                <li class="@yield('surat-keluar-active')">
+                                <li class="@yield('sppd-active')">
                                     <a href="#">
                                         SPPD
                                     </a>
