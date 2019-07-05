@@ -25,7 +25,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="body">
-                            <div class="container clearfix">
+                            <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-12">
                                         <label>Tanggal Terima / No Agenda:</label><br>
