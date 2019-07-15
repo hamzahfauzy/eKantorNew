@@ -14,7 +14,7 @@
                             <i class="material-icons">playlist_add_check</i>
                         </div>
                         <div class="content">
-                            <div class="text">NEW TASKS</div>
+                            <div class="text">SURAT MASUK</div>
                             <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20"></div>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                             <i class="material-icons">help</i>
                         </div>
                         <div class="content">
-                            <div class="text">NEW TICKETS</div>
+                            <div class="text">SURAT KELUAR</div>
                             <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20"></div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                             <i class="material-icons">forum</i>
                         </div>
                         <div class="content">
-                            <div class="text">NEW COMMENTS</div>
+                            <div class="text">SPT/SPD</div>
                             <div class="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20"></div>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                             <i class="material-icons">person_add</i>
                         </div>
                         <div class="content">
-                            <div class="text">NEW VISITORS</div>
+                            <div class="text">AGENDA</div>
                             <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20"></div>
                         </div>
                     </div>

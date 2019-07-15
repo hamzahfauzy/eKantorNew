@@ -5,7 +5,7 @@
 		<div class="container-fluid">
             <div class="block-header">
                 <h2>
-                    Data Surat MasukKeluar
+                    Data Surat Keluar
                 </h2>
             </div>
             <!-- Basic Examples -->
