@@ -12,7 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+	return redirect('/login');
+    // return view('auth.login');
 });
 
 Route::get('/nip-patch',function(){

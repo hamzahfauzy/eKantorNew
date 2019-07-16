@@ -108,7 +108,7 @@
 				                                    
 				                                </a>
 
-                                                @if($model->histori && $model->histori()->orderby('created_at','asc')->first()->status == 'Surat Masuk')
+                                                @if($model->histori && $model->histori()->orderby('created_at','asc')->first() && $model->histori()->orderby('created_at','asc')->first()->status == 'Surat Masuk')
 				                                <a href="{{route('pegawai.surat-masuk.delete')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();deleteAlert({{$model->id}})">
 				                                    <i class="material-icons">delete</i>
 				                                </a>
