@@ -8,7 +8,7 @@ use App\Model\Reference\Employee;
 class SuratMasuk extends Model
 {
     //
-    protected $fillable = ['no_agenda','no_surat','tanggal_surat','tanggal_terima','sumber_surat','perihal','keterangan','file_url_surat','pegawai_id','status_teruskan'];
+    protected $fillable = ['no_agenda','no_surat','tanggal_surat','tanggal_terima','sumber_surat','perihal','keterangan','file_url_surat','pegawai_id','status_teruskan','sifat_surat'];
     protected $dates = ['tanggal_surat','tanggal_terima','created_at','updated_at'];
 
     public function disposisis()
@@ -19,5 +19,10 @@ class SuratMasuk extends Model
     public function employee()
     {
     	return $this->hasOne(Employee::class,'id','pegawai_id');
+    }
+
+    public function histori()
+    {
+        return $this->hasMany(HistoriSuratMasuk::class,'surat_masuk_id','id');
     }
 }

@@ -15,6 +15,15 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('/nip-patch',function(){
+	$employees = App\Model\Reference\Employee::get();
+	foreach ($employees as $employee) {
+		$user = App\User::find($employee->user_id);
+		$user->NIP = $employee->NIP;
+		$user->save();
+	}
+});
+
 Route::middleware('auth')->group(function(){
 	Route::middleware('admin')->group(function(){
 		Route::prefix('reference')->namespace('Reference')->group(function(){

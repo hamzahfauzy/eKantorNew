@@ -56,7 +56,8 @@
                                         <tr>
                                             <td>{{$no++}}</td>
                                             <td>
-                                                <b>{{$model->surat_masuk->no_agenda}}</b>
+                                                <b>{{$model->surat_masuk->no_agenda}}</b><br>
+                                                {{$model->created_at->format('j F, Y')}}
                                             </td>
                                             <td>
                                                 No. Surat: <b>{{$model->surat_masuk->no_surat}}</b><br>

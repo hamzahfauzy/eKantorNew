@@ -36,6 +36,7 @@
                                             <th>Tanggal Surat</th>
                                             <th>Tanggal Terima</th>
                                             <th>Sumber</th>
+                                            <th>Sifat</th>
                                             <th>Pegawai</th>
                                             <th></th>
                                         </tr>
@@ -48,6 +49,7 @@
                                             <th>Tanggal Surat</th>
                                             <th>Tanggal Terima</th>
                                             <th>Sumber</th>
+                                            <th>Sifat</th>
                                             <th>Pegawai</th>
                                             <th></th>
                                         </tr>
@@ -58,7 +60,8 @@
                                         <tr>
                                             <td>{{$no++}}</td>
                                             <td>
-                                                <b>{{$model->no_agenda}}</b>
+                                                <b>{{$model->no_agenda}}</b><br>
+                                                {{$model->created_at->format('j F, Y')}}
                                             </td>
                                             <td>
                                                 No. Surat: <b>{{$model->no_surat}}</b><br>
@@ -68,6 +71,7 @@
                                             <td>{{$model->tanggal_surat->format('j F Y')}}</td>
                                             <td>{{$model->tanggal_terima->format('j F Y')}}</td>
                                             <td>{{$model->sumber_surat}}</td>
+                                            <td>{{$model->sifat_surat}}</td>
                                             <td>{{$model->employee->nama}}</td>
                                             <td>
                                             	<a href="{{Storage::url($model->file_url_surat)}}" target="_blank" class="btn btn-info waves-effect">

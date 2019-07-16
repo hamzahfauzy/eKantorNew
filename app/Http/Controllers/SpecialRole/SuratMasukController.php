@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Model\Surat\SuratMasuk;
+use App\Model\Surat\HistoriSuratMasuk;
 
 class SuratMasukController extends Controller
 {
@@ -47,6 +48,11 @@ class SuratMasukController extends Controller
             'status_teruskan' => 1
         ]);
 
+        HistoriSuratMasuk::create([
+            'surat_masuk_id' => $request->id,
+            'status' => 'Surat diteruskan oleh Sekretaris ke Pimpinan'
+        ]);
+
         return redirect()->route('pegawai.surat-masuk.index')->with(['success'=>'Surat sudah diteruskan']);
     }
 
@@ -65,6 +71,7 @@ class SuratMasukController extends Controller
             'tanggal_surat' => 'required',
             'tanggal_terima' => 'required',
             'sumber_surat' => 'required',
+            'sifat_surat' => 'required',
             'perihal' => 'required',
             'keterangan' => 'required',
             'file_surat' => 'required',
@@ -77,16 +84,23 @@ class SuratMasukController extends Controller
             $path = $uploadedFile->store('public/surat_masuk');
         }
 
-        $this->model->create([
+        $surat = $this->model->create([
             'no_agenda' => $request->no_agenda,
             'no_surat' => $request->no_surat,
             'tanggal_surat' => $request->tanggal_surat,
             'tanggal_terima' => $request->tanggal_terima,
             'sumber_surat' => $request->sumber_surat,
+            'sifat_surat' => $request->sifat_surat,
             'perihal' => $request->perihal,
             'keterangan' => $request->keterangan,
             'file_url_surat' => $path,
             'pegawai_id' => auth()->user()->employee->id,
+        ]);
+
+        $histori = new HistoriSuratMasuk;
+        $histori->create([
+            'surat_masuk_id' => $surat->id,
+            'status' => 'Surat Masuk'
         ]);
 
         return redirect()->route('pegawai.surat-masuk.index')->with(['success'=>'Data berhasil disimpan']);
@@ -133,6 +147,7 @@ class SuratMasukController extends Controller
             'tanggal_surat' => 'required',
             'tanggal_terima' => 'required',
             'sumber_surat' => 'required',
+            'sifat_surat' => 'required',
             'perihal' => 'required',
             'keterangan' => 'required',
         ]);
@@ -153,6 +168,7 @@ class SuratMasukController extends Controller
             'tanggal_surat' => $request->tanggal_surat,
             'tanggal_terima' => $request->tanggal_terima,
             'sumber_surat' => $request->sumber_surat,
+            'sifat_surat' => $request->sifat_surat,
             'perihal' => $request->perihal,
             'keterangan' => $request->keterangan,
             'pegawai_id' => auth()->user()->employee->id,

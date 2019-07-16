@@ -9,7 +9,7 @@
             <i class="material-icons">person</i>
         </span>
         <div class="form-line">
-            <input id="email" type="email" placeholder="E-Mail" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+            <input id="email" type="text" placeholder="NIP / E-Mail" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autofocus>
             <!-- <input type="text" class="form-control" name="username" placeholder="Username" required autofocus> -->
         </div>
         @if ($errors->has('email'))

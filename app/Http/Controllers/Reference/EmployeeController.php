@@ -86,9 +86,12 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Employee $employee)
     {
         //
+        return view('reference.employee.show',[
+            'pegawai' => $employee,
+        ]);
     }
 
     /**
@@ -136,7 +139,7 @@ class EmployeeController extends Controller
 
         if(!empty($request->password))
         {
-            $user->update([
+            User::find($employee->user_id)->update([
                 'password' => bcrypt($request->password)
             ]);
         }

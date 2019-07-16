@@ -118,7 +118,7 @@
 <script src="{{asset('template/bsbm/plugins/jquery-datatable/extensions/export/buttons.print.min.js')}}"></script>
 
 <!-- Sweet Alert Plugin Js -->
-    <script src="{{asset('template/bsbm/plugins/sweetalert/sweetalert.min.js')}}"></script>
+<script src="{{asset('template/bsbm/plugins/sweetalert/sweetalert.min.js')}}"></script>
 <script type="text/javascript">
 $(function () {
     $('.js-basic-example').DataTable({

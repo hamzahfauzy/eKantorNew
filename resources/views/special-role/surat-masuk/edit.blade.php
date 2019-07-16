@@ -77,6 +77,17 @@
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
+                                        <input type="text" class="form-control" name="sifat_surat" required value="{{old('sifat_surat') ? old('sifat_surat') : $surat->sifat_surat}}">
+                                        <label class="form-label">Sifat Surat</label>
+                                    </div>
+                                    @if ($errors->has('sifat_surat'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('sifat_surat') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group form-float">
+                                    <div class="form-line">
                                         <input type="text" class="form-control" name="perihal" required value="{{old('perihal') ? old('perihal') : $surat->perihal}}">
                                         <label class="form-label">Perihal</label>
                                     </div>

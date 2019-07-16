@@ -1,6 +1,6 @@
 @extends('bsbmtemplate.admin-template')
 @section('surat-active','active')
-@section('surat-masuk-active','active')
+@section('surat-masuk-pimpinan-active','active')
 @section('content')
 		<div class="container-fluid">
             <div class="block-header">
@@ -79,6 +79,30 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2 class="pull-left">
+                                Histori
+                            </h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    @foreach($surat->histori()->orderby('created_at','desc')->get() as $histori)
+                                    <div class="col-12">
+                                        <label>{{$histori->created_at->format('j F Y H:i:s')}}</label><br>
+                                        <p>{{$histori->status}}</p>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <!-- #END# Basic Examples -->
         </div>
@@ -95,7 +119,6 @@
                                 <div class="form-group form-float">
                                     <label>Disposisikan Ke:</label>
                                     <select class="form-control show-tick" name="pegawai[]" required="" data-live-search="true" multiple="">
-                                        <option value="">Pilih Pegawai</option>
                                         @foreach($employees as $employee)
                                         <option value="{{$employee->id}}">{{$employee->nama}}</option>
                                         @endforeach

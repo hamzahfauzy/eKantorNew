@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Pimpinan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Model\Surat\{SuratMasuk, Disposisi};
+use App\Model\Surat\{HistoriSuratMasuk, SuratMasuk, Disposisi};
 use App\Model\Reference\Employee;
 use App\Model\Setting;
 
@@ -69,6 +69,11 @@ class SuratController extends Controller
             $disposisi->surat_masuk_id = $id;
             $disposisi->catatan = $request->catatan;
             $disposisi->save();
+
+            HistoriSuratMasuk::create([
+                'surat_masuk_id' => $id,
+                'status' => 'Surat sudah di disposisikan oleh Pimpinan'
+            ]);
         }
 
         return redirect()->route('pimpinan.surat.show',$id)->with(['success'=>'Surat telah di Disposisikan']);
@@ -83,6 +88,20 @@ class SuratController extends Controller
     public function show(SuratMasuk $surat)
     {
         //
+
+        if(auth()->user()->employee->isPimpinan())
+        {
+            $status = 'Surat sudah dibaca oleh Pimpinan';
+            $histori = HistoriSuratMasuk::where('surat_masuk_id',$surat->id)->where('status',$status)->first();
+            if(!$histori)
+            {
+                HistoriSuratMasuk::create([
+                    'status' => $status,
+                    'surat_masuk_id' => $surat->id
+                ]);
+            }
+        }
+
         return view('pimpinan.surat.show',[
             'surat' => $surat,
             'employees' => $this->employees,

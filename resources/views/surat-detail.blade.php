@@ -77,6 +77,13 @@
                             </a>
                             @endif
 
+                            @if($surat->disposisis && auth()->user()->employee->inSpecialRoleUser())
+                            <a href="#cetak_dispoissi" class="btn btn-warning waves-effect">
+                                <i class="material-icons">print</i>
+                                <span>Cetak Lembar Disposisi</span>
+                            </a>
+                            @endif
+
                             @if(empty($surat->status_teruskan) && auth()->user()->employee->kepala_group_special_role())
                             <a href="{{route('pegawai.surat-masuk.teruskan')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();teruskanAlert({{$surat->id}})">
                                 <i class="material-icons">arrow_forward</i>
@@ -91,6 +98,30 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2 class="pull-left">
+                                Histori
+                            </h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    @foreach($surat->histori()->orderby('created_at','desc')->get() as $histori)
+                                    <div class="col-12">
+                                        <label>{{$histori->created_at->format('j F Y H:i:s')}}</label><br>
+                                        <p>{{$histori->status}}</p>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <!-- #END# Basic Examples -->
         </div>
