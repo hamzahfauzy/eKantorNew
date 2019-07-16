@@ -42,9 +42,8 @@
                                             <th>No. Agenda</th>
                                             <th>Surat</th>
                                             <th>Tanggal Surat</th>
-                                            <th>Tanggal Terima</th>
                                             <th>Sumber</th>
-                                            <th>Sifat</th>
+                                            <th>Histori</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -54,15 +53,15 @@
                                             <th>No. Agenda</th>
                                             <th>Surat</th>
                                             <th>Tanggal Surat</th>
-                                            <th>Tanggal Terima</th>
                                             <th>Sumber</th>
-                                            <th>Sifat</th>
+                                            <th>Histori</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         {{'',$no=1}}
                                         @foreach($surat as $model)
+                                        @php $histori = $model->histori()->orderby('created_at','desc')->first() @endphp
                                         <tr>
                                             <td>{{$no++}}</td>
                                             <td>
@@ -72,12 +71,19 @@
                                             <td>
                                                 No. Surat: <b>{{$model->no_surat}}</b><br>
                                                 Perihal: {{$model->perihal}}<br>
+                                                Sifat: {{$model->sifat}}<br>
+                                                Keterangan:<br>
                                                 {{$model->keterangan}}<br>
                                             </td>
                                             <td>{{$model->tanggal_surat->format('j F Y')}}</td>
-                                            <td>{{$model->tanggal_terima->format('j F Y')}}</td>
                                             <td>{{$model->sumber_surat}}</td>
-                                            <td>{{$model->sifat_surat}}</td>
+                                            <td>
+                                                @if($histori)
+                                                {{$histori->status}}<br><b>{{$histori->created_at->format('j F Y')}}</b>
+                                                @else
+                                                Surat Masuk <br> <b>{{$model->created_at->format('j F Y')}}</b>
+                                                @endif
+                                            </td>
                                             <td>
                                             	<a href="{{Storage::url($model->file_url_surat)}}" target="_blank" class="btn btn-info waves-effect">
                                                     <i class="material-icons">get_app</i>

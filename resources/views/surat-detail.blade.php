@@ -110,12 +110,20 @@
                         <div class="body">
                             <div class="container-fluid">
                                 <div class="row">
+                                    
                                     @foreach($surat->histori()->orderby('created_at','desc')->get() as $histori)
                                     <div class="col-12">
                                         <label>{{$histori->created_at->format('j F Y H:i:s')}}</label><br>
                                         <p>{{$histori->status}}</p>
                                     </div>
                                     @endforeach
+
+                                    @if(count($surat->histori) == 0 || $surat->histori[0]->status != 'Surat Masuk')
+                                    <div class="col-12">
+                                        <label>{{$surat->created_at->format('j F Y H:i:s')}}</label><br>
+                                        <p>Surat Masuk</p>
+                                    </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

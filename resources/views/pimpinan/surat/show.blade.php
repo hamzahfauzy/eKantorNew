@@ -97,6 +97,13 @@
                                         <p>{{$histori->status}}</p>
                                     </div>
                                     @endforeach
+
+                                    @if(count($surat->histori) == 0 || $surat->histori[0]->status != 'Surat Masuk')
+                                    <div class="col-12">
+                                        <label>{{$surat->created_at->format('j F Y H:i:s')}}</label><br>
+                                        <p>Surat Masuk</p>
+                                    </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
