@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Model\Surat\{HistoriSuratMasuk, SuratMasuk, Disposisi};
 use App\Model\Reference\Employee;
-use App\Model\Setting;
+use App\Model\{Setting, Notification};
 
 class SuratController extends Controller
 {
@@ -74,6 +74,15 @@ class SuratController extends Controller
                 'surat_masuk_id' => $id,
                 'status' => 'Surat sudah di disposisikan oleh Pimpinan'
             ]);
+
+            $surat = SuratMasuk::find($id);
+
+            $notification = new Notification;
+            $notification->user_id = $pegawai;
+            $notification->status = 0;
+            $notification->url_to = route('detail-surat-masuk',$surat->id);
+            $notification->deskripsi = "Dispoisisi - ".$surat->sifat_surat.' - '.$surat->sumber_surat;
+            $notification->save();
         }
 
         return redirect()->route('pimpinan.surat.show',$id)->with(['success'=>'Surat telah di Disposisikan']);

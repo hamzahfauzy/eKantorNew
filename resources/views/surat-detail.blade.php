@@ -70,7 +70,7 @@
                                 <i class="material-icons">visibility</i>
                                 <span>Lihat Surat</span>
                             </a>
-                            @if((empty($surat->disposisis) || count($surat->disposisis) == 0) && auth()->user()->employee->isPimpinan())
+                            @if((empty($surat->disposisis) || count($surat->disposisis) == 0) && (auth()->user()->employee->isPimpinan() || auth()->user()->employee->kepala_group_special_role()) )
                             <a href="javascript:void(0)" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#defaultModal">
                                 <i class="material-icons">arrow_forward</i>
                                 <span>Disposisi</span>
@@ -78,13 +78,13 @@
                             @endif
 
                             @if($surat->disposisis && auth()->user()->employee->inSpecialRoleUser())
-                            <a href="#cetak_dispoissi" class="btn btn-warning waves-effect">
+                            <a href="{{route('pegawai.surat-masuk.print',$surat->id)}}" class="btn btn-warning waves-effect">
                                 <i class="material-icons">print</i>
                                 <span>Cetak Lembar Disposisi</span>
                             </a>
                             @endif
 
-                            @if(empty($surat->status_teruskan) && auth()->user()->employee->kepala_group_special_role())
+                            @if(empty($surat->status_teruskan) && auth()->user()->employee->kepala_group_special_role() && count($surat->disposisis) == 0)
                             <a href="{{route('pegawai.surat-masuk.teruskan')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();teruskanAlert({{$surat->id}})">
                                 <i class="material-icons">arrow_forward</i>
                                 <span>Teruskan</span>
@@ -131,12 +131,47 @@
                 </div>
 
             </div>
+
+            <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="defaultModalLabel">Set Disposisi Surat</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="form_validation" method="POST" action="{{route('sekretaris.surat.set-disposisi',$surat->id)}}">
+                                {{csrf_field()}}
+                                <div class="form-group form-float">
+                                    <label>Disposisikan Ke:</label>
+                                    <select class="form-control show-tick" name="pegawai[]" required="" data-live-search="true" multiple="">
+                                        @foreach($employees as $employee)
+                                        <option value="{{$employee->id}}">{{$employee->nama}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group form-float">
+                                    <label>Catatan</label>
+                                    <div class="form-line">
+                                        <textarea class="form-control" name="catatan" required></textarea>
+                                        <label class="form-label">Catatan</label>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
+                                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- #END# Basic Examples -->
         </div>
 @endsection
 
 @section('script')
 <!-- Sweet Alert Plugin Js -->
+<script src="{{asset('template/bsbm/plugins/bootstrap-select/js/bootstrap-select.js')}}"></script>
 <script src="{{asset('template/bsbm/plugins/sweetalert/sweetalert.min.js')}}"></script>
 <script type="text/javascript">
 

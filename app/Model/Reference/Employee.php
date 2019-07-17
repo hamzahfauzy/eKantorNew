@@ -4,7 +4,7 @@ namespace App\Model\Reference;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User;
-use App\Model\Setting;
+use App\Model\{Setting,Notification};
 use App\Model\Surat\{SuratMasuk, Disposisi};
 
 class Employee extends Model
@@ -82,13 +82,6 @@ class Employee extends Model
 
     public function notifications()
     {
-        if($this->kepala_group_special_role())
-            $ret = SuratMasuk::whereNull('status_teruskan')->get();
-        elseif($this->isPimpinan())
-            $ret = SuratMasuk::where('status_teruskan',1)->get();
-        else
-            $ret = Disposisi::where('pegawai_id',$this->id)->get();
-        
-        return $ret;
+        return $this->hasMany(Notification::class,'user_id','id');
     }
 }

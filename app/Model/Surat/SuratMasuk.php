@@ -25,4 +25,9 @@ class SuratMasuk extends Model
     {
         return $this->hasMany(HistoriSuratMasuk::class,'surat_masuk_id','id');
     }
+
+    public function getArsipAttribute()
+    {
+        return ArsipSurat::where('surat_id',$this->id)->where('jenis_surat','Surat Masuk')->first();
+    }
 }

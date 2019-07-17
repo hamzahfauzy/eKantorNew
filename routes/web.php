@@ -25,7 +25,10 @@ Route::get('/nip-patch',function(){
 	}
 });
 
+
 Route::middleware('auth')->group(function(){
+	Route::get('notification-redirector/{notification}','HomeController@notificationRedirector')->name('notification-redirector');
+	Route::get('file-viewer','HomeController@fileViewer')->name('file-viewer');
 	Route::middleware('admin')->group(function(){
 		Route::prefix('reference')->namespace('Reference')->group(function(){
 			Route::prefix('golongan')->group(function(){
@@ -139,6 +142,8 @@ Route::middleware('auth')->group(function(){
 				Route::get('create','SuratMasukController@create')->name('pegawai.surat-masuk.create');
 				Route::get('edit/{surat}','SuratMasukController@edit')->name('pegawai.surat-masuk.edit');
 				Route::get('show/{surat}','SuratMasukController@show')->name('pegawai.surat-masuk.show');
+				Route::get('print/{surat}','SuratMasukController@print')->name('pegawai.surat-masuk.print');
+				Route::post('arsip','SuratMasukController@arsip')->name('pegawai.surat-masuk.arsip');
 				Route::post('insert','SuratMasukController@store')->name('pegawai.surat-masuk.insert');
 				Route::post('teruskan','SuratMasukController@teruskan')->name('pegawai.surat-masuk.teruskan');
 				Route::put('update','SuratMasukController@update')->name('pegawai.surat-masuk.update');
@@ -154,6 +159,8 @@ Route::middleware('auth')->group(function(){
 				Route::post('show/{surat}/set-disposisi','SuratController@setDisposisi')->name('pimpinan.surat.set-disposisi');
 			});
 		});
+
+		Route::post('set-disposisi/{surat}','SpecialRole\SuratMasukController@setDisposisi')->name('sekretaris.surat.set-disposisi');
 
 		Route::get('disposisi','HomeController@disposisi')->name('disposisi');
 		Route::get('detail-surat-masuk/{surat}','HomeController@detailSuratMasuk')->name('detail-surat-masuk');

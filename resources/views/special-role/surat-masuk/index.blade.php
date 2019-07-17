@@ -66,12 +66,20 @@
                                             <td>{{$no++}}</td>
                                             <td>
                                                 <b>{{$model->no_agenda}}</b><br>
-                                                {{$model->created_at->format('j F, Y')}}
+                                                {{$model->created_at->format('j F, Y')}}<br>
+
+                                                @if(!auth()->user()->employee->kepala_group_special_role())
+                                                    @if($model->arsip)
+                                                        No. Arsip : {{$model->arsip->no_arsip}}
+                                                    @else
+                                                        <a href="javascript:void(0)" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#defaultModal{{$model->id}}">Arsipkan Surat</a>
+                                                    @endif
+                                                @endif
                                             </td>
                                             <td>
                                                 No. Surat: <b>{{$model->no_surat}}</b><br>
                                                 Perihal: {{$model->perihal}}<br>
-                                                Sifat: {{$model->sifat}}<br>
+                                                Sifat: {{$model->sifat_surat}}<br>
                                                 Keterangan:<br>
                                                 {{$model->keterangan}}<br>
                                             </td>
@@ -85,7 +93,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                            	<a href="{{Storage::url($model->file_url_surat)}}" target="_blank" class="btn btn-info waves-effect">
+                                                <a href="{{Storage::url($model->file_url_surat)}}" target="_blank" class="btn btn-info waves-effect">
                                                     <i class="material-icons">get_app</i>
                                                     
                                                 </a>
@@ -95,7 +103,7 @@
                                                     
                                                 </a>
 
-                                                @if(auth()->user()->employee->kepala_group_special_role() && empty($model->status_teruskan))
+                                                @if(auth()->user()->employee->kepala_group_special_role() && empty($model->status_teruskan) && count($model->disposisis) == 0)
                                                 <a href="{{route('pegawai.surat-masuk.teruskan')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();teruskanAlert({{$model->id}})">
                                                     <i class="material-icons">arrow_forward</i>
                                                     
@@ -109,26 +117,60 @@
 
                                                 @if(!auth()->user()->employee->kepala_group_special_role())
 
-                                                <a href="{{route('pegawai.surat-masuk.edit',$model->id)}}" class="btn btn-warning waves-effect">
-				                                    <i class="material-icons">create</i>
-				                                    
-				                                </a>
+                                                    <a href="{{route('pegawai.surat-masuk.edit',$model->id)}}" class="btn btn-warning waves-effect">
+    				                                    <i class="material-icons">create</i>
+    				                                    
+    				                                </a>
 
-                                                @if($model->histori && $model->histori()->orderby('created_at','asc')->first() && $model->histori()->orderby('created_at','asc')->first()->status == 'Surat Masuk')
-				                                <a href="{{route('pegawai.surat-masuk.delete')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();deleteAlert({{$model->id}})">
-				                                    <i class="material-icons">delete</i>
-				                                </a>
-                                                @endif
+                                                    @if($model->histori && $model->histori()->orderby('created_at','desc')->first() && $model->histori()->orderby('created_at','desc')->first()->status == 'Surat Masuk')
+    				                                <a href="{{route('pegawai.surat-masuk.delete')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();deleteAlert({{$model->id}})">
+    				                                    <i class="material-icons">delete</i>
+    				                                </a>
 
-				                                <form id="form-delete-{{$model->id}}" style="display: none;" method="post" action="{{route('pegawai.surat-masuk.delete')}}">
-				                                	{{csrf_field()}}
-				                                	<input type="hidden" name="_method" value="DELETE">
-				                                	<input type="hidden" name="id" value="{{$model->id}}">
-				                                </form>
+    				                                <form id="form-delete-{{$model->id}}" style="display: none;" method="post" action="{{route('pegawai.surat-masuk.delete')}}">
+    				                                	{{csrf_field()}}
+    				                                	<input type="hidden" name="_method" value="DELETE">
+    				                                	<input type="hidden" name="id" value="{{$model->id}}">
+    				                                </form>
+                                                    @endif
 
                                                 @endif
                                             </td>
                                         </tr>
+
+                                        <div class="modal fade" id="defaultModal{{$model->id}}" tabindex="-1" role="dialog">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title" id="defaultModalLabel">Arsip Surat Masuk</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="form_validation" method="POST" action="{{route('pegawai.surat-masuk.arsip')}}">
+                                                            {{csrf_field()}}
+                                                            <input type="hidden" name="id" value="{{$model->id}}">
+                                                            <div class="form-group form-float">
+                                                                <label>No. Arsip</label>
+                                                                <div class="form-line">
+                                                                    <input type="text" class="form-control" name="no_arsip" required>
+                                                                    <label class="form-label">No Arsip</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group form-float">
+                                                                <label>Catatan</label>
+                                                                <div class="form-line">
+                                                                    <textarea class="form-control" name="catatan" required></textarea>
+                                                                    <label class="form-label">Catatan</label>
+                                                                </div>
+                                                            </div>
+                                                            <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
+                                                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         @endforeach
                                     </tbody>
                                 </table>

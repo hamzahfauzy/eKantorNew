@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Model\Surat\{Disposisi, SuratMasuk, HistoriSuratMasuk};
+use App\Model\Reference\Employee;
+use App\Model\Notification;
 
 class HomeController extends Controller
 {
@@ -66,7 +69,32 @@ class HomeController extends Controller
         }
 
         return view('surat-detail',[
-            'surat' => $surat
+            'surat' => $surat,
+            'employees' => Employee::get()
         ]);
+    }
+
+    public function fileViewer()
+    {
+        $storage_url = $_GET['url'];
+        $file = Storage::url($storage_url);
+        $pathinfo = pathinfo($file);
+        if($pathinfo['extension'] == "pdf")
+        {
+            return redirect($file);
+        }
+    }
+
+    public function notificationRedirector(Notification $notification)
+    {
+        if(auth()->user()->employee->id == $notification->user_id)
+        {
+            $notification->status = 1;
+            $notification->save();
+            return redirect($notification->url_to);
+        }
+
+        return abort(404);
+
     }
 }
