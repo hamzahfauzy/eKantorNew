@@ -331,35 +331,7 @@ class SuratKeluarController extends Controller
             'catatan' => $request->catatan,
         ]);
 
-        $posisi = 4;
-        if($surat->employee->staffGroup)
-        {
-            $pimpinan_id = $surat->employee->staffGroup->subGroups->kepala_id;            
-        }
-        elseif ($surat->employee->kepala_sub_group) 
-        {
-            $pimpinan_id = $surat->employee->kepala_sub_group->group->kepala_id;
-            $posisi = 3;
-        }
-        elseif ($surat->employee->kepala_group) 
-        {
-            $employees = Employee::get();
-            foreach ($employees as $employee) {
-                if($employee->kepala_group_special_role())
-                {
-                    $pimpinan_id = $employee->id;
-                    break;
-                }
-            }
-            if($surat->employee->id != $pimpinan_id)
-                $posisi = 2;
-            else
-            {
-                $setting = Setting::find(1);
-                $pimpinan_id = $setting->pimpinan_id;
-                $posisi = 1;
-            }
-        }
+        $posisi = 0;
 
         $this->model->find($surat->id)->update(['need_action' => $posisi]);
 
