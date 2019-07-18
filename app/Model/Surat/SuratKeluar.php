@@ -35,4 +35,9 @@ class SuratKeluar extends Model
     {
         return HistoriSuratKeluar::where('surat_id',$this->id)->orderby('id','desc')->first();
     }
+
+    public function getArsipAttribute()
+    {
+        return 0;
+    }
 }
