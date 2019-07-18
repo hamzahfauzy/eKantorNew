@@ -5,7 +5,7 @@ namespace App\Model\Reference;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Model\{Setting,Notification};
-use App\Model\Surat\{SuratMasuk, Disposisi};
+use App\Model\Surat\{SuratMasuk, SuratKeluar, Disposisi};
 
 class Employee extends Model
 {
@@ -83,5 +83,10 @@ class Employee extends Model
     public function notifications()
     {
         return $this->hasMany(Notification::class,'user_id','id');
+    }
+
+    public function surat_keluars()
+    {
+        return $this->hasMany(SuratKeluar::class,'pegawai_id','id');
     }
 }

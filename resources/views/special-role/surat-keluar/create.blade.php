@@ -42,22 +42,6 @@
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
-                                        <label>Pengolah</label>
-                                        <select class="form-control show-tick" name="sub_group_id" required="" data-live-search="true">
-                                            <option value="">Pilih Pengelolah</option>
-                                            @foreach($subgroups as $subgroup)
-                                            <option value="{{$subgroup->id}}" {{old('sub_group_id') == $subgroup->id ? 'selected=""' : ''}}>{{$subgroup->nama}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    @if ($errors->has('sub_group_id'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('sub_group_id') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group form-float">
-                                    <div class="form-line">
                                         <input type="text" class="form-control" name="tujuan" required value="{{old('tujuan')}}">
                                         <label class="form-label">Tujuan</label>
                                     </div>

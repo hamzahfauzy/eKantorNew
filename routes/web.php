@@ -132,6 +132,8 @@ Route::middleware('auth')->group(function(){
 			Route::get('edit/{surat}','SuratKeluarController@edit')->name('pegawai.surat-keluar.edit');
 			Route::get('show/{surat}','SuratKeluarController@show')->name('pegawai.surat-keluar.show');
 			Route::post('insert','SuratKeluarController@store')->name('pegawai.surat-keluar.insert');
+			Route::post('accept','SuratKeluarController@accept')->name('pegawai.surat-keluar.accept');
+			Route::post('decline','SuratKeluarController@decline')->name('pegawai.surat-keluar.decline');
 			Route::put('update','SuratKeluarController@update')->name('pegawai.surat-keluar.update');
 			Route::delete('delete','SuratKeluarController@destroy')->name('pegawai.surat-keluar.delete');
 		});
@@ -163,6 +165,7 @@ Route::middleware('auth')->group(function(){
 		Route::post('set-disposisi/{surat}','SpecialRole\SuratMasukController@setDisposisi')->name('sekretaris.surat.set-disposisi');
 
 		Route::get('disposisi','HomeController@disposisi')->name('disposisi');
+		Route::get('profil','HomeController@profil')->name('profil');
 		Route::get('detail-surat-masuk/{surat}','HomeController@detailSuratMasuk')->name('detail-surat-masuk');
 	});
 });

@@ -15,7 +15,6 @@ class CreateTableSuratKeluars extends Migration
     {
         Schema::create('surat_keluars', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('sub_group_id')->unsigned();
             $table->bigInteger('pegawai_id')->unsigned();
             $table->string('no_surat');
             $table->date('tanggal');
@@ -24,8 +23,7 @@ class CreateTableSuratKeluars extends Migration
             $table->text('keterangan');
             $table->text('file_surat_url');
             $table->timestamps();
-
-            $table->foreign('sub_group_id')->references('id')->on('sub_groups')->onDelete('cascade');
+            
             $table->foreign('pegawai_id')->references('id')->on('employees')->onDelete('cascade');
         });
     }

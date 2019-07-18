@@ -13,12 +13,13 @@
                     <li class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
                             <i class="material-icons">notifications</i>
-                            <span class="label-count">{{ count(auth()->user()->employee->notifications()->where('status',0)->get())}}</span>
+                            <span class="label-count">{{ auth()->user()->level == 'pegawai' ? count(auth()->user()->employee->notifications()->where('status',0)->get()) : 0}}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="header">NOTIFICATIONS</li>
                             <li class="body">
                                 <ul class="menu">
+                                    @if(auth()->user()->level == 'pegawai')
                                     @foreach(auth()->user()->employee->notifications()->orderby('created_at','desc')->get() as $notification)
                                     <li>
                                         <a href="{{route('notification-redirector',$notification->id)}}">
@@ -34,6 +35,7 @@
                                         </a>
                                     </li>
                                     @endforeach
+                                    @endif
                                 </ul>
                             </li>
                             <li class="footer">
