@@ -93,7 +93,9 @@
                                                     <td>
                                                         Perihal: {{$model->perihal}}<br>
                                                         {{$model->keterangan}}<br>
+                                                        @if($model->lastHistori)
                                                         <span class="badge {{$bg[$model->lastHistori->status]}}">{{$status[$model->lastHistori->status]}}</span>
+                                                        @endif
                                                     </td>
                                                     <td>{{$model->tanggal->format('j F Y')}}</td>
                                                     <td>{{$model->tujuan}}</td>
