@@ -58,7 +58,7 @@
                                         @if(env('APP_ENV') == 'local')
                                         <iframe src="{{Storage::url($surat->file_surat_url)}}" style="width: 100%;height: 500px;" frameborder="0"></iframe>
                                         @else
-                                        <iframe src="http://docs.google.com/viewer?url={{url('/')}}{{Storage::url($surat->file_surat_url)}}&embedded=true" style="width: 100%;height: 500px;" frameborder="0"></iframe>
+                                        <iframe src="http://docs.google.com/viewer?url={{Storage::url($surat->file_surat_url)}}&embedded=true" style="width: 100%;height: 500px;" frameborder="0"></iframe>
                                         @endif
                                     </div>
                                 </div>
