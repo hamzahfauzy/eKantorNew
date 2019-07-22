@@ -105,6 +105,7 @@
                                                             
                                                         </a>
 
+                                                        @if($model->need_action > -1)
                                                         <a href="{{route('pegawai.surat-keluar.edit',$model->id)}}" class="btn btn-warning waves-effect">
                                                             <i class="material-icons">create</i>
                                                             
@@ -120,6 +121,7 @@
                                                             <input type="hidden" name="_method" value="DELETE">
                                                             <input type="hidden" name="id" value="{{$model->id}}">
                                                         </form>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                                 <div class="modal fade" id="modalArsip{{$model->id}}" tabindex="-1" role="dialog">

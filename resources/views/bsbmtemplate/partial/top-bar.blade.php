@@ -20,7 +20,7 @@
                             <li class="body">
                                 <ul class="menu">
                                     @if(auth()->user()->level == 'pegawai')
-                                    @foreach(auth()->user()->employee->notifications()->orderby('created_at','desc')->get() as $notification)
+                                    @foreach(auth()->user()->employee->notifications()->orderby('created_at','desc')->skip(0)->take(7)->get() as $notification)
                                     <li>
                                         <a href="{{route('notification-redirector',$notification->id)}}">
                                             <div class="icon-circle bg-light-green">

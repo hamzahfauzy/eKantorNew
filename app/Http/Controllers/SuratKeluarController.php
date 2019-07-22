@@ -299,21 +299,26 @@ class SuratKeluarController extends Controller
             }
         }
 
-        HistoriSuratKeluar::create([
-            'user_id' => $pimpinan_id,
-            'surat_id' => $histori->surat_id,
-            'posisi' => $posisi,
-            'status' => 0
-        ]);
-
-        $this->model->find($histori->surat_id)->update(['need_action' => $posisi]);
-
-        $notification = new Notification;
-        $notification->user_id = $pimpinan_id;
-        $notification->status = 0;
-        $notification->url_to = route('pegawai.surat-keluar.show',$histori->surat_id);
-        $notification->deskripsi = "Surat Keluar - Dari ".$histori->suratKeluar->employee->nama;
-        $notification->save();
+        if($posisi > 1)
+        {
+            HistoriSuratKeluar::create([
+                'user_id' => $pimpinan_id,
+                'surat_id' => $histori->surat_id,
+                'posisi' => $posisi,
+                'status' => 0
+            ]);
+            $this->model->find($histori->surat_id)->update(['need_action' => $posisi]);
+            $notification = new Notification;
+            $notification->user_id = $pimpinan_id;
+            $notification->status = 0;
+            $notification->url_to = route('pegawai.surat-keluar.show',$histori->surat_id);
+            $notification->deskripsi = "Surat Keluar - Dari ".$histori->suratKeluar->employee->nama;
+            $notification->save();
+        }
+        else
+        {
+            $this->model->find($histori->surat_id)->update(['need_action' => -1]);
+        }
 
         return redirect()->route('pegawai.surat-keluar.index')->with(['success'=>'Data berhasil disimpan']);
 
