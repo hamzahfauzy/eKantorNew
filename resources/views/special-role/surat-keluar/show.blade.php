@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        <iframe src="{{Storage::url($surat->file_surat_url)}}" style="width: 100%;height: 500px;" frameborder="0"></iframe>
+                                        <iframe src="https://docs.google.com/viewer?url={{Storage::url($surat->file_surat_url)}}" style="width: 100%;height: 500px;" frameborder="0"></iframe>
                                     </div>
                                 </div>
                             </div>
