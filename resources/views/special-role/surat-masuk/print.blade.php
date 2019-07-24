@@ -4,7 +4,7 @@
 @section('content')
         <div class="container-fluid">
             <div class="block-header">
-                <a href="javascript:void(0)" class="btn btn-success btn-print waves-effect">
+                <a href="javascript:void(0)" onclick="doPrint()" class="btn btn-success btn-print waves-effect">
                     <i class="material-icons">print</i>
                     <span>Print</span>
                 </a>
@@ -34,16 +34,18 @@
                                                 </td>
                                                 <td>
                                                 Kode
-                                                <br><br><br>
+                                                <br>
+                                                <h3>{{explode("/",$surat->no_agenda)[0]}}</h3>
                                                 </td>
                                                 <td>
                                                 No. Urut
-                                                <br><br><br>
+                                                <br>
+                                                <h3>{{explode("/",$surat->no_agenda)[1]}}</h3>
                                                 </td>
                                             </tr>
                                         </table>
                                         <label>Isi Ringkas :</label>
-                                        <p>{{$surat->keterangan}}</p>
+                                        <p>{{$surat->perihal}}</p>
                                         <br>
 
                                         <table class="table table-bordered">
@@ -64,6 +66,8 @@
                                                 </td>
                                                 <td>
                                                     <p>Lampiran</p>
+                                                    <span id="jumlah_lampiran"></span>
+                                                    <input type="text" id="lampiran" class="form-control" value="Tidak Ada">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -106,11 +110,18 @@
 <script type="text/javascript">
 var old_html = document.body.innerHTML;
 var show_print = ""
-$(".btn-print").click(function(){
+
+function doPrint()
+{
+    var lampiran_value = $("#lampiran").val()
+    $("#jumlah_lampiran").html(lampiran_value)
+    $("#lampiran").css("display","none")
     show_print = $(".print-section").html()
     document.body.innerHTML = show_print
     window.print()
-    location=location
-})
+    document.body.innerHTML = old_html
+    $("#lampiran").val(lampiran_value)
+    $('.page-loader-wrapper').hide()
+}
 </script>
 @endsection
