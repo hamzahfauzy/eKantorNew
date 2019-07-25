@@ -77,7 +77,7 @@
                             </a>
                             @endif
 
-                            @if($surat->disposisis && auth()->user()->employee->inSpecialRoleUser())
+                            @if(count($surat->disposisis) > 0 && auth()->user()->employee->inSpecialRoleUser())
                             <a href="{{route('pegawai.surat-masuk.print',$surat->id)}}" class="btn btn-warning waves-effect">
                                 <i class="material-icons">print</i>
                                 <span>Cetak Lembar Disposisi</span>

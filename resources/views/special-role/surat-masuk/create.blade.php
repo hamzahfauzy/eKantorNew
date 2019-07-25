@@ -40,7 +40,7 @@
                                         <div class="form-group form-float" style="margin-bottom:0;">
                                             <div class="form-line">
                                                 <input type="text" name="index" class="form-control" required>
-                                                <label class="form-label">Index</label>
+                                                <label class="form-label">No Urut</label>
                                             </div>
                                         </div>
                                     </div>

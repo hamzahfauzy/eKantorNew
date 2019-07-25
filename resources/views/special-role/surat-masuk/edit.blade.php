@@ -42,7 +42,7 @@
                                         <div class="form-group form-float" style="margin-bottom:0;">
                                             <div class="form-line">
                                                 <input type="text" name="index" class="form-control" required value="{{old('index') ? old('index') : explode('/',$surat->no_agenda)[1]}}">
-                                                <label class="form-label">Index</label>
+                                                <label class="form-label">No Urut</label>
                                             </div>
                                         </div>
                                     </div>
