@@ -135,6 +135,7 @@ Route::middleware('auth')->group(function(){
 			Route::post('accept','SuratKeluarController@accept')->name('pegawai.surat-keluar.accept');
 			Route::post('decline','SuratKeluarController@decline')->name('pegawai.surat-keluar.decline');
 			Route::post('arsip','SuratKeluarController@arsip')->name('pegawai.surat-keluar.arsip');
+			Route::post('set-agenda','SuratKeluarController@setAgendaSurat')->name('pegawai.surat-keluar.set-agenda');
 			Route::put('update','SuratKeluarController@update')->name('pegawai.surat-keluar.update');
 			Route::delete('delete','SuratKeluarController@destroy')->name('pegawai.surat-keluar.delete');
 		});

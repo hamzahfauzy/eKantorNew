@@ -47,6 +47,14 @@
                                     </a>
                                 </li>
                                 @endif
+
+                                @if(auth()->user()->employee->inSpecialRole())
+                                <li role="presentation">
+                                    <a href="#staff_with_icon_title" data-toggle="tab">
+                                        <i class="material-icons">email</i> Surat Staff
+                                    </a>
+                                </li>
+                                @endif
                             </ul>
 
                             <!-- Tab panes -->
@@ -88,6 +96,11 @@
                                                             <br>
                                                             <a href="javascript:void(0)" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#modalArsip{{$model->id}}">Arsipkan Surat</a>
                                                             @endif
+                                                        @endif
+
+                                                        @if($model->no_agenda != 0)
+                                                            <br>
+                                                            No. Agenda : {{$model->no_agenda}}
                                                         @endif
                                                     </td>
                                                     <td>
@@ -162,6 +175,7 @@
                                         </table>
                                     </div>
                                 </div>
+
                                 @if(!auth()->user()->employee->staffGroup)
                                 <?php $status = ['Received','Accepted','Declined']; $bg = ["","bg-teal","bg-pink"] ?>
                                 <div role="tabpanel" class="tab-pane fade" id="staff_with_icon_title">
@@ -203,6 +217,11 @@
                                                     <td>{{$no++}}</td>
                                                     <td>
                                                         <b>{{$model->no_surat}}</b>
+
+                                                        @if(!$model->no_agenda)
+                                                            <br>
+                                                            No. Agenda : {{$model->no_agenda}}
+                                                        @endif
                                                     </td>
                                                     <td>
                                                         Perihal: {{$model->perihal}}<br>
@@ -263,6 +282,139 @@
                                                             </div>
                                                         </div>
                                                         @endif
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                @endif
+
+                                @if(auth()->user()->employee->inSpecialRole())
+                                <?php $status = ['Received','Accepted','Declined']; $bg = ["","bg-teal","bg-pink"] ?>
+                                <div role="tabpanel" class="tab-pane fade" id="staff_with_icon_title">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>No. Surat</th>
+                                                    <th>Surat</th>
+                                                    <th>Tanggal Surat</th>
+                                                    <th>Asal</th>
+                                                    <th>Tujuan</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>No. Surat</th>
+                                                    <th>Surat</th>
+                                                    <th>Tanggal Surat</th>
+                                                    <th>Asal</th>
+                                                    <th>Tujuan</th>
+                                                    <th></th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                {{'',$no=1}}
+                                                <?php $suratid = [] ?>
+                                                @foreach($surat_staffs as $histori)
+                                                <?php 
+                                                    $model = $histori->suratKeluar;
+                                                    if(in_array($histori->surat_id,$suratid))
+                                                        continue;
+                                                    $suratid[] = $histori->surat_id;
+                                                ?>
+                                                <tr>
+                                                    <td>{{$no++}}</td>
+                                                    <td>
+                                                        <b>{{$model->no_surat}}</b>
+
+                                                        @if($model->no_agenda != 0)
+                                                            <br>
+                                                            No. Agenda : {{$model->no_agenda}}
+                                                        @endif
+
+                                                        @if($model->no_agenda == 0)
+
+                                                        <a href="javascript:void(0)" class="btn btn-warning waves-effect" data-toggle="modal" data-target="#defaultModal{{$model->id}}">Set Agenda Surat</a>
+
+                                                        <div class="modal fade" id="defaultModal{{$model->id}}" tabindex="-1" role="dialog">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title" id="defaultModalLabel">Tolak Surat</h4>
+                                                                    </div>
+                                                                    <form id="form_validation" method="POST" onsubmit="no_agenda.value = indeks.value + '/' + kode.value + '/' + index.value" action="{{route('pegawai.surat-keluar.set-agenda')}}">
+                                                                    <div class="modal-body">
+                                                                            {{csrf_field()}}
+                                                                            <input type="hidden" name="id" value="{{$model->id}}">
+                                                                            <input type="hidden" name="no_agenda" value="">
+                                                                            <div class="row clearfix">
+                                                                                <div class="col-sm-12" style="margin-bottom:0;">
+                                                                                    <label>No. Agenda</label>
+                                                                                </div>
+                                                                                <div class="col-sm-5 col-md-2" style="margin-bottom:0;">
+                                                                                    <div class="form-group form-float" style="margin-bottom:0;">
+                                                                                        <div class="form-line">
+                                                                                            <input type="text" name="indeks" class="form-control" required value="">
+                                                                                            <label class="form-label">Index</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div style="margin-bottom:0;float:left;">
+                                                                                    <div style="margin:10px;">
+                                                                                    /
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-5 col-md-2" style="margin-bottom:0;">
+                                                                                    <div class="form-group form-float" style="margin-bottom:0;">
+                                                                                        <div class="form-line">
+                                                                                            <input type="text" name="kode" class="form-control" required value="">
+                                                                                            <label class="form-label">Kode</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div style="margin-bottom:0;float:left;">
+                                                                                    <div style="margin:10px;">
+                                                                                    /
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6 col-md-2" style="margin-bottom:0;">
+                                                                                    <div class="form-group form-float" style="margin-bottom:0;">
+                                                                                        <div class="form-line">
+                                                                                            <input type="text" name="index" class="form-control" required>
+                                                                                            <label class="form-label">No Urut</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                            <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
+                                                                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                                                    </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        Perihal: {{$model->perihal}}<br>
+                                                        {{$model->keterangan}}<br>
+                                                    </td>
+                                                    <td>{{$model->tanggal->format('j F Y')}}</td>
+                                                    <td>{{$model->employee->nama}}</td>
+                                                    <td>{{$model->tujuan}}</td>
+                                                    <td>
+                                                        <a href="{{route('pegawai.surat-keluar.show',$model->id)}}" target="_blank" class="btn btn-info waves-effect">
+                                                            <i class="material-icons">visibility</i>
+                                                            
+                                                        </a>
                                                     </td>
                                                 </tr>
                                                 @endforeach

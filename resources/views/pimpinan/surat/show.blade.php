@@ -52,6 +52,11 @@
                                         <p>{{$surat->keterangan}}</p>
                                     </div>
 
+                                    <div class="col-12">
+                                        <label>Jumlah Lampiran:</label><br>
+                                        <p>{{$surat->jumlah_lampiran}} {{$surat->satuan_lampiran}}</p>
+                                    </div>
+
                                     @if(!empty($surat->disposisis) && count($surat->disposisis) > 0)
                                     <div class="col-12">
                                         <label>Di Disposisikan Ke:</label><br>

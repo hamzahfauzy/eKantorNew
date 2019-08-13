@@ -8,7 +8,7 @@ use App\Model\Reference\Employee;
 class SuratMasuk extends Model
 {
     //
-    protected $fillable = ['no_agenda','no_surat','tanggal_surat','tanggal_terima','sumber_surat','perihal','keterangan','file_url_surat','pegawai_id','status_teruskan','sifat_surat'];
+    protected $fillable = ['no_agenda','no_surat','tanggal_surat','tanggal_terima','sumber_surat','perihal','keterangan','file_url_surat','pegawai_id','status_teruskan','sifat_surat','jumlah_lampiran','satuan_lampiran'];
     protected $dates = ['tanggal_surat','tanggal_terima','created_at','updated_at'];
 
     public function disposisis()

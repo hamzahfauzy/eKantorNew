@@ -84,6 +84,8 @@ class SuratMasukController extends Controller
             'sifat_surat' => 'required',
             'perihal' => 'required',
             'keterangan' => 'required',
+            'jumlah_lampiran' => 'required',
+            'satuan_lampiran' => 'required',
             'file_surat' => 'required',
         ]);
 
@@ -103,6 +105,8 @@ class SuratMasukController extends Controller
             'sifat_surat' => $request->sifat_surat,
             'perihal' => $request->perihal,
             'keterangan' => $request->keterangan,
+            'jumlah_lampiran' => $request->jumlah_lampiran,
+            'satuan_lampiran' => $request->satuan_lampiran,
             'file_url_surat' => $path,
             'pegawai_id' => auth()->user()->employee->id,
         ]);
@@ -179,6 +183,8 @@ class SuratMasukController extends Controller
             'sumber_surat' => 'required',
             'sifat_surat' => 'required',
             'perihal' => 'required',
+            'jumlah_lampiran' => 'required',
+            'satuan_lampiran' => 'required',
             'keterangan' => 'required',
         ]);
 
@@ -200,6 +206,8 @@ class SuratMasukController extends Controller
             'sumber_surat' => $request->sumber_surat,
             'sifat_surat' => $request->sifat_surat,
             'perihal' => $request->perihal,
+            'jumlah_lampiran' => $request->jumlah_lampiran,
+            'satuan_lampiran' => $request->satuan_lampiran,
             'keterangan' => $request->keterangan,
             'pegawai_id' => auth()->user()->employee->id,
         ]);

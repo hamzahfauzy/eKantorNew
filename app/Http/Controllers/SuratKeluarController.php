@@ -24,9 +24,11 @@ class SuratKeluarController extends Controller
     public function index()
     {
         //
+        $histori_surat = HistoriSuratKeluar::where('user_id',auth()->user()->employee->id)->where('status',0)->orderby('id','desc')->get();
+        $surat_staffs = HistoriSuratKeluar::where('status',1)->orderby('id','desc')->get();
         return view('special-role.surat-keluar.index',[
             'surat' => $this->model->where('pegawai_id',auth()->user()->employee->id)->orderby('id','desc')->get(),
-            'surat_staffs' => HistoriSuratKeluar::where('user_id',auth()->user()->employee->id)->where('status',0)->orderby('id','desc')->get(),
+            'surat_staffs' => auth()->user()->employee->inSpecialRole() ? $surat_staffs : $histori_surat,
         ]);
     }
 
@@ -349,5 +351,14 @@ class SuratKeluarController extends Controller
 
         return redirect()->route('pegawai.surat-keluar.index')->with(['success'=>'Data berhasil disimpan']);
 
+    }
+
+    public function setAgendaSurat(Request $request)
+    {
+        $surat = SuratKeluar::find($request->id);
+        $surat->no_agenda = $request->no_agenda;
+        $surat->save();
+
+        return redirect()->route('pegawai.surat-keluar.index')->with(['success'=>'Surat Berhasil diagendakan']);
     }
 }

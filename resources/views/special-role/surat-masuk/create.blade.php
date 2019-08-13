@@ -16,12 +16,25 @@
                             <h2>Tambah Data Surat Masuk</h2>
                         </div>
                         <div class="body">
-                            <form id="form_validation" method="POST" onsubmit="no_agenda.value = kode.value + '/' + index.value" action="{{route('pegawai.surat-masuk.insert')}}" enctype="multipart/form-data">
+                            <form id="form_validation" method="POST" onsubmit="no_agenda.value = indeks.value + '/' + kode.value + '/' + index.value" action="{{route('pegawai.surat-masuk.insert')}}" enctype="multipart/form-data">
                             	{{csrf_field()}}
                                 <input type="hidden" name="no_agenda">
                                 <div class="row clearfix">
                                     <div class="col-sm-12" style="margin-bottom:0;">
                                         <label>No. Agenda</label>
+                                    </div>
+                                    <div class="col-sm-5 col-md-2" style="margin-bottom:0;">
+                                        <div class="form-group form-float" style="margin-bottom:0;">
+                                            <div class="form-line">
+                                                <input type="text" name="indeks" class="form-control" required>
+                                                <label class="form-label">Index</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom:0;float:left;">
+                                        <div style="margin:10px;">
+                                        /
+                                        </div>
                                     </div>
                                     <div class="col-sm-5 col-md-2" style="margin-bottom:0;">
                                         <div class="form-group form-float" style="margin-bottom:0;">
@@ -126,6 +139,28 @@
                                     @if ($errors->has('keterangan'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('keterangan') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="number" class="form-control" name="jumlah_lampiran" required value="{{old('jumlah_lampiran')}}">
+                                        <label class="form-label">Jumlah Lampiran</label>
+                                    </div>
+                                    @if ($errors->has('jumlah_lampiran'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('jumlah_lampiran') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="text" class="form-control" name="satuan_lampiran" required value="{{old('satuan_lampiran')}}">
+                                        <label class="form-label">Satuan Lampiran</label>
+                                    </div>
+                                    @if ($errors->has('satuan_lampiran'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('satuan_lampiran') }}</strong>
                                         </span>
                                     @endif
                                 </div>
