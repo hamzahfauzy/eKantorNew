@@ -346,7 +346,7 @@
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h4 class="modal-title" id="defaultModalLabel">Tolak Surat</h4>
+                                                                        <h4 class="modal-title" id="defaultModalLabel">Agenda Surat</h4>
                                                                     </div>
                                                                     <form id="form_validation" method="POST" onsubmit="no_agenda.value = indeks.value + '/' + kode.value + '/' + index.value" action="{{route('pegawai.surat-keluar.set-agenda')}}">
                                                                     <div class="modal-body">
