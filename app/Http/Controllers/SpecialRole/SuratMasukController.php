@@ -219,6 +219,7 @@ class SuratMasukController extends Controller
             foreach($files as $file)
             {
                 $path_lampiran = $file->store('public/lampiran_surat_masuk');
+                $lampiran = new LampiranSuratMasuk;
                 $lampiran->create([
                     "surat_masuk_id"    => $surat->id,
                     "file_lampiran_url" => $path_lampiran
