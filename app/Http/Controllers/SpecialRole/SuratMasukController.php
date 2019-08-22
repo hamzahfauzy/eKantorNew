@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Model\Reference\Employee;
-use App\Model\Surat\{SuratMasuk,Disposisi,ArsipSurat};
+use App\Model\Surat\{SuratMasuk,Disposisi,ArsipSurat,LampiranSuratMasuk};
 use App\Model\Surat\HistoriSuratMasuk;
 use App\Model\{Notification, Setting};
 
@@ -111,6 +111,20 @@ class SuratMasukController extends Controller
             'pegawai_id' => auth()->user()->employee->id,
         ]);
 
+        if(!empty($request->file('file_lampiran')))
+        {
+            $files = $request->file('file_lampiran');
+            foreach($files as $file)
+            {
+                $path = $file->store('public/lampiran_surat_masuk');
+                $lampiran = new LampiranSuratMasuk;
+                $lampiran->create([
+                    "surat_masuk_id"    => $surat->id,
+                    "file_lampiran_url" => $path
+                ]);
+            }
+        }
+
         $histori = new HistoriSuratMasuk;
         $histori->create([
             'surat_masuk_id' => $surat->id,
@@ -196,6 +210,20 @@ class SuratMasukController extends Controller
             $this->model->find($request->id)->update([
                 'file_url_surat' => $path,
             ]);
+        }
+
+        if(!empty($request->file('file_lampiran')))
+        {
+            LampiranSuratMasuk::where('surat_masuk_id',$request->id)->delete();
+            $files = $request->file('file_lampiran');
+            foreach($files as $file)
+            {
+                $path_lampiran = $file->store('public/lampiran_surat_masuk');
+                $lampiran->create([
+                    "surat_masuk_id"    => $surat->id,
+                    "file_lampiran_url" => $path_lampiran
+                ]);
+            }
         }
 
         $this->model->find($request->id)->update([

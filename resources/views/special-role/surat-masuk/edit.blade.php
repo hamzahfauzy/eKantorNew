@@ -177,6 +177,15 @@
                                         </span>
                                     @endif
                                 </div>
+                                <div class="form-group form-float">
+                                    <label>File Lampiran (Multiple File) (*Kosongkan jika tidak diubah)</label>
+                                    <input type="file" name="file_lampiran[]" class="form-control" style="height: auto;" multiple="">
+                                    @if ($errors->has('file_lampiran'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('file_lampiran') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
                                 <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
                             </form>
                         </div>

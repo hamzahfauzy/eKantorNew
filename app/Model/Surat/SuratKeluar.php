@@ -8,7 +8,7 @@ use App\Model\Reference\{Employee, SubGroup};
 class SuratKeluar extends Model
 {
     //
-    protected $fillable = ['no_surat','tanggal','sub_group_id','tujuan','perihal','keterangan','file_surat_url','pegawai_id','need_action'];
+    protected $fillable = ['no_surat','tanggal','sub_group_id','tujuan','perihal','keterangan','file_surat_url','pegawai_id','need_action','no_agenda','file_surat_fix_url'];
     protected $dates = ['tanggal','created_at','updated_at'];
 
     public function employee()

@@ -348,7 +348,7 @@
                                                                     <div class="modal-header">
                                                                         <h4 class="modal-title" id="defaultModalLabel">Agenda Surat</h4>
                                                                     </div>
-                                                                    <form id="form_validation" method="POST" onsubmit="no_agenda.value = indeks.value + '/' + kode.value + '/' + index.value" action="{{route('pegawai.surat-keluar.set-agenda')}}">
+                                                                    <form id="form_validation" method="POST" onsubmit="no_agenda.value = indeks.value + '/' + kode.value + '/' + index.value" action="{{route('pegawai.surat-keluar.set-agenda')}}" enctype="multipart/form-data">
                                                                     <div class="modal-body">
                                                                             {{csrf_field()}}
                                                                             <input type="hidden" name="id" value="{{$model->id}}">
@@ -391,6 +391,16 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                            </div>
+                                                                            <div class="form-group form-float">
+                                                                                <br>
+                                                                                <label>File Surat (yang sudah ditanda tangani)</label>
+                                                                                <input type="file" name="file_surat" class="form-control" style="height: auto;">
+                                                                                @if ($errors->has('file_surat'))
+                                                                                    <span class="invalid-feedback" role="alert">
+                                                                                        <strong>{{ $errors->first('file_surat') }}</strong>
+                                                                                    </span>
+                                                                                @endif
                                                                             </div>
                                                                     </div>
                                                                     <div class="modal-footer">

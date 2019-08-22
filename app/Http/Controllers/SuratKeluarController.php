@@ -355,9 +355,21 @@ class SuratKeluarController extends Controller
 
     public function setAgendaSurat(Request $request)
     {
+        $this->validate($request,[
+            'file_surat' => 'required'
+        ]);
         $surat = SuratKeluar::find($request->id);
         $surat->no_agenda = $request->no_agenda;
         $surat->save();
+
+        if(!empty($request->file('file_surat')))
+        {
+            $uploadedFile = $request->file('file_surat');
+            $path = $uploadedFile->store('public/surat_keluar');
+            $surat->update([
+                'file_surat_fix_url' => $path,
+            ]);
+        }
 
         return redirect()->route('pegawai.surat-keluar.index')->with(['success'=>'Surat Berhasil diagendakan']);
     }
