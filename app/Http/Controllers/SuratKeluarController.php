@@ -366,9 +366,8 @@ class SuratKeluarController extends Controller
         {
             $uploadedFile = $request->file('file_surat');
             $path = $uploadedFile->store('public/surat_keluar');
-            $surat->update([
-                'file_surat_fix_url' => $path,
-            ]);
+            $surat->file_surat_fix_url = $path;
+            $surat->save();
         }
 
         return redirect()->route('pegawai.surat-keluar.index')->with(['success'=>'Surat Berhasil diagendakan']);
