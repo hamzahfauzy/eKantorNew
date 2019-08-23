@@ -4,9 +4,15 @@ namespace App\Http\Controllers\Reference;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Reference\Program;
 
 class ProgramController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->model = new Program;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +21,9 @@ class ProgramController extends Controller
     public function index()
     {
         //
+        return view('reference.program.index',[
+            'program' => $this->model->get()
+        ]);
     }
 
     /**
@@ -25,6 +34,7 @@ class ProgramController extends Controller
     public function create()
     {
         //
+        return view('reference.program.create');
     }
 
     /**
@@ -36,6 +46,17 @@ class ProgramController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request,[
+            'kd_program' => 'required|unique:programs',
+            'nama' => 'required|unique:programs',
+        ]);
+
+        $this->model->create([
+            'kd_program' => $request->kd_program,
+            'nama' => $request->nama,
+        ]);
+
+        return redirect()->route('reference.program.index')->with(['success'=>'Data berhasil disimpan']);
     }
 
     /**
@@ -55,9 +76,10 @@ class ProgramController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Program $program)
     {
         //
+        return view('reference.program.edit')->with('program',$program);
     }
 
     /**
@@ -67,9 +89,20 @@ class ProgramController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $this->validate($request,[
+            'kd_program' => 'required|unique:programs,kd_program,'.$request->id.',id,kd_program,'.$request->kd_program,
+            'nama' => 'required|unique:programs,nama,'.$request->id.',id,nama,'.$request->nama,
+        ]);
+
+        $this->model->find($request->id)->update([
+            'kd_program' => $request->kd_program,
+            'nama' => $request->nama,
+        ]);
+
+        return redirect()->route('reference.program.index')->with(['success'=>'Data berhasil diupdate']);;
     }
 
     /**
@@ -81,5 +114,7 @@ class ProgramController extends Controller
     public function destroy($id)
     {
         //
+        $this->model->find($request->id)->delete();
+        return redirect()->route('reference.program.index')->with(['success'=>'Data berhasil dihapus']);;
     }
 }

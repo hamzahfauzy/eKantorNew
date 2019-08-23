@@ -4,9 +4,15 @@ namespace App\Http\Controllers\Reference;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Reference\{Program,Kegiatan};
 
 class KegiatanController extends Controller
 {
+    public function __construct()
+    {
+        $this->model = new Kegiatan;
+        $this->program = Program::get();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +21,7 @@ class KegiatanController extends Controller
     public function index()
     {
         //
+        return view('reference.kegiatan.index')->with('kegiatan',$this->model->orderby('kd_kegiatan')->get());
     }
 
     /**
@@ -25,6 +32,9 @@ class KegiatanController extends Controller
     public function create()
     {
         //
+        return view('reference.kegiatan.create',[
+            'programs' => $this->program
+        ]);
     }
 
     /**
@@ -36,6 +46,21 @@ class KegiatanController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request,[
+            'nama' => 'required|unique:kegiatans,nama,'.$request->nama.',nama,program_id,'.$request->program_id.',kd_kegiatan,'.$request->kd_kegiatan,
+            'program_id' => 'required|unique:kegiatans,program_id,'.$request->nama.',nama,program_id,'.$request->program_id.',kd_kegiatan,'.$request->kd_kegiatan,
+            'kd_kegiatan' => 'required|unique:kegiatans,kd_kegiatan,'.$request->nama.',nama,program_id,'.$request->program_id.',kd_kegiatan,'.$request->kd_kegiatan,
+            'pagu_kegiatan' => 'required',
+        ]);
+
+        $this->model->create([
+            'nama' => $request->nama,
+            'program_id' => $request->program_id,
+            'kd_kegiatan' => $request->kd_kegiatan,
+            'pagu_kegiatan' => $request->pagu_kegiatan
+        ]);
+
+        return redirect()->route('reference.kegiatan.index')->with(['success'=>'Data berhasil disimpan']);
     }
 
     /**
@@ -44,9 +69,10 @@ class KegiatanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Kegiatan $kegiatan)
     {
         //
+        return view('reference.kegiatan.show')->with('kegiatan',$kegiatan); 
     }
 
     /**
@@ -55,9 +81,13 @@ class KegiatanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Kegiatan $kegiatan)
     {
         //
+        return view('reference.kegiatan.edit',[
+            'programs' => $this->program,
+            'model' => $kegiatan
+        ]);
     }
 
     /**
@@ -67,9 +97,24 @@ class KegiatanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $this->validate($request,[
+            'nama' => 'required|unique:kegiatans,nama,'.$request->id.',id,nama,'.$request->nama.',program_id,'.$request->program_id.',kd_kegiatan,'.$request->kd_kegiatan,
+            'program_id' => 'required|unique:kegiatans,program_id,'.$request->id.',id,nama,'.$request->nama.',program_id,'.$request->program_id.',kd_kegiatan,'.$request->kd_kegiatan,
+            'kd_kegiatan' => 'required|unique:kegiatans,kd_kegiatan,'.$request->id.',id,nama,'.$request->nama.',program_id,'.$request->program_id.',kd_kegiatan,'.$request->kd_kegiatan,
+            'pagu_kegiatan' => 'required',
+        ]);
+
+        $this->model->find($request->id)->update([
+            'nama' => $request->nama,
+            'program_id' => $request->program_id,
+            'kd_kegiatan' => $request->kd_kegiatan,
+            'pagu_kegiatan' => $request->pagu_kegiatan
+        ]);
+
+        return redirect()->route('reference.kegiatan.index')->with(['success'=>'Data berhasil diupdate']);;
     }
 
     /**
@@ -78,8 +123,10 @@ class KegiatanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $this->model->find($request->id)->delete();
+        return redirect()->route('reference.kegiatan.index')->with(['success'=>'Data berhasil dihapus']);;
     }
 }

@@ -78,11 +78,13 @@
                                     Kegiatan
                                 </a>
                             </li>
+                            {{--
                             <li class="@yield('rekening-active')">
                                 <a href="{{route('reference.rekening.index')}}">
                                     Rekening
                                 </a>
                             </li>
+                            --}}
                         </ul>
                     </li>
                     <!-- <li class="@yield('user-active')">
