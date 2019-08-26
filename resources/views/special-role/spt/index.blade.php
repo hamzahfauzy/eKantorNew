@@ -1,10 +1,11 @@
 @extends('bsbmtemplate.admin-template')
-@section('transportasi-active','active')
+@section('spt-sppd-active','active')
+@section('spt-active','active')
 @section('content')
 		<div class="container-fluid">
             <div class="block-header">
                 <h2>
-                    Data Transportasi
+                    Data SPT
                 </h2>
             </div>
             <!-- Basic Examples -->
@@ -13,10 +14,10 @@
                     <div class="card">
                         <div class="header">
                             <h2 class="pull-left">
-                                List Data Transportasi
+                                List Data SPT
                             </h2>
                             <div class="pull-right">
-                                <a href="{{route('reference.transportasi.create')}}" class="btn btn-primary waves-effect">
+                                <a href="{{$spt_add_url=route('pegawai.spt-role.create')}}" class="btn btn-primary waves-effect">
                                     <i class="material-icons">add</i> 
                                     <span>TAMBAH DATA</span>
                                 </a>
@@ -36,8 +37,7 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Nama</th>
-                                            <th>Status Maskapai</th>
+                                            <th>No SPT</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -45,29 +45,27 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Nama</th>
-                                            <th>Status Maskapai</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         {{'',$no=1}}
-                                        @foreach($transportation as $model)
+                                        @foreach($spt as $model)
                                         <tr>
                                             <td>{{$no++}}</td>
-                                            <th>{{$model->nama}}</th>
-                                            <td>{{$model->status_maskapai}}</td>
+                                            <th>{{$model->no_spt}}</th>
                                             <td>
-                                            	<a href="{{route('reference.transportasi.edit',$model->id)}}" class="btn btn-warning waves-effect">
+                                            	<a href="{{route('pegawai.spt-role.edit',$model->id)}}" class="btn btn-warning waves-effect">
 				                                    <i class="material-icons">create</i>
 				                                    <span>Edit</span>
 				                                </a>
 
-				                                <a href="{{route('reference.transportasi.delete')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();deleteAlert({{$model->id}})">
+				                                <a href="{{route('pegawai.spt-role.delete')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();deleteAlert({{$model->id}})">
 				                                    <i class="material-icons">delete</i>
 				                                    <span>Hapus</span>
 				                                </a>
 
-				                                <form id="form-delete-{{$model->id}}" style="display: none;" method="post" action="{{route('reference.transportasi.delete')}}">
+				                                <form id="form-delete-{{$model->id}}" style="display: none;" method="post" action="{{route('pegawai.spt-role.delete')}}">
 				                                	{{csrf_field()}}
 				                                	<input type="hidden" name="_method" value="DELETE">
 				                                	<input type="hidden" name="id" value="{{$model->id}}">

@@ -47,7 +47,7 @@ class TransportationController extends Controller
         //
         $this->validate($request,[
             'nama' => 'required|unique:transportations',
-            'status_maskapai' => 'required|unique:transportations',
+            'status_maskapai' => 'required',
         ]);
 
         $this->model->create([
