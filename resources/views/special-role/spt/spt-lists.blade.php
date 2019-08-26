@@ -17,7 +17,7 @@
                                 List Data SPT
                             </h2>
                             <div class="pull-right">
-                                <a href="{{$spt_add_url=route('pegawai.spt-role.create')}}" class="btn btn-primary waves-effect">
+                                <a href="{{$spt_add_url=route('pegawai.spt.create')}}" class="btn btn-primary waves-effect">
                                     <i class="material-icons">add</i> 
                                     <span>TAMBAH DATA</span>
                                 </a>
@@ -38,6 +38,9 @@
                                         <tr>
                                             <th>#</th>
                                             <th>No SPT</th>
+                                            <th>Tujuan</th>
+                                            <th>Selama</th>
+                                            <th>Tanggal</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -45,6 +48,9 @@
                                         <tr>
                                             <th>#</th>
                                             <th>No SPT</th>
+                                            <th>Tujuan</th>
+                                            <th>Selama</th>
+                                            <th>Tanggal</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
@@ -53,19 +59,32 @@
                                         @foreach($spt as $model)
                                         <tr>
                                             <td>{{$no++}}</td>
-                                            <th>{{$model->no_spt}}</th>
+                                            <td>{{$model->no_spt}}</td>
+                                            <td>{{$model->tempat_tujuan}}</td>
+                                            <td>{{$model->lama_waktu}}</td>
+                                            <td>{{$model->tanggal_awal->format('d-m-Y')}} sampai {{$model->tanggal_akhir->format('d-m-Y')}}</td>
                                             <td>
-                                            	<a href="{{route('pegawai.spt-role.edit',$model->id)}}" class="btn btn-warning waves-effect">
+                                                <a href="{{route('pegawai.spt.cetak',$model->id)}}" class="btn btn-secondary waves-effect">
+				                                    <i class="material-icons">print</i>
+				                                    <span>Cetak</span>
+				                                </a>
+
+                                                <a href="{{route('pegawai.spt.show',$model->id)}}" class="btn btn-primary waves-effect">
+				                                    <i class="material-icons">visibility</i>
+				                                    <span>Lihat</span>
+				                                </a>
+                                                
+                                                <a href="{{route('pegawai.spt.edit',$model->id)}}" class="btn btn-warning waves-effect">
 				                                    <i class="material-icons">create</i>
 				                                    <span>Edit</span>
 				                                </a>
 
-				                                <a href="{{route('pegawai.spt-role.delete')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();deleteAlert({{$model->id}})">
+				                                <a href="{{route('pegawai.spt.delete')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();deleteAlert({{$model->id}})">
 				                                    <i class="material-icons">delete</i>
 				                                    <span>Hapus</span>
 				                                </a>
 
-				                                <form id="form-delete-{{$model->id}}" style="display: none;" method="post" action="{{route('pegawai.spt-role.delete')}}">
+				                                <form id="form-delete-{{$model->id}}" style="display: none;" method="post" action="{{route('pegawai.spt.delete')}}">
 				                                	{{csrf_field()}}
 				                                	<input type="hidden" name="_method" value="DELETE">
 				                                	<input type="hidden" name="id" value="{{$model->id}}">

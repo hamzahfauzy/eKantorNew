@@ -3,6 +3,7 @@
 namespace App\Model\Surat;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Model\Reference\Employee;
 
 class SptList extends Model
 {
@@ -13,6 +14,11 @@ class SptList extends Model
     function employees()
     {
         return $this->hasMany(SptEmployee::class,'spt_id','id');
+    }
+
+    function pimpinan()
+    {
+        return $this->hasOne(Employee::class,'id','pimpinan_id');
     }
 
     function sppds()
