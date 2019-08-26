@@ -87,12 +87,36 @@
                             --}}
                         </ul>
                     </li>
-                    <!-- <li class="@yield('user-active')">
-                        <a href="{{route('users.index')}}">
-                            <i class="material-icons">supervisor_account</i>
-                            <span>Users</span>
+                    <li class="@yield('spt-sppd-active')">
+                            <a href="javascript:void(0);" class="menu-toggle">
+                                <i class="material-icons">dvr</i>
+                                <span>SPT & SPPD</span>
+                            </a>
+                            <ul class="ml-menu">
+                                <li class="@yield('spt-active')">
+                                    <a href="#">
+                                        SPT
+                                    </a>
+                                </li>
+                                <li class="@yield('sppd-active')">
+                                    <a href="#">
+                                        SPPD
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    <li class="@yield('wilayah-active')">
+                        <a href="{{route('reference.wilayah.index')}}">
+                            <i class="material-icons">flight_takeoff</i>
+                            <span>Wilayah Tujuan</span>
                         </a>
-                    </li> -->
+                    </li>
+                    <li class="@yield('transportasi-active')">
+                        <a href="{{route('reference.transportasi.index')}}">
+                            <i class="material-icons">motorcycle</i>
+                            <span>Transportasi</span>
+                        </a>
+                    </li>
                     <li class="@yield('setting-active')">
                         <a href="{{route('setting.index')}}">
                             <i class="material-icons">build</i>
@@ -118,7 +142,9 @@
                                     </a>
                                 </li>
                                 @endif
+                                {{'',$spt_url = route('pegawai.spt.index')}}
                                 @if((auth()->user()->employee->inSpecialRoleUser() && !auth()->user()->employee->isPimpinan()) || auth()->user()->employee->kepala_group_special_role())
+                                {{'',$spt_url = route('pegawai.spt.index')}}
                                 <li class="@yield('surat-masuk-active')">
                                     <a href="{{route('pegawai.surat-masuk.index')}}">
                                         Surat Masuk
@@ -139,7 +165,7 @@
                             </a>
                             <ul class="ml-menu">
                                 <li class="@yield('spt-active')">
-                                    <a href="#">
+                                    <a href="{{$spt_url}}">
                                         SPT
                                     </a>
                                 </li>

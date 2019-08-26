@@ -64,7 +64,7 @@
                                 <div class="form-group form-float">
                                     {{'',$old_group = old('group_special_role_id') ? old('group_special_role_id') : $model->group_special_role_id}}
                                     <label>Group Special Role</label>
-                                    <select class="form-control show-tick" name="group_special_role_id" required="" data-live-search="true">
+                                    <select class="form-control show-tick group_special_role" name="group_special_role_id" required="" data-live-search="true">
                                         @foreach($groups as $group)
                                             @foreach($group->subGroups as $data)
                                             <option value="{{$data->id}}" {{$old_group == $data->id ? 'selected=""' : '' }}>{{$data->nama}}</option>
@@ -80,7 +80,7 @@
                                 <div class="form-group form-float">
                                     {{'',$old_group_user_id = old('group_special_role_user_id') ? old('group_special_role_user_id') : $model->group_special_role_user_id}}
                                     <label>Group Special Role User</label>
-                                    <select class="form-control show-tick" name="group_special_role_user_id" data-live-search="true">
+                                    <select class="form-control user_special_role show-tick" name="group_special_role_user_id" data-live-search="true">
                                         @if($model->special)
                                         @foreach($model->special->subGroupStaffs as $data)
                                         <option value="{{$data->pegawai_id}}" {{$old_group_user_id == $data->pegawai_id ? 'selected=""' : '' }}>{{$data->employee->nama}}</option>
@@ -120,4 +120,10 @@
 
 <!-- Dropzone Plugin Js -->
 <script src="{{asset('template/bsbm/plugins/dropzone/dropzone.js')}}"></script>
+
+<script>
+$(".group_special_role").change(function(){
+    
+})
+</script>
 @endsection

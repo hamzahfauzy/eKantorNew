@@ -1,0 +1,2 @@
+@extends('bsbmtemplate.admin-template')
+

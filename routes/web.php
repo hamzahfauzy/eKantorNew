@@ -106,6 +106,24 @@ Route::middleware('auth')->group(function(){
 				Route::put('update','RekeningController@update')->name('reference.rekening.update');
 				Route::delete('delete','RekeningController@destroy')->name('reference.rekening.delete');
 			});
+
+			Route::prefix('wilayah')->group(function(){
+				Route::get('/','WilayahController@index')->name('reference.wilayah.index');
+				Route::get('create','WilayahController@create')->name('reference.wilayah.create');
+				Route::get('edit/{wilayah}','WilayahController@edit')->name('reference.wilayah.edit');
+				Route::post('insert','WilayahController@store')->name('reference.wilayah.insert');
+				Route::put('update','WilayahController@update')->name('reference.wilayah.update');
+				Route::delete('delete','WilayahController@destroy')->name('reference.wilayah.delete');
+			});
+
+			Route::prefix('transportation')->group(function(){
+				Route::get('/','TransportationController@index')->name('reference.transportasi.index');
+				Route::get('create','TransportationController@create')->name('reference.transportasi.create');
+				Route::get('edit/{transportation}','TransportationController@edit')->name('reference.transportasi.edit');
+				Route::post('insert','TransportationController@store')->name('reference.transportasi.insert');
+				Route::put('update','TransportationController@update')->name('reference.transportasi.update');
+				Route::delete('delete','TransportationController@destroy')->name('reference.transportasi.delete');
+			});
 		});
 
 		Route::prefix('users')->group(function(){
@@ -140,6 +158,19 @@ Route::middleware('auth')->group(function(){
 			Route::delete('delete','SuratKeluarController@destroy')->name('pegawai.surat-keluar.delete');
 		});
 
+		Route::prefix('spt')->group(function(){
+			Route::get('/','SptController@index')->name('pegawai.spt.index');
+			Route::get('create','SptController@create')->name('pegawai.spt.create');
+			Route::get('edit/{spt}','SptController@edit')->name('pegawai.spt.edit');
+			Route::get('show/{spt}','SptController@show')->name('pegawai.spt.show');
+			Route::get('show/{spt}/sppd','SptController@sppd')->name('pegawai.spt.sppd');
+			Route::get('show/{spt}/sppd/cetak','SptController@sppdCetak')->name('pegawai.spt.sppd-cetak');
+			Route::get('cetak/{spt}','SptController@cetak')->name('pegawai.spt.cetak');
+			Route::post('insert','SptController@store')->name('pegawai.spt.insert');
+			Route::put('update','SptController@update')->name('pegawai.spt.update');
+			Route::delete('delete','SptController@destroy')->name('pegawai.spt.delete');
+		});
+
 		Route::middleware('specialRoleUser')->group(function(){
 			Route::prefix('surat-masuk')->namespace('SpecialRole')->group(function(){
 				Route::get('/','SuratMasukController@index')->name('pegawai.surat-masuk.index');
@@ -153,6 +184,20 @@ Route::middleware('auth')->group(function(){
 				Route::put('update','SuratMasukController@update')->name('pegawai.surat-masuk.update');
 				Route::delete('delete','SuratMasukController@destroy')->name('pegawai.surat-masuk.delete');
 			});
+
+			Route::prefix('spt-role')->namespace('SpecialRole')->group(function(){
+				Route::get('/','SptController@index')->name('pegawai.spt-role.index');
+				Route::get('create','SptController@create')->name('pegawai.spt-role.create');
+				Route::get('edit/{spt}','SptController@edit')->name('pegawai.spt-role.edit');
+				Route::get('show/{spt}','SptController@show')->name('pegawai.spt-role.show');
+				Route::get('show/{spt}/sppd','SptController@sppd')->name('pegawai.spt-role.sppd');
+				Route::get('show/{spt}/sppd/cetak','SptController@sppdCetak')->name('pegawai.spt-role.sppd-cetak');
+				Route::get('cetak/{spt}','SptController@cetak')->name('pegawai.spt-role.cetak');
+				Route::post('insert','SptController@store')->name('pegawai.spt-role.insert');
+				Route::put('update','SptController@update')->name('pegawai.spt-role.update');
+				Route::delete('delete','SptController@destroy')->name('pegawai.spt-role.delete');
+			});
+
 		});
 
 		Route::middleware('pimpinan')->group(function(){
