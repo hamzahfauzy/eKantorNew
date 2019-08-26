@@ -63,26 +63,68 @@
                                         </center>
                                         <p>Kepada :</p>
                                         <table class="table">
+                                        @foreach($spt->employees as $key => $employee)
                                         <tr>
-                                            <td rowspan="4">1</td>
+                                            <td rowspan="4">{{++$key}}</td>
                                             <td>Nama</td>
                                             <td>:</td>
-                                            <td>{{$spt->pimpinan->nama}}</td>
+                                            <td>{{$employee->employee->nama}}</td>
                                         </tr>
                                         <tr>
                                             <td>NIP</td>
                                             <td>:</td>
-                                            <td>{{$spt->pimpinan->NIP}}</td>
+                                            <td>{{$employee->employee->NIP}}</td>
                                         </tr>
                                         <tr>
                                             <td>Pangkat/Gol. Ruang</td>
                                             <td>:</td>
-                                            <td>{{$spt->pimpinan->golongan->nama}} / {{$spt->pimpinan->golongan->pangkat}}</td>
+                                            <td>{{$employee->employee->golongan->nama}} / {{$employee->employee->golongan->pangkat}}</td>
                                         </tr>
                                         <tr>
                                             <td>Jabatan</td>
                                             <td>:</td>
+                                            <td>{{$employee->employee->jabatan}}</td>
+                                        </tr>
+                                        @endforeach
+                                        </table>
+
+                                        <p>Untuk :</p>
+                                        <table class="table">
+                                        <tr>
+                                            <td>1</td>
+                                            <td>{{$spt->dasar1}}</td>
+                                        </tr>
+                                        @if($spt->dasar2 && $spt->dasar2 != '-')
+                                        <tr>
+                                            <td>2</td>
+                                            <td>{{$spt->dasar2}}</td>
+                                        </tr>
+                                        @endif
+
+                                        @if($spt->dasar3 && $spt->dasar3 != '-')
+                                        <tr>
+                                            <td>3</td>
+                                            <td>{{$spt->dasar3}}</td>
+                                        </tr>
+                                        @endif
+                                        </table>
+
+                                        <p>Demikian surat tugas ini dibuat untuk dilaksanakan sebagaimana mestinya.</p>
+
+                                        <table width="30%" align="right">
+                                        <tr>
                                             <td>{{$spt->pimpinan->jabatan}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            <br><br><br><br>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>{{$spt->pimpinan->nama}}</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td>NIP. {{$spt->pimpinan->NIP}}</td>
                                         </tr>
                                         </table>
                                     </div>
