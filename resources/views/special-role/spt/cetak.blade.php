@@ -49,7 +49,7 @@
                                         @if($spt->dasar3 && $spt->dasar3 != '-')
                                         <p>{{$spt->dasar3}}</p>
                                         @endif
-
+                                        
                                         <table class="table">
                                         <tr>
                                             <td>Nama</td>
@@ -91,6 +91,17 @@
                                             <td>Jabatan</td>
                                             <td>:</td>
                                             <td>{{$employee->employee->jabatan}}</td>
+                                        </tr>
+                                        @endforeach
+                                        </table>
+
+                                        <p>Untuk :</p>
+                                        <?php $maksud_tujuan = explode("\n",$spt->maksud_tujuan);?>
+                                        <table class="table">
+                                        @foreach($maksud_tujuan as $key => $text)
+                                        <tr>
+                                            <td width="5%">{{++$key}}</td>
+                                            <td>{!! $text !!}</td>
                                         </tr>
                                         @endforeach
                                         </table>

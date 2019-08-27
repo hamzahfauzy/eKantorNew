@@ -115,9 +115,18 @@ class SptController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(SptList $spt)
     {
         //
+        $sptNumber = SptNumber::get();
+        $wilayah = WilayahTujuan::get();
+        $employees = Employee::get();
+        return view('special-role.spt.edit-spt',[
+            'sptModel' => $spt,
+            'spt' => $sptNumber,
+            'wilayah' => $wilayah,
+            'employees' => $employees,
+        ]);
     }
 
     /**
@@ -127,9 +136,26 @@ class SptController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+
+        $this->model->find($request->id)->update([
+            'no_spt' => $request->no_spt,
+            'pimpinan_id' => $request->pimpinan_id,
+            'wilayah_id' => $request->wilayah_id,
+            'tanggal' => $request->tanggal,
+            'lama_waktu' => $request->lama_waktu,
+            'tanggal_awal' => $request->tanggal_awal,
+            'tanggal_akhir' => $request->tanggal_akhir,
+            'tempat_tujuan' => $request->tempat_tujuan,
+            'maksud_tujuan' => $request->maksud_tujuan,
+            'dasar1' => $request->dasar1,
+            'dasar2' => $request->dasar2,
+            'dasar3' => $request->dasar3,
+        ]);
+
+        return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil diupdate']);
     }
 
     /**

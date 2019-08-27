@@ -16,12 +16,6 @@
                             <h2 class="pull-left">
                                 List Data SPT
                             </h2>
-                            <div class="pull-right">
-                                <a href="{{$spt_add_url=route('pegawai.spt.create')}}" class="btn btn-primary waves-effect">
-                                    <i class="material-icons">add</i> 
-                                    <span>TAMBAH DATA</span>
-                                </a>
-                            </div>
                         	<div class="clearfix"></div>
                         </div>
                         <div class="body">
@@ -73,22 +67,6 @@
 				                                    <i class="material-icons">visibility</i>
 				                                    <span>Lihat</span>
 				                                </a>
-                                                
-                                                <a href="{{route('pegawai.spt.edit',$model->id)}}" class="btn btn-warning waves-effect">
-				                                    <i class="material-icons">create</i>
-				                                    <span>Edit</span>
-				                                </a>
-
-				                                <a href="{{route('pegawai.spt.delete')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();deleteAlert({{$model->id}})">
-				                                    <i class="material-icons">delete</i>
-				                                    <span>Hapus</span>
-				                                </a>
-
-				                                <form id="form-delete-{{$model->id}}" style="display: none;" method="post" action="{{route('pegawai.spt.delete')}}">
-				                                	{{csrf_field()}}
-				                                	<input type="hidden" name="_method" value="DELETE">
-				                                	<input type="hidden" name="id" value="{{$model->id}}">
-				                                </form>
                                             </td>
                                         </tr>
                                         @endforeach

@@ -38,6 +38,9 @@
                                         <tr>
                                             <th>#</th>
                                             <th>No SPT</th>
+                                            <th>Tujuan</th>
+                                            <th>Selama</th>
+                                            <th>Tanggal</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -45,6 +48,9 @@
                                         <tr>
                                             <th>#</th>
                                             <th>No SPT</th>
+                                            <th>Tujuan</th>
+                                            <th>Selama</th>
+                                            <th>Tanggal</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
@@ -53,9 +59,22 @@
                                         @foreach($spt as $model)
                                         <tr>
                                             <td>{{$no++}}</td>
-                                            <th>{{$model->no_spt}}</th>
+                                            <td>{{$model->no_spt}}</td>
+                                            <td>{{$model->tempat_tujuan}}</td>
+                                            <td>{{$model->lama_waktu}}</td>
+                                            <td>{{$model->tanggal_awal->format('d-m-Y')}} sampai {{$model->tanggal_akhir->format('d-m-Y')}}</td>
                                             <td>
-                                            	<a href="{{route('pegawai.spt-role.edit',$model->id)}}" class="btn btn-warning waves-effect">
+                                                <a href="{{route('pegawai.spt-role.cetak',$model->id)}}" class="btn btn-secondary waves-effect">
+				                                    <i class="material-icons">print</i>
+				                                    <span>Cetak</span>
+				                                </a>
+
+                                                <a href="{{route('pegawai.spt-role.show',$model->id)}}" class="btn btn-primary waves-effect">
+				                                    <i class="material-icons">visibility</i>
+				                                    <span>Lihat</span>
+				                                </a>
+                                                
+                                                <a href="{{route('pegawai.spt-role.edit',$model->id)}}" class="btn btn-warning waves-effect">
 				                                    <i class="material-icons">create</i>
 				                                    <span>Edit</span>
 				                                </a>

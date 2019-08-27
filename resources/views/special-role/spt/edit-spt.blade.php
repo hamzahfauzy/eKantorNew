@@ -13,16 +13,21 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
-                            <h2>Tambah SPT</h2>
+                            <h2>Edit SPT</h2>
                         </div>
                         <div class="body">
-                            <form id="form_validation" method="POST" action="{{route('pegawai.spt-role.insert')}}">
+                            <form id="form_validation" method="POST" action="{{route('pegawai.spt.update')}}">
                             	{{csrf_field()}}
+                                {{csrf_field()}}
+                                <input type="hidden" name="_method" value="PUT">
+                                <input type="hidden" name="id" value="{{$sptModel->id}}">
                                 <div class="form-group form-float">
-                                    <div class="form-line">
-                                        <input type="text" class="form-control" name="no_spt" required value="{{old('no_spt')}}">
-                                        <label class="form-label">No SPT</label>
-                                    </div>
+                                    <select class="form-control show-tick" name="no_spt" required="" data-live-search="true">
+                                        <option value="">Pilih SPT</option>
+                                        @foreach($spt as $model)
+                                        <option value="{{$model->no_spt}}" {{$sptModel->no_spt == $model->no_spt ? 'selected=""' : '' }}>{{$model->no_spt}}</option>
+                                        @endforeach
+                                    </select>
                                     @if ($errors->has('no_spt'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('no_spt') }}</strong>
@@ -33,7 +38,7 @@
                                     <select class="form-control show-tick" name="wilayah_id" required="" data-live-search="true">
                                         <option value="">Pilih Wilayah Tujuan</option>
                                         @foreach($wilayah as $model)
-                                        <option value="{{$model->id}}" {{old('wilayah_id') == $model->id ? 'selected=""' : '' }}>{{$model->kode}}. {{$model->keterangan}}</option>
+                                        <option value="{{$model->id}}" {{$sptModel->wilayah_id == $model->id ? 'selected=""' : '' }}>{{$model->kode}}. {{$model->keterangan}}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('wilayah_id'))
@@ -46,19 +51,19 @@
                                     <select class="form-control show-tick" name="pimpinan_id" required="" data-live-search="true">
                                         <option value="">Yang Menugaskan</option>
                                         @foreach($employees as $model)
-                                        <option value="{{$model->id}}" {{old('pimpinan_id') == $model->id ? 'selected=""' : '' }}>{{$model->nama}}</option>
+                                        <option value="{{$model->id}}" {{$sptModel->pimpinan_id == $model->id ? 'selected=""' : '' }}>{{$model->nama}}</option>
                                         @endforeach
                                     </select>
-                                    @if ($errors->has('pimpinan_id'))
+                                    @if ($errors->has('wilayah_id'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('pimpinan_id') }}</strong>
+                                            <strong>{{ $errors->first('wilayah_id') }}</strong>
                                         </span>
                                     @endif
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <label>Tanggal</label>
-                                        <input type="text" class="datepicker form-control" name="tanggal" placeholder="Tanggal" required="" value="{{old('tanggal')}}">
+                                        <input type="text" class="datepicker form-control" name="tanggal" placeholder="Tanggal" required="" value="{{$sptModel->tanggal}}">
                                     </div>
                                     @if ($errors->has('tanggal'))
                                         <span class="invalid-feedback" role="alert">
@@ -68,7 +73,7 @@
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
-                                        <input type="text" class="form-control" name="lama_waktu" required value="{{old('lama_waktu')}}">
+                                        <input type="text" class="form-control" name="lama_waktu" required value="{{$sptModel->lama_waktu}}">
                                         <label class="form-label">Selama (Hari)</label>
                                     </div>
                                     @if ($errors->has('lama_waktu'))
@@ -80,7 +85,7 @@
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <label>Terhitung Sejak</label>
-                                        <input type="text" class="datepicker form-control" name="tanggal_awal" placeholder="Terhitung Sejak" required="" value="{{old('tanggal_awal')}}">
+                                        <input type="text" class="datepicker form-control" name="tanggal_awal" placeholder="Terhitung Sejak" required="" value="{{$sptModel->tanggal_awal}}">
                                     </div>
                                     @if ($errors->has('tanggal_awal'))
                                         <span class="invalid-feedback" role="alert">
@@ -91,7 +96,7 @@
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <label>Sampai Tanggal</label>
-                                        <input type="text" class="form-control" name="tanggal_akhir" placeholder="Sampai" value="{{old('tanggal_akhir')}}" readonly="">
+                                        <input type="text" class="form-control" name="tanggal_akhir" placeholder="Sampai" value="{{$sptModel->tanggal_akhir}}" readonly="">
                                     </div>
                                     @if ($errors->has('tanggal_akhir'))
                                         <span class="invalid-feedback" role="alert">
@@ -101,7 +106,7 @@
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
-                                        <input type="text" class="form-control" name="tempat_tujuan" required value="{{old('tempat_tujuan')}}">
+                                        <input type="text" class="form-control" name="tempat_tujuan" required value="{{$sptModel->tempat_tujuan}}">
                                         <label class="form-label">Tempat Tujuan</label>
                                     </div>
                                     @if ($errors->has('tempat_tujuan'))
@@ -112,7 +117,7 @@
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
-                                        <textarea class="form-control" name="maksud_tujuan" required>{{old('maksud_tujuan')}}</textarea>
+                                        <textarea class="form-control" name="maksud_tujuan" required>{{$sptModel->maksud_tujuan}}</textarea>
                                         <label class="form-label">Maksud Tujuan</label>
                                     </div>
                                     @if ($errors->has('maksud_tujuan'))
@@ -123,7 +128,7 @@
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
-                                        <textarea class="form-control" name="dasar1" required>{{old('dasar1')}}</textarea>
+                                        <textarea class="form-control" name="dasar1" required>{{$sptModel->dasar1}}</textarea>
                                         <label class="form-label">Dasar 1</label>
                                     </div>
                                     @if ($errors->has('dasar1'))
@@ -134,7 +139,7 @@
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
-                                        <textarea class="form-control" name="dasar2" required>{{old('dasar2')}}</textarea>
+                                        <textarea class="form-control" name="dasar2" required>{{$sptModel->dasar2}}</textarea>
                                         <label class="form-label">Dasar 2</label>
                                     </div>
                                     @if ($errors->has('dasar2'))
@@ -145,25 +150,12 @@
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
-                                        <textarea class="form-control" name="dasar3" required>{{old('dasar3')}}</textarea>
+                                        <textarea class="form-control" name="dasar3" required>{{$sptModel->dasar3}}</textarea>
                                         <label class="form-label">Dasar 3</label>
                                     </div>
                                     @if ($errors->has('dasar3'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('dasar3') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group form-float">
-                                    <select class="form-control show-tick" name="pengikut[]" required="" data-live-search="true" multiple="">
-                                        <option value="">Pengikut</option>
-                                        @foreach($employees as $model)
-                                        <option value="{{$model->id}}" {{ old('pengikut') && in_array($model->id, old('pengikut')) ? 'selected=""' : '' }}>{{$model->nama}}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('pengikut'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('pengikut') }}</strong>
                                         </span>
                                     @endif
                                 </div>
