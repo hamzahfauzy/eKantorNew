@@ -119,7 +119,7 @@ class SptController extends Controller
         $employees = Employee::get();
         $sptEmployee = [];
         foreach($spt->employees as $employee)
-            $sptEmployee[] = $employee->id;
+            $sptEmployee[] = $employee->employee_id;
         return view('special-role.spt.edit',[
             'sptModel' => $spt,
             'wilayah' => $wilayah,

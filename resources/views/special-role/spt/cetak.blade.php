@@ -85,7 +85,7 @@
                                         <tr>
                                             <td>Pangkat/Gol. Ruang</td>
                                             <td>:</td>
-                                            <td>{{$employee->employee->golongan->nama}} / {{$employee->employee->golongan->pangkat}}</td>
+                                            <td>{{$employee->employee->golongan->nama}} ({{$employee->employee->golongan->pangkat}})</td>
                                         </tr>
                                         <tr>
                                             <td>Jabatan</td>
@@ -108,6 +108,7 @@
 
                                         <p>Demikian surat tugas ini dibuat untuk dilaksanakan sebagaimana mestinya.</p>
 
+                                        <br>
                                         <table width="30%" align="right">
                                         <tr>
                                             <td>{{$spt->pimpinan->jabatan}}</td>

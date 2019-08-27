@@ -62,7 +62,7 @@
                                             <td>{{$model->no_spt}}</td>
                                             <td>{{$model->tempat_tujuan}}</td>
                                             <td>{{$model->lama_waktu}}</td>
-                                            <td>{{$model->tanggal_awal->format('d-m-Y')}} sampai {{$model->tanggal_akhir->format('d-m-Y')}}</td>
+                                            <td>{{$model->tanggal_awal->format('d-m-Y')}} s/d {{$model->tanggal_akhir->format('d-m-Y')}}</td>
                                             <td>
                                                 <a href="{{route('pegawai.spt-role.cetak',$model->id)}}" class="btn btn-secondary waves-effect">
 				                                    <i class="material-icons">print</i>
