@@ -42,7 +42,14 @@
                                         <br>
                                         </center>
 
-                                        <p>{{$spt->maksud_tujuan}}. dengan ini:</p>
+                                        <p>{{$spt->dasar1}}. @if($spt->dasar2 == "-") dengan ini: @endif</p>
+                                        @if($spt->dasar2 && $spt->dasar2 != '-')
+                                        <p>{{$spt->dasar2}}</p>
+                                        @endif
+                                        @if($spt->dasar3 && $spt->dasar3 != '-')
+                                        <p>{{$spt->dasar3}}</p>
+                                        @endif
+
                                         <table class="table">
                                         <tr>
                                             <td>Nama</td>
@@ -86,27 +93,6 @@
                                             <td>{{$employee->employee->jabatan}}</td>
                                         </tr>
                                         @endforeach
-                                        </table>
-
-                                        <p>Untuk :</p>
-                                        <table class="table">
-                                        <tr>
-                                            <td>1</td>
-                                            <td>{{$spt->dasar1}}</td>
-                                        </tr>
-                                        @if($spt->dasar2 && $spt->dasar2 != '-')
-                                        <tr>
-                                            <td>2</td>
-                                            <td>{{$spt->dasar2}}</td>
-                                        </tr>
-                                        @endif
-
-                                        @if($spt->dasar3 && $spt->dasar3 != '-')
-                                        <tr>
-                                            <td>3</td>
-                                            <td>{{$spt->dasar3}}</td>
-                                        </tr>
-                                        @endif
                                         </table>
 
                                         <p>Demikian surat tugas ini dibuat untuk dilaksanakan sebagaimana mestinya.</p>
