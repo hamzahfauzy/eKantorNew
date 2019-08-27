@@ -60,7 +60,7 @@
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <label>Tanggal</label>
-                                        <input type="text" class="datepicker form-control" name="tanggal" placeholder="Tanggal" required="" value="{{$sptModel->tanggal}}">
+                                        <input type="text" class="datepicker form-control" name="tanggal" placeholder="Tanggal" required="" value="{{$sptModel->tanggal->format('Y-m-d')}}">
                                     </div>
                                     @if ($errors->has('tanggal'))
                                         <span class="invalid-feedback" role="alert">
@@ -82,7 +82,7 @@
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <label>Terhitung Sejak</label>
-                                        <input type="text" class="datepicker form-control" name="tanggal_awal" placeholder="Terhitung Sejak" required="" value="{{$sptModel->tanggal_awal}}">
+                                        <input type="text" class="datepicker form-control" name="tanggal_awal" placeholder="Terhitung Sejak" required="" value="{{$sptModel->tanggal_awal->format('Y-m-d')}}">
                                     </div>
                                     @if ($errors->has('tanggal_awal'))
                                         <span class="invalid-feedback" role="alert">
@@ -93,7 +93,7 @@
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <label>Sampai Tanggal</label>
-                                        <input type="text" class="form-control" name="tanggal_akhir" placeholder="Sampai" value="{{$sptModel->tanggal_akhir}}" readonly="">
+                                        <input type="text" class="form-control" name="tanggal_akhir" placeholder="Sampai" value="{{$sptModel->tanggal_akhir->format('Y-m-d')}}" readonly="">
                                     </div>
                                     @if ($errors->has('tanggal_akhir'))
                                         <span class="invalid-feedback" role="alert">

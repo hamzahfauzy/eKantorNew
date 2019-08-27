@@ -64,12 +64,7 @@
                                             <td>{{$model->lama_waktu}}</td>
                                             <td>{{$model->tanggal_awal->format('d-m-Y')}} s/d {{$model->tanggal_akhir->format('d-m-Y')}}</td>
                                             <td>
-                                                <a href="{{route('pegawai.spt-role.cetak',$model->id)}}" class="btn btn-secondary waves-effect">
-				                                    <i class="material-icons">print</i>
-				                                    <span>Cetak</span>
-				                                </a>
-
-                                                <a href="{{route('pegawai.spt-role.show',$model->id)}}" class="btn btn-primary waves-effect">
+                                                <a href="{{route('pegawai.spt-role.cetak',$model->id)}}" class="btn btn-primary waves-effect">
 				                                    <i class="material-icons">visibility</i>
 				                                    <span>Lihat</span>
 				                                </a>

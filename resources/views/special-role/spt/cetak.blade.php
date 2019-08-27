@@ -42,7 +42,7 @@
                                         <br>
                                         </center>
 
-                                        <p>{{$spt->dasar1}}. @if($spt->dasar2 == "-") dengan ini: @endif</p>
+                                        <p>{{$spt->dasar1}} @if($spt->dasar2 == "-") dengan ini: @endif</p>
                                         @if($spt->dasar2 && $spt->dasar2 != '-')
                                         <p>{{$spt->dasar2}}</p>
                                         @endif
@@ -104,6 +104,10 @@
                                             <td>{!! $text !!}</td>
                                         </tr>
                                         @endforeach
+                                        <tr>
+                                            <td width="5%">{{count($maksud_tujuan)+1}}</td>
+                                            <td>Melaporkan hasilnya kepada Kepala BAPPEDA Kabupaten Asahan</td>
+                                        </tr>
                                         </table>
 
                                         <p>Demikian surat tugas ini dibuat untuk dilaksanakan sebagaimana mestinya.</p>
@@ -111,7 +115,18 @@
                                         <br>
                                         <table width="30%" align="right">
                                         <tr>
-                                            <td>{{$spt->pimpinan->jabatan}}</td>
+                                            <td>Dikeluarkan di Kisaran</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pada Tanggal {{$spt->tanggal->formatLocalized('%d %B %Y')}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <br>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ strtoupper($spt->pimpinan->jabatan) }} KABUPATEN ASAHAN</td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -119,7 +134,10 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><b>{{$spt->pimpinan->nama}}</b></td>
+                                            <td><b>{{strtoupper($spt->pimpinan->nama)}}</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{$spt->pimpinan->golongan->nama}}</td>
                                         </tr>
                                         <tr>
                                             <td>NIP. {{$spt->pimpinan->NIP}}</td>
