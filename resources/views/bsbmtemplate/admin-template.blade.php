@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{env('APP_NAME','eKantor Application')}}</title>
     <!-- Favicon-->
     <link rel="icon" href="{{asset('images/logo.png')}}" type="image/x-icon">

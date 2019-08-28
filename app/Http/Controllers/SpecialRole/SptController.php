@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\SpecialRole;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Model\Surat\{SptList, SptNumber, SptEmployee};
 use App\Model\Reference\{WilayahTujuan, Employee};
@@ -55,7 +56,7 @@ class SptController extends Controller
     {
         //
         $this->validate($request,[
-            'no_spt' => 'required',
+            'no_spt' => 'required|unique:spt_lists',
             'wilayah_id' => 'required',
             'tanggal' => 'required',
             'lama_waktu' => 'required',
@@ -138,6 +139,20 @@ class SptController extends Controller
     public function update(Request $request)
     {
         //
+        $this->validate($request,[
+            'no_spt' => 'required|unique:spt_lists,no_spt,'.$request->id.',id',
+            'wilayah_id' => 'required',
+            'tanggal' => 'required',
+            'lama_waktu' => 'required',
+            'tanggal_awal' => 'required',
+            'tanggal_akhir' => 'required',
+            'tempat_tujuan' => 'required',
+            'maksud_tujuan' => 'required',
+            'dasar1' => 'required',
+            'dasar2' => 'required',
+            'dasar3' => 'required',
+        ]);
+
         $this->model->find($request->id)->update([
             'no_spt' => $request->no_spt,
             'pimpinan_id' => $request->pimpinan_id,
@@ -184,9 +199,52 @@ class SptController extends Controller
     public function cetak(SptList $spt)
     {
         $setting = Setting::first();
+        $employees_query = "SELECT spte.spt_id, e.NIP, e.nama, e.jabatan, g.pangkat, g.nama as nama_golongan FROM `spt_employees` spte, `employees` e, `golongans` g WHERE spte.spt_id = '$spt->id' AND e.id = spte.employee_id AND g.id = e.golongan_id ORDER BY g.pangkat DESC";
+        $employees = DB::select($employees_query);
         return view('special-role.spt.cetak',[
             'spt' => $spt,
+            'employees' => $employees,
             'setting' => $setting
         ]);
+    }
+
+    public function getEmployees(Request $request)
+    {
+        $employeesModel = Employee::get();
+        $existingSpt = SptList::whereBetween('tanggal_awal',[$request->tanggal_awal,$request->tanggal_akhir])->orwhereBetween('tanggal_akhir',[$request->tanggal_awal,$request->tanggal_akhir])->get();
+        $showEmployee = [];
+        if(!empty($existingSpt) && count($existingSpt) > 0)
+        {
+            $existingEmployees = [];
+            foreach($existingSpt as $spt)
+            {
+                foreach($spt->employees as $employee)
+                {
+                    if(isset($request->id) && $spt->id == $request->id)
+                        continue;
+
+                    $existingEmployees[] = $employee->employee_id;
+                }
+            }
+
+            foreach($employeesModel as $employee)
+                if(!in_array($employee->id,$existingEmployees))
+                    $showEmployee[] = $employee;
+        }
+        else
+        {
+            foreach($employeesModel as $employee)
+                $showEmployee[] = $employee;
+        }
+
+        // if(isset($request->id))
+        // {
+        //     $SptEmployee = SptEmployee::where('spt_id',$request->id)->get();
+        //     foreach($SptEmployee as $employee)
+        //         $showEmployee[] = $employee->employee;
+            
+        // }
+
+        return response()->json(["error" => 0, "message" => "data found", "data" => $showEmployee]);
     }
 }

@@ -200,6 +200,23 @@ $('input[name=tanggal_awal]').bootstrapMaterialDatePicker({
     var lama = $('input[name=lama_waktu]').val()
     lama = lama - 1
     $('input[name=tanggal_akhir]').val(moment(date).add(lama, 'day').format('YYYY-MM-DD'));
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type:'POST',
+        url:"{{route('pegawai.spt-role.get-employees')}}",
+        data:{tanggal_awal:moment(date).format('YYYY-MM-DD'), tanggal_akhir:moment(date).add(lama, 'day').format('YYYY-MM-DD'), id:'{{$sptModel->id}}'},
+        success:function(data){
+            data.data.forEach(value => {
+                var option = "<option value='"+value.id+"'>" + value.nama + "</option>"
+                $('select.pengikut').append(option)
+            })
+            $("select.pengikut").selectpicker("refresh");
+        }
+    });
 });
 
 </script>

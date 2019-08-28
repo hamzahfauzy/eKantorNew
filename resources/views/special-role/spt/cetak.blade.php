@@ -70,27 +70,27 @@
                                         </center>
                                         <p>Kepada :</p>
                                         <table class="table">
-                                        @foreach($spt->employees as $key => $employee)
+                                        @foreach($employees as $key => $employee)
                                         <tr>
                                             <td rowspan="4">{{++$key}}</td>
                                             <td>Nama</td>
                                             <td>:</td>
-                                            <td>{{$employee->employee->nama}}</td>
+                                            <td>{{$employee->nama}}</td>
                                         </tr>
                                         <tr>
                                             <td>NIP</td>
                                             <td>:</td>
-                                            <td>{{$employee->employee->NIP}}</td>
+                                            <td>{{$employee->NIP}}</td>
                                         </tr>
                                         <tr>
                                             <td>Pangkat/Gol. Ruang</td>
                                             <td>:</td>
-                                            <td>{{$employee->employee->golongan->nama}} ({{$employee->employee->golongan->pangkat}})</td>
+                                            <td>{{$employee->nama}} ({{$employee->pangkat}})</td>
                                         </tr>
                                         <tr>
                                             <td>Jabatan</td>
                                             <td>:</td>
-                                            <td>{{$employee->employee->jabatan}}</td>
+                                            <td>{{$employee->jabatan}}</td>
                                         </tr>
                                         @endforeach
                                         </table>

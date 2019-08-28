@@ -194,6 +194,7 @@ Route::middleware('auth')->group(function(){
 				Route::get('show/{spt}/sppd/cetak','SptController@sppdCetak')->name('pegawai.spt-role.sppd-cetak');
 				Route::get('cetak/{spt}','SptController@cetak')->name('pegawai.spt-role.cetak');
 				Route::post('insert','SptController@store')->name('pegawai.spt-role.insert');
+				Route::post('get-employees','SptController@getEmployees')->name('pegawai.spt-role.get-employees');
 				Route::put('update','SptController@update')->name('pegawai.spt-role.update');
 				Route::delete('delete','SptController@destroy')->name('pegawai.spt-role.delete');
 			});
