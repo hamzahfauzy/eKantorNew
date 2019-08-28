@@ -9,7 +9,7 @@ use App\Model\Surat\SptList;
 class SptEmployee extends Model
 {
     //
-    protected $fillable = ['employee_id','spt_id'];
+    protected $fillable = ['employee_id','spt_id','no_urut'];
     public $timestamps = false;
 
     function employee()

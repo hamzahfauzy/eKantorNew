@@ -70,27 +70,27 @@
                                         </center>
                                         <p>Kepada :</p>
                                         <table class="table">
-                                        @foreach($employees as $key => $employee)
+                                        @foreach($spt->employees()->orderby('no_urut','asc')->get() as $key => $employee)
                                         <tr>
                                             <td rowspan="4">{{++$key}}</td>
                                             <td>Nama</td>
                                             <td>:</td>
-                                            <td>{{$employee->nama}}</td>
+                                            <td>{{$employee->employee->nama}}</td>
                                         </tr>
                                         <tr>
                                             <td>NIP</td>
                                             <td>:</td>
-                                            <td>{{$employee->NIP}}</td>
+                                            <td>{{$employee->employee->NIP}}</td>
                                         </tr>
                                         <tr>
                                             <td>Pangkat/Gol. Ruang</td>
                                             <td>:</td>
-                                            <td>{{$employee->nama_golongan}} ({{$employee->pangkat}})</td>
+                                            <td>{{$employee->employee->golongan->nama}} ({{$employee->employee->golongan->pangkat}})</td>
                                         </tr>
                                         <tr>
                                             <td>Jabatan</td>
                                             <td>:</td>
-                                            <td>{{$employee->jabatan}}</td>
+                                            <td>{{$employee->employee->jabatan}}</td>
                                         </tr>
                                         @endforeach
                                         </table>

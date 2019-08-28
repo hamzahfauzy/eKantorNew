@@ -39,8 +39,8 @@
                                             <th>#</th>
                                             <th>No SPT</th>
                                             <th>Tujuan</th>
-                                            <th>Selama</th>
                                             <th>Tanggal</th>
+                                            <th>Pegawai</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -49,8 +49,8 @@
                                             <th>#</th>
                                             <th>No SPT</th>
                                             <th>Tujuan</th>
-                                            <th>Selama</th>
                                             <th>Tanggal</th>
+                                            <th>Pegawai</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
@@ -60,9 +60,18 @@
                                         <tr>
                                             <td>{{$no++}}</td>
                                             <td>{{$model->no_spt}}</td>
-                                            <td>{{$model->tempat_tujuan}}</td>
-                                            <td>{{$model->lama_waktu}}</td>
-                                            <td>{{$model->tanggal_awal->format('d-m-Y')}} s/d {{$model->tanggal_akhir->format('d-m-Y')}}</td>
+                                            <td>
+                                            {{$model->tempat_tujuan}}
+                                            <br>
+                                            <span class="label label-default">{{$model->lama_waktu}} Hari</span>
+                                            </td>
+                                            <td>
+                                            <span class="label label-default">Terhitung Tanggal :</span><br>
+                                            {{$model->tanggal_awal->formatLocalized("%d %B %Y")}} <br><br> 
+                                            <span class="label label-default">Sampai Tanggal :</span><br>
+                                            {{$model->tanggal_akhir->formatLocalized("%d %B %Y")}}
+                                            </td>
+                                            <td><a href="javascript:void(0)" data-toggle="modal" data-target="#defaultModal{{$model->id}}"class="label label-primary">Lihat Pegawai</a>
                                             <td>
                                                 <a href="{{route('pegawai.spt-role.cetak',$model->id)}}" class="btn btn-primary waves-effect">
 				                                    <i class="material-icons">visibility</i>
@@ -84,6 +93,52 @@
 				                                	<input type="hidden" name="_method" value="DELETE">
 				                                	<input type="hidden" name="id" value="{{$model->id}}">
 				                                </form>
+                                                <div class="modal fade" id="defaultModal{{$model->id}}" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title" id="defaultModalLabel">Pegawai Pada No SPT : {{$model->no_spt}}</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <table class="table">
+                                                                @foreach($model->employees()->orderby('no_urut','asc')->get() as $key => $employee)
+                                                                <tr>
+                                                                    <td rowspan="5">{{++$key}}</td>
+                                                                    <td>Nama</td>
+                                                                    <td>:</td>
+                                                                    <td>{{$employee->employee->nama}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>NIP</td>
+                                                                    <td>:</td>
+                                                                    <td>{{$employee->employee->NIP}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Pangkat/Gol. Ruang</td>
+                                                                    <td>:</td>
+                                                                    <td>{{$employee->employee->golongan->nama}} ({{$employee->employee->golongan->pangkat}})</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Jabatan</td>
+                                                                    <td>:</td>
+                                                                    <td>{{$employee->employee->jabatan}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Urutan</td>
+                                                                    <td>:</td>
+                                                                    <td>
+                                                                    <input type="number" class="form-control" name="urutan_{{$employee->id}}" value="{{$employee->no_urut}}">
+                                                                    <button class="btn btn-primary" onclick="simpanUrutan({{$employee->id}})">Simpan</button>
+                                                                    </td>
+                                                                </tr>
+                                                                @endforeach
+                                                                </table>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -135,6 +190,24 @@ function deleteAlert(id)
             $("#form-delete-"+id).submit()
         }
 	});
+}
+
+function simpanUrutan(id)
+{
+    var urutan = $('input[name=urutan_'+id+']').val()
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type:'POST',
+        url:"{{route('pegawai.spt-role.set-urutan')}}",
+        data:{id:id,urutan:urutan},
+        success:function(data){
+            alert('No Urut berhasil disimpan')
+        }
+    });
 }
 </script>
 @endsection

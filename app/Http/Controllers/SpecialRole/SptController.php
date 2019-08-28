@@ -211,6 +211,15 @@ class SptController extends Controller
         ]);
     }
 
+    public function setUrutan(Request $request)
+    {
+        SptEmployee::find($request->id)->update([
+            'no_urut' => $request->urutan
+        ]);
+
+        return 1;
+    }
+
     public function getEmployees(Request $request)
     {
         $employeesModel = Employee::get();
