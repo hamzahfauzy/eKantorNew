@@ -92,7 +92,7 @@
                                             <td>:</td>
                                             <td>{{$employee->employee->jabatan}}</td>
                                         </tr>
-                                        @endforeach
+                                        @endforeach 
                                         </table>
 
                                         <p>Untuk :</p>
