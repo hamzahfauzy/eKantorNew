@@ -55,6 +55,9 @@ class SptController extends Controller
     public function store(Request $request)
     {
         //
+        $customMessages = [
+            'unique' => ':attribute sudah digunakan.'
+        ];
         $this->validate($request,[
             'no_spt' => 'required|unique:spt_lists',
             'wilayah_id' => 'required',
@@ -67,7 +70,7 @@ class SptController extends Controller
             'dasar1' => 'required',
             'dasar2' => 'required',
             'dasar3' => 'required',
-        ]);
+        ],$customMessages);
 
         $sptModel = $this->model->create([
             'no_spt' => $request->no_spt,

@@ -212,5 +212,26 @@ $('input[name=tanggal_awal]').bootstrapMaterialDatePicker({
     });
 });
 
+var tgl_awal = $("input[name=tanggal_awal]")
+if(tgl_awal.val() != '')
+{
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type:'POST',
+        url:"{{route('pegawai.spt-role.get-employees')}}",
+        data:{tanggal_awal:tgl_awal.val(), tanggal_akhir:$("input[name=tanggal_akhir]").val()},
+        success:function(data){
+            data.data.forEach(value => {
+                var option = "<option value='"+value.id+"'>" + value.nama + "</option>"
+                $('select.pengikut').append(option)
+            })
+            $("select.pengikut").selectpicker("refresh");
+        }
+    });
+}
 </script>
 @endsection

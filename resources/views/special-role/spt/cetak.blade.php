@@ -36,7 +36,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <center>
-                                        <h4 style="margin-bottom:0;"><u>Surat Perintah Tugas</u></h4>
+                                        <h4 style="margin-bottom:0;"><u>SURAT PERINTAH TUGAS</u></h4>
                                         <span>No. {{$spt->no_spt}}</span>
                                         <p></p>
                                         <br>
@@ -85,7 +85,7 @@
                                         <tr>
                                             <td>Pangkat/Gol. Ruang</td>
                                             <td>:</td>
-                                            <td>{{$employee->nama}} ({{$employee->pangkat}})</td>
+                                            <td>{{$employee->nama_golongan}} ({{$employee->pangkat}})</td>
                                         </tr>
                                         <tr>
                                             <td>Jabatan</td>
@@ -99,6 +99,17 @@
                                         <?php $maksud_tujuan = explode("\n",$spt->maksud_tujuan);?>
                                         <table class="table">
                                         @foreach($maksud_tujuan as $key => $text)
+                                        <?php
+                                        if($key == 0)
+                                            if($spt->lama_waktu > 1)
+                                            {
+                                                $text .= " dari tanggal ".$spt->tanggal_awal->formatLocalized('%d %B %Y')." s/d ".$spt->tanggal_akhir->formatLocalized('%d %B %Y');
+                                            }
+                                            else
+                                            {
+                                                $text .= " pada tanggal ".$spt->tanggal_awal->formatLocalized('%d %B %Y');
+                                            }
+                                        ?>
                                         <tr>
                                             <td width="5%">{{++$key}}</td>
                                             <td>{!! $text !!}</td>
