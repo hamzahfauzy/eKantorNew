@@ -71,7 +71,7 @@
                                             <span class="label label-default">Sampai Tanggal :</span><br>
                                             {{$model->tanggal_akhir->formatLocalized("%d %B %Y")}}
                                             </td>
-                                            <td><a href="javascript:void(0)" data-toggle="modal" data-target="#defaultModal{{$model->id}}"class="label label-primary">Lihat Pegawai</a>
+                                            <td><a href="javascript:void(0)" data-toggle="modal" data-target="#defaultModal{{$model->id}}"class="label label-primary">Lihat Pegawai</a></td>
                                             <td>
                                                 <a href="{{route('pegawai.spt-role.cetak',$model->id)}}" class="btn btn-primary waves-effect">
 				                                    <i class="material-icons">visibility</i>

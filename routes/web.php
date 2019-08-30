@@ -163,12 +163,24 @@ Route::middleware('auth')->group(function(){
 			Route::get('create','SptController@create')->name('pegawai.spt.create');
 			Route::get('edit/{spt}','SptController@edit')->name('pegawai.spt.edit');
 			Route::get('show/{spt}','SptController@show')->name('pegawai.spt.show');
-			Route::get('show/{spt}/sppd','SptController@sppd')->name('pegawai.spt.sppd');
-			Route::get('show/{spt}/sppd/cetak','SptController@sppdCetak')->name('pegawai.spt.sppd-cetak');
 			Route::get('cetak/{spt}','SptController@cetak')->name('pegawai.spt.cetak');
 			Route::post('insert','SptController@store')->name('pegawai.spt.insert');
 			Route::put('update','SptController@update')->name('pegawai.spt.update');
 			Route::delete('delete','SptController@destroy')->name('pegawai.spt.delete');
+		});
+
+		Route::prefix('sppd')->group(function(){
+			Route::get('/','SppdController@index')->name('pegawai.sppd.index');
+			Route::get('create','SppdController@create')->name('pegawai.sppd.create');
+			Route::get('edit/{sppd}','SppdController@edit')->name('pegawai.sppd.edit');
+			Route::get('show/{sppd}','SppdController@show')->name('pegawai.sppd.show');
+			Route::get('cetak/{sppd}','SppdController@cetak')->name('pegawai.sppd.cetak');
+			Route::post('insert','SppdController@store')->name('pegawai.sppd.insert');
+			Route::post('get-employee','SppdController@getEmployees')->name('pegawai.sppd.get-employees');
+			Route::post('set-urutan','SppdController@setUrutan')->name('pegawai.sppd.set-urutan');
+			Route::post('set-maskapai','SppdController@setMaskapai')->name('pegawai.sppd.set-maskapai');
+			Route::put('update','SppdController@update')->name('pegawai.sppd.update');
+			Route::delete('delete','SppdController@destroy')->name('pegawai.sppd.delete');
 		});
 
 		Route::middleware('specialRoleUser')->group(function(){
@@ -198,6 +210,12 @@ Route::middleware('auth')->group(function(){
 				Route::post('set-urutan','SptController@setUrutan')->name('pegawai.spt-role.set-urutan');
 				Route::put('update','SptController@update')->name('pegawai.spt-role.update');
 				Route::delete('delete','SptController@destroy')->name('pegawai.spt-role.delete');
+			});
+
+			Route::prefix('sppd-role')->group(function(){
+				Route::get('/','SptController@index')->name('pegawai.sppd-role.index');
+				Route::get('show/{sppd}','SptController@show')->name('pegawai.sppd-role.show');
+				Route::get('cetak/{sppd}','SptController@cetak')->name('pegawai.sppd-role.cetak');
 			});
 
 		});

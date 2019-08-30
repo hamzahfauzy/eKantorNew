@@ -89,4 +89,9 @@ class Employee extends Model
     {
         return $this->hasMany(SuratKeluar::class,'pegawai_id','id');
     }
+
+    public function isPptk()
+    {
+        return $this->hasOne(Kegiatan::class,'pptk_id','id');
+    }
 }

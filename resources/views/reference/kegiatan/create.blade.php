@@ -64,6 +64,19 @@
                                         </span>
                                     @endif
                                 </div>
+                                <div class="form-group form-float">
+                                    <select class="form-control show-tick" name="pptk_id" required="" data-live-search="true">
+                                        <option value="">Pilih PPTK</option>
+                                        @foreach($employees as $employee)
+                                        <option value="{{$employee->id}}" {{old('pptk_id') == $employee->id ? 'selected=""' : '' }}>{{$employee->nama}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('pptk_id'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('pptk_id') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
                                 <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
                             </form>
                         </div>

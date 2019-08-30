@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFileSuratKeluar extends Migration
+class AddEmployeeIdInSppdList extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class AddFileSuratKeluar extends Migration
      */
     public function up()
     {
-        Schema::table('surat_keluars', function (Blueprint $table) {
+        Schema::table('sppd_lists', function (Blueprint $table) {
             //
-            $table->string('file_surat_fix_url')->nullable();
+            $table->bigInteger('employee_id')->unsigned()->nullable();
+            $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
         });
     }
 
@@ -26,9 +27,9 @@ class AddFileSuratKeluar extends Migration
      */
     public function down()
     {
-        Schema::table('surat_keluars', function (Blueprint $table) {
+        Schema::table('sppd_lists', function (Blueprint $table) {
             //
-            $table->dropColumn('file_surat_fix_url');
+            $table->dropColumn('employee_id');
         });
     }
 }

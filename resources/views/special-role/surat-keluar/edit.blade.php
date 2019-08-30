@@ -78,7 +78,7 @@
                                 <div class="form-group form-float">
                                     <label>File Surat (*Kosongkan jika tidak diubah)</label>
                                     <br>
-                                    <a href="{{Storage::url($surat->file_url_surat)}}">Lihat Surat</a>
+                                    <a href="{{Storage::url($surat->file_surat_url)}}">Lihat Surat</a>
                                     <input type="file" name="file_surat" class="form-control" style="height: auto;">
                                     @if ($errors->has('file_surat'))
                                         <span class="invalid-feedback" role="alert">

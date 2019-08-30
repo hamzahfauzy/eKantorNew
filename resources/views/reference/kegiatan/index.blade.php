@@ -40,6 +40,7 @@
                                             <th>Kode Kegiatan</th>
                                             <th>Nama</th>
                                             <th>Program</th>
+                                            <th>PPTK</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -49,6 +50,7 @@
                                             <th>Kode Kegiatan</th>
                                             <th>Nama</th>
                                             <th>Program</th>
+                                            <th>PPTK</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
@@ -61,10 +63,13 @@
                                             <td>
                                             {{$model->nama}}
                                             <br>
-                                            Pagu : Rp. <b>{{number_format($model->pagu_kegiatan,2,',','.')}}</b>
+                                            Pagu : Rp. <b>{{number_format($model->pagu,2,',','.')}}</b>
                                             </td>
                                             <td>
                                                 {{$model->program->nama}}
+                                            </td>
+                                            <td>
+                                                {{ !empty($model->pptk) ? $model->pptk->nama : '-'}}
                                             </td>
                                             <td>
                                             	<a href="{{route('reference.kegiatan.edit',$model->id)}}" class="btn btn-warning waves-effect">

@@ -65,7 +65,7 @@
                     <li class="@yield('pkr-active')">
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">text_fields</i>
-                            <span>Program, Kegiatan & Rekening</span>
+                            <span>Program & Kegiatan</span>
                         </a>
                         <ul class="ml-menu">
                             <li class="@yield('program-active')">
@@ -104,7 +104,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                    </li>
                     <li class="@yield('wilayah-active')">
                         <a href="{{route('reference.wilayah.index')}}">
                             <i class="material-icons">flight_takeoff</i>
@@ -170,7 +170,7 @@
                                     </a>
                                 </li>
                                 <li class="@yield('sppd-active')">
-                                    <a href="#">
+                                    <a href="{{route('pegawai.sppd.index')}}">
                                         SPPD
                                     </a>
                                 </li>

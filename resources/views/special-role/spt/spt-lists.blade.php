@@ -62,11 +62,6 @@
 				                                    <i class="material-icons">print</i>
 				                                    <span>Cetak</span>
 				                                </a>
-
-                                                <a href="{{route('pegawai.spt.show',$model->id)}}" class="btn btn-primary waves-effect">
-				                                    <i class="material-icons">visibility</i>
-				                                    <span>Lihat</span>
-				                                </a>
                                             </td>
                                         </tr>
                                         @endforeach

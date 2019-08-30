@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Reference;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Reference\{Program,Kegiatan};
+use App\Model\Reference\{Program,Kegiatan,Employee};
 
 class KegiatanController extends Controller
 {
@@ -12,6 +12,7 @@ class KegiatanController extends Controller
     {
         $this->model = new Kegiatan;
         $this->program = Program::get();
+        $this->employees = Employee::get();
     }
     /**
      * Display a listing of the resource.
@@ -33,7 +34,8 @@ class KegiatanController extends Controller
     {
         //
         return view('reference.kegiatan.create',[
-            'programs' => $this->program
+            'programs' => $this->program,
+            'employees' => $this->employees
         ]);
     }
 
@@ -51,13 +53,15 @@ class KegiatanController extends Controller
             'program_id' => 'required|unique:kegiatans,program_id,'.$request->nama.',nama,program_id,'.$request->program_id.',kd_kegiatan,'.$request->kd_kegiatan,
             'kd_kegiatan' => 'required|unique:kegiatans,kd_kegiatan,'.$request->nama.',nama,program_id,'.$request->program_id.',kd_kegiatan,'.$request->kd_kegiatan,
             'pagu_kegiatan' => 'required',
+            'pptk_id' => 'required'
         ]);
 
         $this->model->create([
             'nama' => $request->nama,
             'program_id' => $request->program_id,
             'kd_kegiatan' => $request->kd_kegiatan,
-            'pagu_kegiatan' => $request->pagu_kegiatan
+            'pagu_kegiatan' => $request->pagu_kegiatan,
+            'pptk_id' => $request->pptk_id
         ]);
 
         return redirect()->route('reference.kegiatan.index')->with(['success'=>'Data berhasil disimpan']);
@@ -86,7 +90,8 @@ class KegiatanController extends Controller
         //
         return view('reference.kegiatan.edit',[
             'programs' => $this->program,
-            'model' => $kegiatan
+            'model' => $kegiatan,
+            'employees' => $this->employees
         ]);
     }
 
@@ -105,13 +110,15 @@ class KegiatanController extends Controller
             'program_id' => 'required|unique:kegiatans,program_id,'.$request->id.',id,nama,'.$request->nama.',program_id,'.$request->program_id.',kd_kegiatan,'.$request->kd_kegiatan,
             'kd_kegiatan' => 'required|unique:kegiatans,kd_kegiatan,'.$request->id.',id,nama,'.$request->nama.',program_id,'.$request->program_id.',kd_kegiatan,'.$request->kd_kegiatan,
             'pagu_kegiatan' => 'required',
+            'pptk_id' => 'required'
         ]);
 
         $this->model->find($request->id)->update([
             'nama' => $request->nama,
             'program_id' => $request->program_id,
             'kd_kegiatan' => $request->kd_kegiatan,
-            'pagu_kegiatan' => $request->pagu_kegiatan
+            'pagu_kegiatan' => $request->pagu_kegiatan,
+            'pptk_id' => $request->pptk_id
         ]);
 
         return redirect()->route('reference.kegiatan.index')->with(['success'=>'Data berhasil diupdate']);;
