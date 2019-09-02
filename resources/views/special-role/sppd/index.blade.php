@@ -67,6 +67,7 @@
                                             <td>
                                                 {{$model->no_sppd}}
                                                 @if(!empty(auth()->user()->employee->isPptk))
+                                                <br>
                                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#defaultModal{{$model->id}}" class="label label-primary">Lihat Pegawai</a>
                                                 @endif
                                             </td>
