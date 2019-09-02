@@ -62,7 +62,11 @@
                                         <tr>
                                             <td>{{$no++}}</td>
                                             <td>
-                                                {{$model->spt->no_spt}}
+                                                <b>No. SPT</b> : {{$model->spt->no_spt}}
+                                                <br>
+                                                <b>Tanggal</b> : {{$model->spt->tanggal->formatLocalized('%d %B %Y')}}<br>
+                                                <b>Tujuan</b> : {{$model->spt->tempat_tujuan}}<br>
+                                                <b>Lama Waktu</b> : {{$model->spt->lama_waktu}} Hari
                                             </td>
                                             <td>
                                                 {{$model->no_sppd}}

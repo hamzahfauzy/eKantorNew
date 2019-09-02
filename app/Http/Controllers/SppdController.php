@@ -30,7 +30,8 @@ class SppdController extends Controller
 
         $ownSppd = $this->model->where('employee_id', auth()->user()->employee->id)->get();
         foreach($ownSppd as $sppd)
-            $sppds[] = $sppd;
+            if(!in_array($sppd,$sppds))
+                $sppds[] = $sppd;
         return view('special-role.sppd.index',[
             'sppd' => $sppds
         ]);
