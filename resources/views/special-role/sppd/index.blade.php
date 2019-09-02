@@ -66,7 +66,9 @@
                                             </td>
                                             <td>
                                                 {{$model->no_sppd}}
+                                                @if(!empty(auth()->user()->employee->isPptk))
                                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#defaultModal{{$model->id}}" class="label label-primary">Lihat Pegawai</a>
+                                                @endif
                                             </td>
                                             <td>
                                                 {{$model->transportation->nama}}
@@ -76,6 +78,7 @@
                                                     margin-bottom:25px !important;
                                                 }
                                                 </style>
+                                                @if(!empty(auth()->user()->employee->isPptk))
                                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#maskapai{{$model->id}}"class="label label-primary">Set Maskapai</a>
                                                 <div class="modal fade maskapai" id="maskapai{{$model->id}}" tabindex="-1" role="dialog">
                                                     <div class="modal-dialog" role="document">
@@ -171,18 +174,21 @@
                                                     </div>
                                                 </div>
                                                 @endif
+                                                @endif
                                             </td>
                                             <td>
                                             {{number_format($model->total_biaya)}}
+                                            @if(!empty(auth()->user()->employee->isPptk))
                                             <br>
                                             <a href="{{route('pegawai.sppd.detail-biaya',$model->id)}}">Detail Biaya</a>
+                                            @endif
                                             </td>
                                             <td>
                                                 <a href="{{route('pegawai.sppd.cetak',$model->id)}}" class="btn btn-primary waves-effect">
 				                                    <i class="material-icons">visibility</i>
 				                                    <span>Lihat</span>
 				                                </a>
-                                                
+                                                @if(!empty(auth()->user()->employee->isPptk))
                                                 <a href="{{route('pegawai.sppd.edit',$model->id)}}" class="btn btn-warning waves-effect">
 				                                    <i class="material-icons">create</i>
 				                                    <span>Edit</span>
@@ -192,6 +198,7 @@
 				                                    <i class="material-icons">delete</i>
 				                                    <span>Hapus</span>
 				                                </a>
+                                                @endif
 
 				                                <form id="form-delete-{{$model->id}}" style="display: none;" method="post" action="{{route('pegawai.sppd.delete')}}">
 				                                	{{csrf_field()}}
