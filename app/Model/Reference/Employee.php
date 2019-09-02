@@ -94,4 +94,9 @@ class Employee extends Model
     {
         return $this->hasOne(Kegiatan::class,'pptk_id','id');
     }
+
+    public function kegiatans()
+    {
+        return $this->hasMany(Kegiatan::class,'pptk_id','id');
+    }
 }

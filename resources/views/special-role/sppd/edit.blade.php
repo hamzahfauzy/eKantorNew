@@ -70,8 +70,17 @@
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
-                                        <label>Kegiatan</label>
-                                        <input type="text" class="form-control" value="{{auth()->user()->employee->isPptk->nama}}" readonly>
+                                        <select class="form-control show-tick" name="kegiatan_id" required="" data-live-search="true">
+                                            <option value="">Pilih Kegiatan</option>
+                                            @foreach(auth()->user()->employee->kegiatans as $kegiatan)
+                                            <option value="{{$kegiatan->id}}" {{$sppd->kegiatan_id == $kegiatan->id ? 'selected=""' : '' }}>{{$kegiatan->nama}}</option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('kegiatan_id'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('kegiatan_id') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-group form-float">
