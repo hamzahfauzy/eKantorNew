@@ -23,8 +23,16 @@ class SppdController extends Controller
     public function index()
     {
         //
+        $sppdEmployee = SppdEmployee::where('employee_id', auth()->user()->employee->id)->get();
+        $sppds = [];
+        foreach($sppdEmployee as $data)
+            $sppds[] = $data->list;
+
+        $ownSppd = $this->model->where('employee_id', auth()->user()->employee->id)->get();
+        foreach($ownSppd as $sppd)
+            $sppds[] = $sppd;
         return view('special-role.sppd.index',[
-            'sppd' => $this->model->where('employee_id', auth()->user()->employee->id)->get()
+            'sppd' => $sppds
         ]);
         
     }
