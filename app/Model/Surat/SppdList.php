@@ -8,7 +8,7 @@ use App\Model\Reference\Transportation;
 class SppdList extends Model
 {
     //
-    protected $fillable = ['spt_id','tanggal','no_sppd','kegiatan_id','asal','tujuan','transportation_id','employee_id'];
+    protected $fillable = ['spt_id','tanggal','no_sppd','kegiatan_id','asal','uang_harian','representatif','transport','penginapan','tujuan','transportation_id','employee_id'];
     protected $dates = ['tanggal'];
 
     function maskapai()

@@ -92,6 +92,10 @@ class SppdController extends Controller
             $model->create([
                 'sppd_id' => $sppd->id,
                 'employee_id' => $pengikut,
+                'uang_harian' => '0',
+                'transport' => '0',
+                'penginapan' => '0',
+                'representatif' => '0',
                 'no_urut' => 0
             ]);
         }
@@ -172,6 +176,10 @@ class SppdController extends Controller
             $model->create([
                 'sppd_id' => $sppd->id,
                 'employee_id' => $pengikut,
+                'uang_harian' => '0',
+                'transport' => '0',
+                'penginapan' => '0',
+                'representatif' => '0',
                 'no_urut' => 0
             ]);
         }
