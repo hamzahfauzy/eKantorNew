@@ -25,4 +25,5 @@ class SptList extends Model
     {
         return $this->hasMany(SppdList::class,'spt_id','id');
     }
+
 }

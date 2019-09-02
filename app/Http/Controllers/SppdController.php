@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\Setting;
 use App\Model\Reference\Transportation;
-use App\Model\Surat\{SppdList, SptList, SptEmployee,SppdEmployee};
+use App\Model\Surat\{SppdList, SptList, SptEmployee, SppdEmployee, SppdMaskapai};
 
 class SppdController extends Controller
 {
@@ -58,10 +59,6 @@ class SppdController extends Controller
             'tanggal' => 'required',
             'asal' => 'required',
             'tujuan' => 'required',
-            'uang_harian' => 'required|integer',
-            'transport' => 'required|integer',
-            'penginapan' => 'required|integer',
-            'representatif' => 'required|integer',
             'pengikut' => 'required'
         ]);
 
@@ -71,10 +68,10 @@ class SppdController extends Controller
             'tanggal' => $request->tanggal,
             'kegiatan_id' => auth()->user()->employee->isPptk->id,
             'transportation_id' => $request->transportation_id,
-            'uang_harian' => $request->uang_harian,
-            'transport' => $request->transport,
-            'penginapan' => $request->penginapan,
-            'representatif' => $request->representatif,
+            'uang_harian' => '',
+            'transport' => '',
+            'penginapan' => '',
+            'representatif' => '',
             'asal' => $request->asal,
             'tujuan' => $request->tujuan,
             'employee_id' => auth()->user()->employee->id,
@@ -142,10 +139,6 @@ class SppdController extends Controller
             'tanggal' => 'required',
             'asal' => 'required',
             'tujuan' => 'required',
-            'uang_harian' => 'required|integer',
-            'transport' => 'required|integer',
-            'penginapan' => 'required|integer',
-            'representatif' => 'required|integer',
             'pengikut' => 'required'
         ]);
 
@@ -155,10 +148,10 @@ class SppdController extends Controller
             'tanggal' => $request->tanggal,
             'kegiatan_id' => auth()->user()->employee->isPptk->id,
             'transportation_id' => $request->transportation_id,
-            'uang_harian' => $request->uang_harian,
-            'transport' => $request->transport,
-            'penginapan' => $request->penginapan,
-            'representatif' => $request->representatif,
+            'uang_harian' => '',
+            'transport' => '',
+            'penginapan' => '',
+            'representatif' => '',
             'asal' => $request->asal,
             'tujuan' => $request->tujuan,
         ]);
@@ -206,5 +199,66 @@ class SppdController extends Controller
         ]);
 
         return 1;
+    }
+
+    public function cetak(SppdList $sppd)
+    {
+        $setting = Setting::first();
+        return view('special-role.sppd.cetak',[
+            'sppd' => $sppd,
+            'setting' => $setting
+        ]);
+    }
+
+    public function detailBiaya(SppdList $sppd)
+    {
+        return view('special-role.sppd.detail-biaya',[
+            'sppd' => $sppd,
+        ]);
+    }
+
+    public function setBiaya(Request $request)
+    {
+        $this->validate($request,[
+            'id' => 'required',
+            'uang_harian' => 'required|integer',
+            'transport' => 'required|integer',
+            'penginapan' => 'required|integer',
+            'representatif' => 'required|integer',
+        ]);
+
+        $model = SppdEmployee::find($request->id);
+        $model->update([
+            'uang_harian' => $request->uang_harian,
+            'transport' => $request->transport,
+            'penginapan' => $request->penginapan,
+            'representatif' => $request->representatif,
+        ]);
+
+        return redirect()->route('pegawai.sppd.detail-biaya',$model->sppd_id)->with(['success'=>'Data berhasil dihapus']);;
+    }
+
+    public function setMaskapai(Request $request)
+    {
+        $arr = [
+            'nama_maskapai' => $request->nama_maskapai,
+            'no_tiket' => $request->no_tiket,
+            'id_booking' => $request->id_booking,
+            'tanggal_checkin' => $request->tanggal_checkin,
+            'harga_tiket' => $request->harga_tiket,
+            'sppd_id' => $request->sppd_id,
+            'status_keberangkatan' => $request->status,
+        ];
+        $model = SppdMaskapai::where('sppd_id',$request->id)->where('status_keberangkatan',$request->status)->first();
+        if(empty($model))
+        {
+            SppdMaskapai::create($arr);
+        }
+        else
+        {
+            $model->update($arr);
+        }
+
+        return redirect()->route('pegawai.sppd.index')->with(['success'=>'Data berhasil disimpan']);;
     }
 }

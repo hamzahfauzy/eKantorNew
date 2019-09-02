@@ -202,11 +202,8 @@ class SptController extends Controller
     public function cetak(SptList $spt)
     {
         $setting = Setting::first();
-        $employees_query = "SELECT spte.spt_id, e.NIP, e.nama, e.jabatan, g.pangkat, g.nama as nama_golongan FROM `spt_employees` spte, `employees` e, `golongans` g WHERE spte.spt_id = '$spt->id' AND e.id = spte.employee_id AND g.id = e.golongan_id ORDER BY g.pangkat DESC";
-        $employees = DB::select($employees_query);
         return view('special-role.spt.cetak',[
             'spt' => $spt,
-            'employees' => $employees,
             'setting' => $setting
         ]);
     }

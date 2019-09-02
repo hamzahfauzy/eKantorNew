@@ -87,50 +87,6 @@
                                         </span>
                                     @endif
                                 </div>
-                                <div class="form-group form-float">
-                                    <div class="form-line">
-                                        <input type="text" class="form-control" name="uang_harian" required value="{{$sppd->uang_harian}}">
-                                        <label class="form-label">Uang Harian</label>
-                                    </div>
-                                    @if ($errors->has('uang_harian'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('uang_harian') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group form-float">
-                                    <div class="form-line">
-                                        <input type="text" class="form-control" name="transport" required value="{{$sppd->transport}}">
-                                        <label class="form-label">Transport</label>
-                                    </div>
-                                    @if ($errors->has('transport'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('transport') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group form-float">
-                                    <div class="form-line">
-                                        <input type="text" class="form-control" name="penginapan" required value="{{$sppd->penginapan}}">
-                                        <label class="form-label">Penginapan</label>
-                                    </div>
-                                    @if ($errors->has('penginapan'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('penginapan') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group form-float">
-                                    <div class="form-line">
-                                    <input type="text" class="form-control" name="representatif" required value="{{$sppd->representatif}}">
-                                        <label class="form-label">Representatif</label>
-                                    </div>
-                                    @if ($errors->has('representatif'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('representatif') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
                                 <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
                                 <a class="btn btn-warning waves-effect" href="{{url()->previous()}}">KEMBALI</a>
                             </form>

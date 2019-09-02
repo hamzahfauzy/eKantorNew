@@ -13,7 +13,10 @@ class Kegiatan extends Model
 
     function getPaguAttribute()
     {
-        return $this->pagu_kegiatan - ($this->sppds()->sum('uang_harian') + $this->sppds()->sum('representatif') + $this->sppds()->sum('transport') + $this->sppds()->sum('penginapan'));
+        $total = 0;
+        foreach($this->sppds as $sppd)
+            $total += $sppd->total_biaya;
+        return $this->pagu_kegiatan - $total;
     }
 
     function program()

@@ -19,10 +19,10 @@
                             <img src="{{Storage::url($setting->logo)}}" class="img-responsive" width="100px">
                             </div>
                             <div>
-                                <h3 align="center" style="margin:0;padding:0;font-size:37px;">
+                                <h3 align="center" style="margin:0;padding:0;font-size:30px;">
                                     PEMERINTAH KABUPATEN ASAHAN
                                 </h2>
-                                <h3 align="center" style="margin:0;padding:0;text-transform:uppercase">
+                                <h3 align="center" style="margin:0;padding:0;text-transform:uppercase;font-size:20px;">
                                     {{$setting->nama}}
                                 </h3>
                                 <h4 align="center" style="margin:0;padding:0;">
@@ -31,7 +31,7 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="body">
+                        <div class="body" style="font-size:;">
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -124,7 +124,7 @@
                                         <p>Demikian surat tugas ini dibuat untuk dilaksanakan sebagaimana mestinya.</p>
 
                                         <br>
-                                        <table width="30%" align="right">
+                                        <table width="40%" align="right">
                                         <tr>
                                             <td>Dikeluarkan di Kisaran</td>
                                         </tr>

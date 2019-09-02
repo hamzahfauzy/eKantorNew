@@ -175,10 +175,12 @@ Route::middleware('auth')->group(function(){
 			Route::get('edit/{sppd}','SppdController@edit')->name('pegawai.sppd.edit');
 			Route::get('show/{sppd}','SppdController@show')->name('pegawai.sppd.show');
 			Route::get('cetak/{sppd}','SppdController@cetak')->name('pegawai.sppd.cetak');
+			Route::get('detail-biaya/{sppd}','SppdController@detailBiaya')->name('pegawai.sppd.detail-biaya');
 			Route::post('insert','SppdController@store')->name('pegawai.sppd.insert');
 			Route::post('get-employee','SppdController@getEmployees')->name('pegawai.sppd.get-employees');
 			Route::post('set-urutan','SppdController@setUrutan')->name('pegawai.sppd.set-urutan');
 			Route::post('set-maskapai','SppdController@setMaskapai')->name('pegawai.sppd.set-maskapai');
+			Route::post('set-biaya','SppdController@setBiaya')->name('pegawai.sppd.set-biaya');
 			Route::put('update','SppdController@update')->name('pegawai.sppd.update');
 			Route::delete('delete','SppdController@destroy')->name('pegawai.sppd.delete');
 		});

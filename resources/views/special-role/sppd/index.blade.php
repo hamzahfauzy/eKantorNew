@@ -42,10 +42,7 @@
                                             <th>SPT</th>
                                             <th>SPPD</th>
                                             <th>Transportasi</th>
-                                            <th>Biaya Transport (Rp)</th>
-                                            <th>Uang Harian (Rp)</th>
-                                            <th>Penginapan (Rp)</th>
-                                            <th>Representatif (Rp)</th>
+                                            <th>Total Biaya (Rp)</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -55,10 +52,7 @@
                                             <th>SPT</th>
                                             <th>SPPD</th>
                                             <th>Transportasi</th>
-                                            <th>Biaya Transport (Rp)</th>
-                                            <th>Uang Harian (Rp)</th>
-                                            <th>Penginapan (Rp)</th>
-                                            <th>Representatif (Rp)</th>
+                                            <th>Total Biaya (Rp)</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
@@ -72,7 +66,7 @@
                                             </td>
                                             <td>
                                                 {{$model->no_sppd}}
-                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#defaultModal{{$model->id}}"class="label label-primary">Lihat Pegawai</a>
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#defaultModal{{$model->id}}" class="label label-primary">Lihat Pegawai</a>
                                             </td>
                                             <td>
                                                 {{$model->transportation->nama}}
@@ -92,36 +86,37 @@
                                                             <div class="modal-body">
                                                                 <div class="box">
                                                                     <h5>Maskapai Berangkat</h5>
-                                                                    <form method="post" id="form_validation" action="route('pegawai.sppd.set-maskapai')">
+                                                                    <form method="post" id="form_validation" action="{{route('pegawai.sppd.set-maskapai')}}">
+                                                                        {{csrf_field()}}
                                                                         <input type="hidden" name="sppd_id" value="{{$model->id}}">
-                                                                        <input type="hidden" name="status" value="berangkat">
+                                                                        <input type="hidden" name="status" value="1">
                                                                         <div class="form-group form-float">
                                                                             <div class="form-line">
-                                                                                <input type="text" class="form-control" name="nama maskapai" required value="">
+                                                                                <input type="text" class="form-control" name="nama maskapai" required value="{{$model->maskapai_berangkat ? $model->maskapai_berangkat->nama_maskapai : ''}}">
                                                                                 <label class="form-label">Nama Maskapai</label>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group form-float">
                                                                             <div class="form-line">
-                                                                                <input type="text" class="form-control" name="no_tiket" required value="">
+                                                                                <input type="text" class="form-control" name="no_tiket" required value="{{$model->maskapai_berangkat ? $model->maskapai_berangkat->no_tiket : ''}}">
                                                                                 <label class="form-label">No Tiket</label>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group form-float">
                                                                             <div class="form-line">
-                                                                                <input type="text" class="form-control" name="id_booking" required value="">
+                                                                                <input type="text" class="form-control" name="id_booking" required value="{{$model->maskapai_berangkat ? $model->maskapai_berangkat->id_booking : ''}}">
                                                                                 <label class="form-label">ID Booking</label>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group form-float">
                                                                             <div class="form-line">
-                                                                                <input type="text" class="form-control" name="tanggal_checkin" required value="">
+                                                                                <input type="date" class="form-control" name="tanggal_checkin" required value="{{$model->maskapai_berangkat ? $model->maskapai_berangkat->tanggal_checkin : ''}}">
                                                                                 <label class="form-label">Tanggal Check-in</label>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group form-float">
                                                                             <div class="form-line">
-                                                                                <input type="text" class="form-control" name="harga_tiket" required value="">
+                                                                                <input type="text" class="form-control" name="harga_tiket" required value="{{$model->maskapai_berangkat ? $model->maskapai_berangkat->harga_tiket : ''}}">
                                                                                 <label class="form-label">Harga Tiket</label>
                                                                             </div>
                                                                         </div>
@@ -132,36 +127,37 @@
                                                                 <div class="box">
                                                                 <br>
                                                                     <h5>Maskapai Kembali</h5>
-                                                                    <form method="post" id="form_validation" action="route('pegawai.sppd.set-maskapai')">
+                                                                    <form method="post" id="form_validation" action="{{route('pegawai.sppd.set-maskapai')}}">
+                                                                        {{csrf_field()}}
                                                                         <input type="hidden" name="sppd_id" value="{{$model->id}}">
-                                                                        <input type="hidden" name="status" value="kembali">
+                                                                        <input type="hidden" name="status" value="2">
                                                                         <div class="form-group form-float">
                                                                             <div class="form-line">
-                                                                                <input type="text" class="form-control" name="nama_maskapai" required value="">
+                                                                                <input type="text" class="form-control" name="nama maskapai" required value="{{$model->maskapai_kembali ? $model->maskapai_kembali->nama_maskapai : ''}}">
                                                                                 <label class="form-label">Nama Maskapai</label>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group form-float">
                                                                             <div class="form-line">
-                                                                                <input type="text" class="form-control" name="no_tiket" required value="">
+                                                                                <input type="text" class="form-control" name="no_tiket" required value="{{$model->maskapai_kembali ? $model->maskapai_kembali->no_tiket : ''}}">
                                                                                 <label class="form-label">No Tiket</label>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group form-float">
                                                                             <div class="form-line">
-                                                                                <input type="text" class="form-control" name="id_booking" required value="">
+                                                                                <input type="text" class="form-control" name="id_booking" required value="{{$model->maskapai_kembali ? $model->maskapai_kembali->id_booking : ''}}">
                                                                                 <label class="form-label">ID Booking</label>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group form-float">
                                                                             <div class="form-line">
-                                                                                <input type="text" class="form-control" name="tanggal_checkin" required value="">
+                                                                                <input type="date" class="form-control" name="tanggal_checkin" required value="{{$model->maskapai_kembali ? $model->maskapai_kembali->tanggal_checkin : ''}}">
                                                                                 <label class="form-label">Tanggal Check-in</label>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group form-float">
                                                                             <div class="form-line">
-                                                                                <input type="text" class="form-control" name="harga_tiket" required value="">
+                                                                                <input type="text" class="form-control" name="harga_tiket" required value="{{$model->maskapai_kembali ? $model->maskapai_kembali->harga_tiket : ''}}">
                                                                                 <label class="form-label">Harga Tiket</label>
                                                                             </div>
                                                                         </div>
@@ -176,10 +172,11 @@
                                                 </div>
                                                 @endif
                                             </td>
-                                            <td>{{number_format($model->transport)}}</td>
-                                            <td>{{number_format($model->uang_harian)}}</td>
-                                            <td>{{number_format($model->penginapan)}}</td>
-                                            <td>{{number_format($model->representatif)}}</td>
+                                            <td>
+                                            {{number_format($model->total_biaya)}}
+                                            <br>
+                                            <a href="{{route('pegawai.sppd.detail-biaya',$model->id)}}">Detail Biaya</a>
+                                            </td>
                                             <td>
                                                 <a href="{{route('pegawai.sppd.cetak',$model->id)}}" class="btn btn-primary waves-effect">
 				                                    <i class="material-icons">visibility</i>
