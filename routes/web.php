@@ -176,6 +176,7 @@ Route::middleware('auth')->group(function(){
 			Route::get('show/{sppd}','SppdController@show')->name('pegawai.sppd.show');
 			Route::get('cetak/{sppd}','SppdController@cetak')->name('pegawai.sppd.cetak');
 			Route::get('detail-biaya/{sppd}','SppdController@detailBiaya')->name('pegawai.sppd.detail-biaya');
+			Route::get('cetak-rincian/{sppd}','SppdController@cetakRincian')->name('pegawai.sppd.cetak-rincian');
 			Route::post('insert','SppdController@store')->name('pegawai.sppd.insert');
 			Route::post('get-employee','SppdController@getEmployees')->name('pegawai.sppd.get-employees');
 			Route::post('set-urutan','SppdController@setUrutan')->name('pegawai.sppd.set-urutan');

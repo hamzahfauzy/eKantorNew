@@ -3,7 +3,7 @@
 namespace App\Model\Surat;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Model\Reference\Employee;
+use App\Model\Reference\{Employee,WilayahTujuan};
 
 class SptList extends Model
 {
@@ -24,6 +24,11 @@ class SptList extends Model
     function sppds()
     {
         return $this->hasMany(SppdList::class,'spt_id','id');
+    }
+
+    function wilayah()
+    {
+        return $this->hasOne(WilayahTujuan::class,'id','wilayah_id');
     }
 
 }

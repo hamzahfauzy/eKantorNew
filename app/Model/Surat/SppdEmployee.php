@@ -9,7 +9,7 @@ use App\Model\Surat\SppdList;
 class SppdEmployee extends Model
 {
     //
-    protected $fillable = ['employee_id','sppd_id','no_urut','uang_harian','representatif','transport','penginapan'];
+    protected $fillable = ['employee_id','sppd_id','no_urut','uang_harian','representatif','transport','penginapan','lama_waktu','lama_penginapan'];
     public $timestamps = false;
 
     function employee()
@@ -19,7 +19,7 @@ class SppdEmployee extends Model
 
     function getTotalBiayaAttribute()
     {
-        return $this->uang_harian > 0 && $this->uang_harian != "" ? $this->uang_harian + $this->representatif + $this->transport + $this->penginapan : 0;
+        return $this->uang_harian > 0 && $this->uang_harian != "" ? ($this->uang_harian*$this->lama_waktu) + $this->representatif + $this->transport + ($this->penginapan*$this->lama_penginapan) : 0;
     }
 
     function list()

@@ -16,6 +16,12 @@
                             <h2 class="pull-left">
                                 Detail Biaya
                             </h2>
+                            <div class="pull-right">
+                                <a href="{{route('pegawai.sppd.cetak-rincian',$sppd->id)}}" class="btn btn-primary waves-effect">
+                                    <i class="material-icons">print</i> 
+                                    <span>CETAK RINCIAN</span>
+                                </a>
+                            </div>
                         	<div class="clearfix"></div>
                         </div>
                         <div class="body">
@@ -47,14 +53,14 @@
                                     </tfoot>
                                     <tbody>
                                         {{'',$no=1}}
-                                        @foreach($sppd->employees as $model)
+                                        @foreach($sppd->employees()->orderby('no_urut','asc')->get() as $model)
                                         <tr>
                                             <td>{{$no++}}</td>
                                             <td>{{$model->employee->nama}}</td>
                                             <td>{{number_format($model->total_biaya)}}</td>
-                                            <td>{{$model->uang_harian ? number_format($model->uang_harian) : '-'}}</td>
+                                            <td>{!!$model->uang_harian ? number_format($model->uang_harian)." x ".$model->lama_waktu."<br><b>Total: </b>".number_format($model->uang_harian*$model->lama_waktu) : '-'!!}</td>
                                             <td>{{$model->transport ? number_format($model->transport) : '-'}}</td>
-                                            <td>{{$model->penginapan ? number_format($model->penginapan) : '-'}}</td>
+                                            <td>{!!$model->penginapan ? number_format($model->penginapan)." x ".$model->lama_penginapan."<br><b>Total: </b>".number_format($model->penginapan*$model->lama_penginapan) : '-'!!}</td>
                                             <td>{{$model->representatif ? number_format($model->representatif) : '-'}}</td>
                                             <td>
                                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#defaultModal{{$model->id}}" class="btn btn-warning waves-effect">
@@ -79,22 +85,32 @@
                                                                 <tr>
                                                                     <td>Uang Harian</td>
                                                                     <td>:</td>
-                                                                    <td><input type="number" required="" class="form-control" name="uang_harian"></td>
+                                                                    <td><input type="number" required="" class="form-control" name="uang_harian" value="{{$model->uang_harian}}"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Lama Waktu (Hari)</td>
+                                                                    <td>:</td>
+                                                                    <td><input type="number" required="" class="form-control" name="lama_waktu" value="{{$model->lama_waktu}}"></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Transport</td>
                                                                     <td>:</td>
-                                                                    <td><input type="number" required="" class="form-control" name="transport"></td>
+                                                                    <td><input type="number" required="" class="form-control" name="transport" value="{{$model->transport}}"></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Penginapan</td>
                                                                     <td>:</td>
-                                                                    <td><input type="number" required="" class="form-control" name="penginapan"></td>
+                                                                    <td><input type="number" required="" class="form-control" name="penginapan" value="{{$model->penginapan}}"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Lama Penginapan (Malam)</td>
+                                                                    <td>:</td>
+                                                                    <td><input type="number" required="" class="form-control" name="lama_penginapan" value="{{$model->lama_penginapan}}"></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Represenatif</td>
                                                                     <td>:</td>
-                                                                    <td><input type="number" required="" class="form-control" name="representatif"></td>
+                                                                    <td><input type="number" required="" class="form-control" name="representatif" value="{{$model->representatif}}"></td>
                                                                 </tr>
                                                                 </table>
                                                                 <button class="btn btn-primary">Simpan</button>
