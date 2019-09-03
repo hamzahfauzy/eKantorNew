@@ -36,8 +36,8 @@
                                 <div class="form-group form-float">
                                     <select class="form-control show-tick pengikut" name="pengikut[]" required="" data-live-search="true" multiple="">
                                         <option value="">Pengikut</option>
-                                        @foreach($sppd->employees as $model)
-                                        <option value="{{$model->id}}" {{ in_array($model->id, $employees) ? 'selected=""' : '' }}>{{$model->employee->nama}}</option>
+                                        @foreach($sppd->spt->employees as $model)
+                                        <option value="{{$model->employee_id}}" {{ in_array($model->employee_id, $employees) ? 'selected=""' : '' }}>{{$model->employee->nama}}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('pengikut'))
@@ -93,6 +93,28 @@
                                     @if ($errors->has('transportation_id'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('transportation_id') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="text" class="form-control" name="asal" required value="{{$sppd->asal}}">
+                                        <label class="form-label">Tempat Berangkat</label>
+                                    </div>
+                                    @if ($errors->has('asal'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('asal') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="text" class="form-control" name="tujuan" required value="{{$sppd->tujuan}}">
+                                        <label class="form-label">Tempat Tujuan</label>
+                                    </div>
+                                    @if ($errors->has('tujuan'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('tujuan') }}</strong>
                                         </span>
                                     @endif
                                 </div>

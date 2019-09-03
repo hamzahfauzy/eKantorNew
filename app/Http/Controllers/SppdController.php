@@ -23,18 +23,27 @@ class SppdController extends Controller
     public function index()
     {
         //
-        $sppdEmployee = SppdEmployee::where('employee_id', auth()->user()->employee->id)->get();
-        $sppds = [];
-        foreach($sppdEmployee as $data)
-            $sppds[] = $data->list;
+        if(auth()->user()->employee->inSpecialRoleUser())
+        {
+            return view('special-role.sppd.index',[
+                'sppd' => $this->model->get()
+            ]);
+        }
+        else
+        {
+            $sppdEmployee = SppdEmployee::where('employee_id', auth()->user()->employee->id)->get();
+            $sppds = [];
+            foreach($sppdEmployee as $data)
+                $sppds[] = $data->list;
 
-        $ownSppd = $this->model->where('employee_id', auth()->user()->employee->id)->get();
-        foreach($ownSppd as $sppd)
-            if(!in_array($sppd,$sppds))
-                $sppds[] = $sppd;
-        return view('special-role.sppd.index',[
-            'sppd' => $sppds
-        ]);
+            $ownSppd = $this->model->where('employee_id', auth()->user()->employee->id)->get();
+            foreach($ownSppd as $sppd)
+                if(!in_array($sppd,$sppds))
+                    $sppds[] = $sppd;
+            return view('special-role.sppd.index',[
+                'sppd' => $sppds
+            ]);
+        }
         
     }
 
@@ -96,6 +105,8 @@ class SppdController extends Controller
                 'transport' => '0',
                 'penginapan' => '0',
                 'representatif' => '0',
+                'lama_waktu' => '0',
+                'lama_penginapan' => '0',
                 'no_urut' => 0
             ]);
         }
@@ -124,7 +135,7 @@ class SppdController extends Controller
     {
         //
         $sptEmployee = SptEmployee::where('employee_id',auth()->user()->employee->id)->get();
-        $allSptEmployee = SptEmployee::where('spt_id',$sppd->spt_id)->get();
+        $allSptEmployee = SppdEmployee::where('sppd_id',$sppd->id)->get();
         $employees = [];
         foreach($allSptEmployee as $employee)
             $employees[] = $employee->employee_id;
@@ -155,7 +166,8 @@ class SppdController extends Controller
             'pengikut' => 'required'
         ]);
 
-        $sppd = $this->model->find($request->id)->update([
+        $sppd = $this->model->find($request->id);
+        $sppd->update([
             'spt_id' => $request->spt_id,
             'no_sppd' => $request->no_sppd,
             'tanggal' => $request->tanggal,
@@ -169,9 +181,14 @@ class SppdController extends Controller
             'tujuan' => $request->tujuan,
         ]);
 
-        SppdEmployee::where('sppd_id',$sppd->id)->delete();
+        $sppdEmployee = SppdEmployee::where('sppd_id',$request->id)->whereNotIn('employee_id',$request->pengikut)->get();
+        foreach($sppdEmployee as $employee)
+            $employee->delete();
+            
         foreach($request->pengikut as $pengikut)
         {
+            $sppdEmployee = SppdEmployee::where('sppd_id',$request->id)->where('employee_id',$pengikut)->first();
+            if(!empty($sppdEmployee)) continue;
             $model = new SppdEmployee;
             $model->create([
                 'sppd_id' => $sppd->id,
@@ -180,6 +197,8 @@ class SppdController extends Controller
                 'transport' => '0',
                 'penginapan' => '0',
                 'representatif' => '0',
+                'lama_waktu' => '0',
+                'lama_penginapan' => '0',
                 'no_urut' => 0
             ]);
         }

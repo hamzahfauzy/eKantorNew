@@ -66,10 +66,10 @@
                                             <span class="label label-default">{{$model->lama_waktu}} Hari</span>
                                             </td>
                                             <td>
-                                            <span class="label label-default">Terhitung Tanggal :</span><br>
-                                            {{$model->tanggal_awal->formatLocalized("%d %B %Y")}} <br><br> 
-                                            <span class="label label-default">Sampai Tanggal :</span><br>
+                                            <span class="label label-default">
+                                            {{$model->tanggal_awal->formatLocalized("%d %B %Y")}} - 
                                             {{$model->tanggal_akhir->formatLocalized("%d %B %Y")}}
+                                            </span>
                                             </td>
                                             <td><a href="javascript:void(0)" data-toggle="modal" data-target="#defaultModal{{$model->id}}"class="label label-primary">Lihat Pegawai</a></td>
                                             <td>
