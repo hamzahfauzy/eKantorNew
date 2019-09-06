@@ -160,6 +160,7 @@ Route::middleware('auth')->group(function(){
 
 		Route::prefix('spt')->group(function(){
 			Route::get('/','SptController@index')->name('pegawai.spt.index');
+			Route::get('rekapitulasi','SptController@rekapitulasi')->name('pegawai.spt.rekapitulasi');
 			Route::get('create','SptController@create')->name('pegawai.spt.create');
 			Route::get('edit/{spt}','SptController@edit')->name('pegawai.spt.edit');
 			Route::get('show/{spt}','SptController@show')->name('pegawai.spt.show');

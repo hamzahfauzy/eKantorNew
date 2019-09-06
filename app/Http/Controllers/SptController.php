@@ -33,6 +33,21 @@ class SptController extends Controller
         ]);
     }
 
+    public function rekapitulasi()
+    {
+        //
+        $sptEmployee = SptEmployee::where('employee_id',auth()->user()->employee->id)->get();
+        $model = [];
+        foreach($sptEmployee as $spt)
+        {
+            $model[] = $spt->list;
+        }
+        return view('special-role.spt.spt-rekapitulasi',[
+            'setting' => Setting::first(),
+            'spt' => $model
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

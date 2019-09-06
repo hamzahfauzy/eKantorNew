@@ -16,6 +16,12 @@
                             <h2 class="pull-left">
                                 List Data SPT
                             </h2>
+                            <div class="pull-right">
+                                <a href="{{route('pegawai.spt.rekapitulasi')}}" target="_blank" class="btn btn-warning waves-effect">
+                                    <i class="material-icons">print</i> 
+                                    <span>CETAK REKAPITULASI</span>
+                                </a>
+                            </div>
                         	<div class="clearfix"></div>
                         </div>
                         <div class="body">
@@ -55,7 +61,7 @@
                                             <td>{{$no++}}</td>
                                             <td>{{$model->no_spt}}</td>
                                             <td>{{$model->tempat_tujuan}}</td>
-                                            <td>{{$model->lama_waktu}}</td>
+                                            <td>{{$model->lama_waktu}} Hari</td>
                                             <td>
                                             <span class="label label-default">Terhitung Tanggal :</span><br>
                                             {{$model->tanggal_awal->formatLocalized("%d %B %Y")}} <br><br> 

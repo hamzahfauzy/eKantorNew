@@ -27,6 +27,7 @@
                                     <tbody>
                                         {{'',$no=1}}
                                         @foreach($sppd as $model)
+                                        @if(empty(auth()->user()->employee->isPptk))
                                         @foreach($model->employees()->orderby('no_urut','asc')->get() as $employee)
                                         <tr>
                                             <td>{{$no++}}</td>
@@ -53,6 +54,34 @@
                                             <td>{{number_format($employee->total_biaya)}}</td>
                                         </tr>
                                         @endforeach
+                                        @else
+                                        @foreach($model->employees()->where('employee_id',auth()->user()->employee->id)->get() as $employee)
+                                        <tr>
+                                            <td>{{$no++}}</td>
+                                            <td>
+                                                {{$employee->employee->nama}}
+                                                <br>
+                                                <b>{{$employee->employee->NIP}}</b>
+                                                <br>
+                                                {{$employee->employee->jabatan}}
+                                            </td>
+                                            <td>
+                                                <b>No. SPD</b> : {{$model->no_sppd}}
+                                                <br>
+                                                <b>Tanggal</b> : {{$model->tanggal->formatLocalized('%d %B %Y')}}<br>
+                                                <b>Lama Waktu</b> : {{$model->spt->lama_waktu}} Hari
+                                            </td>
+                                            <td>
+                                            <span class="label label-default">
+                                                {{$model->spt->tanggal_awal->formatLocalized("%d %B %Y")}} - 
+                                                {{$model->spt->tanggal_akhir->formatLocalized("%d %B %Y")}}
+                                            </span><br>
+                                            <b>Tujuan</b> : {{$model->spt->tempat_tujuan}}<br>
+                                            </td>
+                                            <td>{{number_format($employee->total_biaya)}}</td>
+                                        </tr>
+                                        @endforeach
+                                        @endif
                                         @endforeach
                                     </tbody>
                                 </table>
