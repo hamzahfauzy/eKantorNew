@@ -29,6 +29,7 @@ Route::get('/nip-patch',function(){
 Route::middleware('auth')->group(function(){
 	Route::get('notification-redirector/{notification}','HomeController@notificationRedirector')->name('notification-redirector');
 	Route::get('file-viewer','HomeController@fileViewer')->name('file-viewer');
+	Route::get('agenda','HomeController@agenda')->name('agenda');
 	Route::middleware('admin')->group(function(){
 		Route::prefix('reference')->namespace('Reference')->group(function(){
 			Route::prefix('golongan')->group(function(){

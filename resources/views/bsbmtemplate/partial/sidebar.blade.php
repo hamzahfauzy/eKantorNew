@@ -185,7 +185,7 @@
                         </li>
                         @endif
                         <li class="@yield('agenda-active')">
-                            <a href="#">
+                            <a href="{{route('agenda')}}">
                                 <i class="material-icons">view_agenda</i>
                                 <span>Agenda</span>
                             </a>
