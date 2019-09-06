@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Surat\{SptList, SptNumber, SptEmployee};
 use App\Model\Reference\{WilayahTujuan, Employee};
 use App\Model\Setting;
+use PDF;
 
 class SptController extends Controller
 {
@@ -255,5 +256,22 @@ class SptController extends Controller
         // }
 
         return response()->json(["error" => 0, "message" => "data found", "data" => $showEmployee]);
+    }
+
+    public function rekapitulasi()
+    {
+        //
+        $setting = Setting::first();
+        // $pdf = PDF::loadview('special-role.spt.rekapitulasi',[
+        //     'spt' => $this->model->get(),
+        //     'setting' => $setting
+        // ]);
+
+        return view('special-role.spt.rekapitulasi',[
+            'spt' => $this->model->get(),
+            'setting' => $setting
+        ]);
+
+        // $pdf->stream();
     }
 }

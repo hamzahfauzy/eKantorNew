@@ -171,6 +171,7 @@ Route::middleware('auth')->group(function(){
 
 		Route::prefix('sppd')->group(function(){
 			Route::get('/','SppdController@index')->name('pegawai.sppd.index');
+			Route::get('rekapitulasi','SppdController@rekapitulasi')->name('pegawai.sppd.rekapitulasi');
 			Route::get('create','SppdController@create')->name('pegawai.sppd.create');
 			Route::get('edit/{sppd}','SppdController@edit')->name('pegawai.sppd.edit');
 			Route::get('show/{sppd}','SppdController@show')->name('pegawai.sppd.show');
@@ -208,6 +209,7 @@ Route::middleware('auth')->group(function(){
 				Route::get('show/{spt}/sppd','SptController@sppd')->name('pegawai.spt-role.sppd');
 				Route::get('show/{spt}/sppd/cetak','SptController@sppdCetak')->name('pegawai.spt-role.sppd-cetak');
 				Route::get('cetak/{spt}','SptController@cetak')->name('pegawai.spt-role.cetak');
+				Route::get('rekapitulasi','SptController@rekapitulasi')->name('pegawai.spt-role.rekapitulasi');
 				Route::post('insert','SptController@store')->name('pegawai.spt-role.insert');
 				Route::post('get-employees','SptController@getEmployees')->name('pegawai.spt-role.get-employees');
 				Route::post('set-urutan','SptController@setUrutan')->name('pegawai.spt-role.set-urutan');

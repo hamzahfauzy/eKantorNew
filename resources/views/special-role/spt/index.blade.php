@@ -17,9 +17,13 @@
                                 List Data SPT
                             </h2>
                             <div class="pull-right">
-                                <a href="{{$spt_add_url=route('pegawai.spt-role.create')}}" class="btn btn-primary waves-effect">
+                                <a href="{{route('pegawai.spt-role.create')}}" class="btn btn-primary waves-effect">
                                     <i class="material-icons">add</i> 
                                     <span>TAMBAH DATA</span>
+                                </a>
+                                <a href="{{route('pegawai.spt-role.rekapitulasi')}}" target="_blank" class="btn btn-warning waves-effect">
+                                    <i class="material-icons">print</i> 
+                                    <span>CETAK REKAPITULASI</span>
                                 </a>
                             </div>
                         	<div class="clearfix"></div>
@@ -59,7 +63,10 @@
                                         @foreach($spt as $model)
                                         <tr>
                                             <td>{{$no++}}</td>
-                                            <td>{{$model->no_spt}}</td>
+                                            <td>
+                                            {{$model->no_spt}}<br>
+                                            {{$model->tanggal->formatLocalized("%d %B %Y")}}
+                                            </td>
                                             <td>
                                             {{$model->tempat_tujuan}}
                                             <br>

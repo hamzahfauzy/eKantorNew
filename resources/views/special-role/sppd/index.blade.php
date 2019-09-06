@@ -16,14 +16,19 @@
                             <h2 class="pull-left">
                                 List Data SPPD
                             </h2>
-                            @if(!empty(auth()->user()->employee->isPptk))
+                            
                             <div class="pull-right">
-                                <a href="{{$spt_add_url=route('pegawai.sppd.create')}}" class="btn btn-primary waves-effect">
+                                @if(!empty(auth()->user()->employee->isPptk))
+                                <a href="{{route('pegawai.sppd.create')}}" class="btn btn-primary waves-effect">
                                     <i class="material-icons">add</i> 
                                     <span>TAMBAH DATA</span>
                                 </a>
+                                @endif
+                                <a href="{{route('pegawai.sppd.rekapitulasi')}}" target="_blank" class="btn btn-warning waves-effect">
+                                    <i class="material-icons">print</i> 
+                                    <span>CETAK REKAPITULASI</span>
+                                </a>
                             </div>
-                            @endif
                         	<div class="clearfix"></div>
                         </div>
                         <div class="body">
@@ -326,6 +331,5 @@ function simpanUrutan(id)
         }
     });
 }
-</script>
 </script>
 @endsection

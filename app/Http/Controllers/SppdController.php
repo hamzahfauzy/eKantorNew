@@ -47,6 +47,36 @@ class SppdController extends Controller
         
     }
 
+    public function rekapitulasi()
+    {
+        //
+        $setting = Setting::first();
+        if(auth()->user()->employee->inSpecialRoleUser())
+        {
+            return view('special-role.sppd.rekapitulasi',[
+                'sppd' => $this->model->get(),
+                'setting' => $setting
+            ]);
+        }
+        else
+        {
+            $sppdEmployee = SppdEmployee::where('employee_id', auth()->user()->employee->id)->get();
+            $sppds = [];
+            foreach($sppdEmployee as $data)
+                $sppds[] = $data->list;
+
+            $ownSppd = $this->model->where('employee_id', auth()->user()->employee->id)->get();
+            foreach($ownSppd as $sppd)
+                if(!in_array($sppd,$sppds))
+                    $sppds[] = $sppd;
+            return view('special-role.sppd.rekapitulasi',[
+                'sppd' => $sppds,
+                'setting' => $setting
+            ]);
+        }
+        
+    }
+
     /**
      * Show the form for creating a new resource.
      *
