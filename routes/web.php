@@ -29,7 +29,7 @@ Route::get('/nip-patch',function(){
 Route::middleware('auth')->group(function(){
 	Route::get('notification-redirector/{notification}','HomeController@notificationRedirector')->name('notification-redirector');
 	Route::get('file-viewer','HomeController@fileViewer')->name('file-viewer');
-	Route::get('agenda','HomeController@agenda')->name('agenda');
+	// Route::get('agenda','HomeController@agenda')->name('agenda');
 	Route::middleware('admin')->group(function(){
 		Route::prefix('reference')->namespace('Reference')->group(function(){
 			Route::prefix('golongan')->group(function(){
@@ -144,6 +144,15 @@ Route::middleware('auth')->group(function(){
 	});
 
 	Route::middleware('pegawai')->group(function(){
+
+		Route::prefix('agenda')->group(function(){
+			Route::get('/','AgendaController@index')->name('agenda.index');
+			Route::get('create','AgendaController@create')->name('agenda.create');
+			Route::get('edit/{agenda}','AgendaController@edit')->name('agenda.edit');
+			Route::post('insert','AgendaController@store')->name('agenda.insert');
+			Route::put('update','AgendaController@update')->name('agenda.update');
+			Route::delete('delete','AgendaController@destroy')->name('agenda.delete');
+		});
 
 		Route::prefix('surat-keluar')->group(function(){
 			Route::get('/','SuratKeluarController@index')->name('pegawai.surat-keluar.index');

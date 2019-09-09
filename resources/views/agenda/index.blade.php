@@ -1,11 +1,10 @@
 @extends('bsbmtemplate.admin-template')
-@section('spt-sppd-active','active')
-@section('spt-active','active')
+@section('agenda-active','active')
 @section('content')
 		<div class="container-fluid">
             <div class="block-header">
                 <h2>
-                    Data SPT
+                    Data Agenda
                 </h2>
             </div>
             <!-- Basic Examples -->
@@ -14,12 +13,12 @@
                     <div class="card">
                         <div class="header">
                             <h2 class="pull-left">
-                                List Data SPT
+                                List Data Agenda
                             </h2>
                             <div class="pull-right">
-                                <a href="{{route('pegawai.spt.rekapitulasi')}}" target="_blank" class="btn btn-warning waves-effect">
-                                    <i class="material-icons">print</i> 
-                                    <span>CETAK REKAPITULASI</span>
+                                <a href="{{route('agenda.create')}}" class="btn btn-primary waves-effect">
+                                    <i class="material-icons">add</i> 
+                                    <span>TAMBAH DATA</span>
                                 </a>
                             </div>
                         	<div class="clearfix"></div>
@@ -37,45 +36,69 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>No SPT</th>
-                                            <th>Tujuan</th>
-                                            <th>Selama</th>
                                             <th>Tanggal</th>
+                                            <th>Waktu</th>
+                                            <th>Kegiatan</th>
+                                            <th>Tempat</th>
+                                            <th>Keterangan</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>#</th>
-                                            <th>No SPT</th>
-                                            <th>Tujuan</th>
-                                            <th>Selama</th>
                                             <th>Tanggal</th>
+                                            <th>Waktu</th>
+                                            <th>Kegiatan</th>
+                                            <th>Tempat</th>
+                                            <th>Keterangan</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         {{'',$no=1}}
-                                        @foreach($spt as $model)
+                                        @foreach($agendas as $model)
                                         <tr>
                                             <td>{{$no++}}</td>
                                             <td>
-                                            {{$model->no_spt}}<br>
-                                            {{$model->tanggal->formatLocalized("%d %B %Y")}}
-                                            </td>
-                                            <td>{{$model->tempat_tujuan}}</td>
-                                            <td>{{$model->lama_waktu}} Hari</td>
-                                            <td>
-                                            <span class="label label-default">Terhitung Tanggal :</span><br>
-                                            {{$model->tanggal_awal->formatLocalized("%d %B %Y")}} <br><br> 
-                                            <span class="label label-default">Sampai Tanggal :</span><br>
-                                            {{$model->tanggal_akhir->formatLocalized("%d %B %Y")}}
+                                                <span>Mulai</span><br>
+                                                {{$model->tanggal_awal}}<br><br>
+                                                
+                                                <span>Selesai</span><br>
+                                                {{$model->tanggal_akhir}} 
                                             </td>
                                             <td>
-                                                <a href="{{route('pegawai.spt.cetak',$model->id)}}" class="btn btn-secondary waves-effect">
-				                                    <i class="material-icons">print</i>
-				                                    <span>Cetak</span>
+                                                <span>Mulai</span><br>
+                                                {{$model->waktu_mulai}} <br><br>
+                                                
+                                                <span>Selesai</span><br>
+                                                {{$model->waktu_selesai}} 
+                                            </td>
+                                            <td>
+                                                {{$model->kegiatan}}
+                                            </td>
+                                            <td>
+                                                {{$model->tempat}}
+                                            </td>
+                                            <td>
+                                                {{$model->keterangan}} 
+                                            </td>
+                                            <td>
+                                            	<a href="{{route('agenda.edit',$model->id)}}" class="btn btn-warning waves-effect">
+				                                    <i class="material-icons">create</i>
+				                                    <span>Edit</span>
 				                                </a>
+
+				                                <a href="{{route('agenda.delete')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();deleteAlert({{$model->id}})">
+				                                    <i class="material-icons">delete</i>
+				                                    <span>Hapus</span>
+				                                </a>
+
+				                                <form id="form-delete-{{$model->id}}" style="display: none;" method="post" action="{{route('agenda.delete')}}">
+				                                	{{csrf_field()}}
+				                                	<input type="hidden" name="_method" value="DELETE">
+				                                	<input type="hidden" name="id" value="{{$model->id}}">
+				                                </form>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -103,7 +126,7 @@
 <script src="{{asset('template/bsbm/plugins/jquery-datatable/extensions/export/buttons.print.min.js')}}"></script>
 
 <!-- Sweet Alert Plugin Js -->
-<script src="{{asset('template/bsbm/plugins/sweetalert/sweetalert.min.js')}}"></script>
+    <script src="{{asset('template/bsbm/plugins/sweetalert/sweetalert.min.js')}}"></script>
 <script type="text/javascript">
 $(function () {
     $('.js-basic-example').DataTable({
