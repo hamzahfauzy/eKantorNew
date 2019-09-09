@@ -7,7 +7,7 @@
                     <div>
                         <div class="header">
                             <h2 align="center">
-                                Rekap SPT Tahun Anggaran {{date('Y')}}
+                                Rekap SPT Tahun Anggaran {{$tahun_anggaran}}
                             </h2>
                             <h3 align="center">{{$setting->nama}}</h3>
                         	<div class="clearfix"></div>
@@ -19,18 +19,27 @@
                                         <tr>
                                             <th>#</th>
                                             <th>No SPT</th>
-                                            <th>Tujuan</th>
+                                            <th>Maksud dan Tujuan</th>
                                             <th>Selama</th>
                                             <th>Tanggal</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {{'',$no=1}}
+                                        @if(empty($spt) || count($spt) == 0)
+                                        <tr>
+                                            <td colspan="5"><i>Tidak ada data</i></td>
+                                        </tr>
+                                        @endif
                                         @foreach($spt as $model)
+                                        <?php $maksud_tujuan = explode("\n",$model->maksud_tujuan);?>
                                         <tr>
                                             <td>{{$no++}}</td>
-                                            <td>{{$model->no_spt}}</td>
-                                            <td>{{$model->tempat_tujuan}}</td>
+                                            <td>
+                                            {{$model->no_spt}}<br>
+                                            {{$model->tanggal->formatLocalized('%d %B %Y')}}
+                                            </td>
+                                            <td>{{$maksud_tujuan[0]}}</td>
                                             <td>{{$model->lama_waktu}} Hari</td>
                                             <td>
                                             <span class="label label-default">Terhitung Tanggal :</span><br>

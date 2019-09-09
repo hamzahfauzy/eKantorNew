@@ -24,8 +24,10 @@ class SptController extends Controller
     public function index()
     {
         //
+        $employees = Employee::get();
         return view('special-role.spt.index',[
-            'spt' => $this->model->get()
+            'spt' => $this->model->get(),
+            'employees' => $employees
         ]);
     }
 
@@ -267,8 +269,14 @@ class SptController extends Controller
         //     'setting' => $setting
         // ]);
 
+        $from = $_GET['tanggal_awal'];
+        $to = $_GET['tanggal_akhir'];
+        $model = $this->model->whereBetween('tanggal', [$from, $to])->get();
+
         return view('special-role.spt.rekapitulasi',[
-            'spt' => $this->model->get(),
+            'spt' => $model,
+            'employee_id' => $_GET['employee_id'],
+            'tahun_anggaran' => $_GET['tahun_anggaran'],
             'setting' => $setting
         ]);
 

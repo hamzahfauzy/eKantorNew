@@ -36,14 +36,20 @@ class SptController extends Controller
     public function rekapitulasi()
     {
         //
+        $from = $_GET['tanggal_awal'];
+        $to = $_GET['tanggal_akhir'];
+        
         $sptEmployee = SptEmployee::where('employee_id',auth()->user()->employee->id)->get();
         $model = [];
         foreach($sptEmployee as $spt)
         {
-            $model[] = $spt->list;
+            $_model = $spt->list()->whereBetween('tanggal', [$from, $to])->first();
+            if($_model != null)
+                $model[] = $_model;
         }
         return view('special-role.spt.spt-rekapitulasi',[
             'setting' => Setting::first(),
+            'tahun_anggaran' => $_GET['tahun_anggaran'],
             'spt' => $model
         ]);
     }

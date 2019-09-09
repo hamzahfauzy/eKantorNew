@@ -24,10 +24,54 @@
                                     <span>TAMBAH DATA</span>
                                 </a>
                                 @endif
-                                <a href="{{route('pegawai.sppd.rekapitulasi')}}" target="_blank" class="btn btn-warning waves-effect">
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-rekapitulasi" class="btn btn-warning waves-effect">
                                     <i class="material-icons">print</i> 
                                     <span>CETAK REKAPITULASI</span>
                                 </a>
+                                <div class="modal fade" id="modal-rekapitulasi" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="defaultModalLabel">Cetak Rekapitulasi SPPD</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="box">
+                                                <form action="{{route('pegawai.sppd.rekapitulasi')}}" target="_blank">
+                                                @if(auth()->user()->employee->inSpecialRoleUser())
+                                                <div class="form-group form-float">
+                                                    <select class="form-control show-tick pengikut" name="employee_id" required="" data-live-search="true">
+                                                    <option value="0">Semua</option>
+                                                    @foreach($employees as $employee)
+                                                    <option value="{{$employee->id}}">{{$employee->nama}}</option>
+                                                    @endforeach
+                                                    </select>
+                                                </div>
+                                                @endif
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <label>Tanggal Awal</label>
+                                                        <input type="text" class="datepicker from form-control" name="tanggal_awal" placeholder="Tanggal Awal" required="">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <label>Tanggal Akhir</label>
+                                                        <input type="text" class="datepicker to form-control" name="tanggal_akhir" placeholder="Tanggal Akhir" required="">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <label>Tahun Anggaran</label>
+                                                        <input type="text" class="form-control" name="tahun_anggaran" placeholder="Tahun Anggaran" required="">
+                                                    </div>
+                                                </div>
+                                                <button class="btn btn-warning"><i class="material-icons">print</i> CETAK REKAPITULASI</button>
+                                                </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         	<div class="clearfix"></div>
                         </div>
@@ -123,7 +167,7 @@
                                                                         </div>
                                                                         <div class="form-group form-float">
                                                                             <div class="form-line">
-                                                                                <input type="date" class="form-control" name="tanggal_checkin" required value="{{$model->maskapai_berangkat ? $model->maskapai_berangkat->tanggal_checkin : ''}}">
+                                                                                <input type="date" class="form-control" name="tanggal_checkin" required value="{{$model->maskapai_berangkat ? $model->maskapai_berangkat->tanggal_checkin : date('Y-m-d')}}">
                                                                                 <label class="form-label">Tanggal Check-in</label>
                                                                             </div>
                                                                         </div>
@@ -164,7 +208,7 @@
                                                                         </div>
                                                                         <div class="form-group form-float">
                                                                             <div class="form-line">
-                                                                                <input type="date" class="form-control" name="tanggal_checkin" required value="{{$model->maskapai_kembali ? $model->maskapai_kembali->tanggal_checkin : ''}}">
+                                                                                <input type="date" class="form-control" name="tanggal_checkin" required value="{{$model->maskapai_kembali ? $model->maskapai_kembali->tanggal_checkin : date('Y-m-d')}}">
                                                                                 <label class="form-label">Tanggal Check-in</label>
                                                                             </div>
                                                                         </div>
@@ -331,5 +375,26 @@ function simpanUrutan(id)
         }
     });
 }
+</script>
+<!-- Select Plugin Js -->
+<script src="{{asset('template/bsbm/plugins/bootstrap-select/js/bootstrap-select.js')}}"></script>
+<!-- Moment Plugin Js -->
+<script src="{{asset('template/bsbm/plugins/momentjs/moment.js')}}"></script>
+<!-- Bootstrap Material Datetime Picker Plugin Js -->
+<script src="{{asset('template/bsbm/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
+<script type="text/javascript">
+$('input.datepicker.to').bootstrapMaterialDatePicker({
+    clearButton: true,
+    weekStart: 1,
+    time: false
+});
+$('input.datepicker.from').bootstrapMaterialDatePicker({
+    clearButton: true,
+    weekStart: 1,
+    time: false
+}).on('change',function(e, date){
+    $('input.datepicker.to').bootstrapMaterialDatePicker('setMinDate', date);
+});
+
 </script>
 @endsection

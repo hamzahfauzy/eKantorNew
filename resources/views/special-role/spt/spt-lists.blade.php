@@ -17,10 +17,44 @@
                                 List Data SPT
                             </h2>
                             <div class="pull-right">
-                                <a href="{{route('pegawai.spt.rekapitulasi')}}" target="_blank" class="btn btn-warning waves-effect">
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-rekapitulasi" class="btn btn-warning waves-effect">
                                     <i class="material-icons">print</i> 
                                     <span>CETAK REKAPITULASI</span>
                                 </a>
+                                <div class="modal fade" id="modal-rekapitulasi" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="defaultModalLabel">Cetak Rekapitulasi SPT</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="box">
+                                                <form action="{{route('pegawai.spt.rekapitulasi')}}" target="_blank">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <label>Tanggal Awal</label>
+                                                        <input type="text" class="datepicker from form-control" name="tanggal_awal" placeholder="Tanggal Awal" required="">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <label>Tanggal Akhir</label>
+                                                        <input type="text" class="datepicker to form-control" name="tanggal_akhir" placeholder="Tanggal Akhir" required="">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <label>Tahun Anggaran</label>
+                                                        <input type="text" class="form-control" name="tahun_anggaran" placeholder="Tahun Anggaran" required="">
+                                                    </div>
+                                                </div>
+                                                <button class="btn btn-warning"><i class="material-icons">print</i> CETAK REKAPITULASI</button>
+                                                </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         	<div class="clearfix"></div>
                         </div>
@@ -38,7 +72,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>No SPT</th>
-                                            <th>Tujuan</th>
+                                            <th>Maksud dan Tujuan</th>
                                             <th>Selama</th>
                                             <th>Tanggal</th>
                                             <th></th>
@@ -48,7 +82,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>No SPT</th>
-                                            <th>Tujuan</th>
+                                            <th>Maksud dan Tujuan</th>
                                             <th>Selama</th>
                                             <th>Tanggal</th>
                                             <th></th>
@@ -57,13 +91,16 @@
                                     <tbody>
                                         {{'',$no=1}}
                                         @foreach($spt as $model)
+                                        <?php $maksud_tujuan = explode("\n",$model->maksud_tujuan);?>
                                         <tr>
                                             <td>{{$no++}}</td>
                                             <td>
                                             {{$model->no_spt}}<br>
                                             {{$model->tanggal->formatLocalized("%d %B %Y")}}
                                             </td>
-                                            <td>{{$model->tempat_tujuan}}</td>
+                                            <td>
+                                            {{$maksud_tujuan[0]}}
+                                            </td>
                                             <td>{{$model->lama_waktu}} Hari</td>
                                             <td>
                                             <span class="label label-default">Terhitung Tanggal :</span><br>
@@ -128,5 +165,26 @@ function deleteAlert(id)
         }
 	});
 }
+</script>
+<!-- Select Plugin Js -->
+<script src="{{asset('template/bsbm/plugins/bootstrap-select/js/bootstrap-select.js')}}"></script>
+<!-- Moment Plugin Js -->
+<script src="{{asset('template/bsbm/plugins/momentjs/moment.js')}}"></script>
+<!-- Bootstrap Material Datetime Picker Plugin Js -->
+<script src="{{asset('template/bsbm/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
+<script type="text/javascript">
+$('input.datepicker.to').bootstrapMaterialDatePicker({
+    clearButton: true,
+    weekStart: 1,
+    time: false
+});
+$('input.datepicker.from').bootstrapMaterialDatePicker({
+    clearButton: true,
+    weekStart: 1,
+    time: false
+}).on('change',function(e, date){
+    $('input.datepicker.to').bootstrapMaterialDatePicker('setMinDate', date);
+});
+
 </script>
 @endsection

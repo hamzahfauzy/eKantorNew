@@ -26,9 +26,17 @@
                                     </thead>
                                     <tbody>
                                         {{'',$no=1}}
+                                        @if(empty($sppd) || count($sppd) == 0)
+                                        <tr>
+                                            <td colspan="5"><i>Tidak ada data</i></td>
+                                        </tr>
+                                        @endif
                                         @foreach($sppd as $model)
                                         @if(empty(auth()->user()->employee->isPptk))
                                         @foreach($model->employees()->orderby('no_urut','asc')->get() as $employee)
+                                        @if($employee->employee_id != $employee_id && $employee_id != 0)
+                                            @continue
+                                        @endif
                                         <tr>
                                             <td>{{$no++}}</td>
                                             <td>

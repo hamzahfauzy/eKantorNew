@@ -9,7 +9,7 @@
                     <div>
                         <div class="header">
                             <h2 align="center">
-                                Rekap SPT Tahun Anggaran {{date('Y')}}
+                                Rekap SPT Tahun Anggaran {{$tahun_anggaran}}
                             </h2>
                             <h3 align="center">{{$setting->nama}}</h3>
                         	<div class="clearfix"></div>
@@ -24,15 +24,23 @@
                                             <th>Tujuan</th>
                                             <th>Tanggal</th>
                                             <th>Pegawai</th>
-                                            <th>Maksud</th>
+                                            <th>Maksud dan Tujuan</th>
                                             <th>Perjalanan Dinas</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {{'',$no=1}}
+                                        @if(empty($spt) || count($spt) == 0)
+                                        <tr>
+                                            <td colspan="7"><i>Tidak ada data</i></td>
+                                        </tr>
+                                        @endif
                                         @foreach($spt as $model)
                                             <?php $maksud_tujuan = explode("\n",$model->maksud_tujuan);?>
                                             @foreach($model->employees as $employee)
+                                            @if($employee->employee_id != $employee_id && $employee_id != 0)
+                                                @continue
+                                            @endif
                                             <tr>
                                                 <td>{{$no++}}</td>
                                                 <td>

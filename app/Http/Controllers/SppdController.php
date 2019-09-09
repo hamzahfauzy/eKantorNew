@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Setting;
-use App\Model\Reference\Transportation;
+use App\Model\Reference\{Transportation,Employee};
 use App\Model\Surat\{SppdList, SptList, SptEmployee, SppdEmployee, SppdMaskapai};
 
 class SppdController extends Controller
@@ -23,10 +23,12 @@ class SppdController extends Controller
     public function index()
     {
         //
+        $employees = Employee::get();
         if(auth()->user()->employee->inSpecialRoleUser())
         {
             return view('special-role.sppd.index',[
-                'sppd' => $this->model->get()
+                'sppd' => $this->model->get(),
+                'employees' => $employees
             ]);
         }
         else
@@ -41,7 +43,8 @@ class SppdController extends Controller
                 if(!in_array($sppd,$sppds))
                     $sppds[] = $sppd;
             return view('special-role.sppd.index',[
-                'sppd' => $sppds
+                'sppd' => $sppds,
+                'employees' => $employees
             ]);
         }
         
@@ -51,10 +54,14 @@ class SppdController extends Controller
     {
         //
         $setting = Setting::first();
+        $from = $_GET['tanggal_awal'];
+        $to = $_GET['tanggal_akhir'];
         if(auth()->user()->employee->inSpecialRoleUser())
         {
             return view('special-role.sppd.rekapitulasi',[
-                'sppd' => $this->model->get(),
+                'sppd' => $this->model->whereBetween('tanggal', [$from, $to])->get(),
+                'tahun_anggaran' => $_GET['tahun_anggaran'],
+                'employee_id' => $_GET['employee_id'],
                 'setting' => $setting
             ]);
         }
@@ -63,14 +70,19 @@ class SppdController extends Controller
             $sppdEmployee = SppdEmployee::where('employee_id', auth()->user()->employee->id)->get();
             $sppds = [];
             foreach($sppdEmployee as $data)
-                $sppds[] = $data->list;
+            {
+                $_model = $data->list()->whereBetween('tanggal', [$from, $to])->first();
+                if($_model != null)
+                    $model[] = $_model;
+            }
 
-            $ownSppd = $this->model->where('employee_id', auth()->user()->employee->id)->get();
+            $ownSppd = $this->model->where('employee_id', auth()->user()->employee->id)->whereBetween('tanggal', [$from, $to])->get();
             foreach($ownSppd as $sppd)
                 if(!in_array($sppd,$sppds))
                     $sppds[] = $sppd;
             return view('special-role.sppd.rekapitulasi',[
                 'sppd' => $sppds,
+                'tahun_anggaran' => $_GET['tahun_anggaran'],
                 'setting' => $setting
             ]);
         }
