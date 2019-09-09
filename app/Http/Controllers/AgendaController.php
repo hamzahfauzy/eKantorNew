@@ -31,12 +31,9 @@ class AgendaController extends Controller
         $this->validate($request,[
             'tanggal_awal' => 'required',
             'tanggal_akhir' => 'required',
-            'waktu_mulai' => 'required',
-            'waktu_selesai' => 'required',
             'kegiatan' => 'required',
             'tempat' => 'required',
             'keterangan' => 'required',
-            'file_url' => 'required'
         ]);
 
         $path = "";
@@ -50,8 +47,8 @@ class AgendaController extends Controller
             'employee_id' => auth()->user()->employee->id,
             'tanggal_awal' => $request->tanggal_awal,
             'tanggal_akhir' => $request->tanggal_awal,
-            'waktu_mulai' => $request->waktu_mulai,
-            'waktu_selesai' => $request->waktu_selesai,
+            'waktu_mulai' => $request->waktu_mulai ? $request->waktu_mulai : '',
+            'waktu_selesai' => $request->waktu_selesai ? $request->waktu_selesai : '',
             'kegiatan' => $request->kegiatan,
             'tempat' => $request->tempat,
             'keterangan' => $request->keterangan,
@@ -73,8 +70,6 @@ class AgendaController extends Controller
         $this->validate($request,[
             'tanggal_awal' => 'required',
             'tanggal_akhir' => 'required',
-            'waktu_mulai' => 'required',
-            'waktu_selesai' => 'required',
             'kegiatan' => 'required',
             'tempat' => 'required',
             'keterangan' => 'required',
@@ -84,8 +79,8 @@ class AgendaController extends Controller
             'employee_id' => auth()->user()->employee->id,
             'tanggal_awal' => $request->tanggal_awal,
             'tanggal_akhir' => $request->tanggal_awal,
-            'waktu_mulai' => $request->waktu_mulai,
-            'waktu_selesai' => $request->waktu_selesai,
+            'waktu_mulai' => $request->waktu_mulai ? $request->waktu_mulai : '',
+            'waktu_selesai' => $request->waktu_selesai ? $request->waktu_selesai : '',
             'kegiatan' => $request->kegiatan,
             'tempat' => $request->tempat,
             'keterangan' => $request->keterangan,

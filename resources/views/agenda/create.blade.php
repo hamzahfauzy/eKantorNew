@@ -42,7 +42,7 @@
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <label>Waktu Mulai</label>
-                                        <input type="text" class="datepicker time form-control" name="waktu_mulai" placeholder="Waktu Mulai" required="" value="{{old('waktu_mulai')}}">
+                                        <input type="text" class="datepicker time form-control" name="waktu_mulai" placeholder="Waktu Mulai" value="{{old('waktu_mulai')}}">
                                     </div>
                                     @if ($errors->has('waktu_mulai'))
                                         <span class="invalid-feedback" role="alert">
@@ -53,7 +53,7 @@
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <label>Waktu Selesai</label>
-                                        <input type="text" class="datepicker time form-control" name="waktu_selesai" placeholder="Waktu Selesai" required="" value="{{old('waktu_selesai')}}">
+                                        <input type="text" class="datepicker time form-control" name="waktu_selesai" placeholder="Waktu Selesai" value="{{old('waktu_selesai')}}">
                                     </div>
                                     @if ($errors->has('waktu_selesai'))
                                         <span class="invalid-feedback" role="alert">
