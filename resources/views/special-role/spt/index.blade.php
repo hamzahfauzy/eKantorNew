@@ -84,7 +84,8 @@
                                         <tr>
                                             <th>#</th>
                                             <th>No SPT</th>
-                                            <th>Maksud dan Tujuan</th>
+                                            <th>Maksud</th>
+                                            <th>Tujuan</th>
                                             <th>Tanggal</th>
                                             <th>Pegawai</th>
                                             <th></th>
@@ -94,7 +95,8 @@
                                         <tr>
                                             <th>#</th>
                                             <th>No SPT</th>
-                                            <th>Maksud dan Tujuan</th>
+                                            <th>Maksud</th>
+                                            <th>Tujuan</th>
                                             <th>Tanggal</th>
                                             <th>Pegawai</th>
                                             <th></th>
@@ -114,6 +116,9 @@
                                             {{$maksud_tujuan[0]}}
                                             <br>
                                             <span class="label label-default">{{$model->lama_waktu}} Hari</span>
+                                            </td>
+                                            <td>
+                                            {{$model->tempat_tujuan}}
                                             </td>
                                             <td>
                                             <span class="label label-default">

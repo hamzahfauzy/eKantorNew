@@ -72,7 +72,8 @@
                                         <tr>
                                             <th>#</th>
                                             <th>No SPT</th>
-                                            <th>Maksud dan Tujuan</th>
+                                            <th>Maksud</th>
+                                            <th>Tujuan</th>
                                             <th>Selama</th>
                                             <th>Tanggal</th>
                                             <th></th>
@@ -82,7 +83,8 @@
                                         <tr>
                                             <th>#</th>
                                             <th>No SPT</th>
-                                            <th>Maksud dan Tujuan</th>
+                                            <th>Maksud</th>
+                                            <th>Tujuan</th>
                                             <th>Selama</th>
                                             <th>Tanggal</th>
                                             <th></th>
@@ -100,8 +102,12 @@
                                             </td>
                                             <td>
                                             {{$maksud_tujuan[0]}}
+                                            <br>
+                                            <span class="label label-default">{{$model->lama_waktu}} Hari</span>
                                             </td>
-                                            <td>{{$model->lama_waktu}} Hari</td>
+                                            <td>
+                                            {{$model->tempat_tujuan}}
+                                            </td>
                                             <td>
                                             <span class="label label-default">Terhitung Tanggal :</span><br>
                                             {{$model->tanggal_awal->formatLocalized("%d %B %Y")}} <br><br> 
