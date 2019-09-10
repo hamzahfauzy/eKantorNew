@@ -177,6 +177,12 @@ Route::middleware('auth')->group(function(){
 			Route::get('cetak/{spt}','SptController@cetak')->name('pegawai.spt.cetak');
 			Route::post('insert','SptController@store')->name('pegawai.spt.insert');
 			Route::put('update','SptController@update')->name('pegawai.spt.update');
+			Route::put('doupdate','SptController@doupdate')->name('pegawai.spt.doupdate');
+			Route::post('accept','SptController@accept')->name('pegawai.spt.accept');
+			Route::post('upload','SptController@upload')->name('pegawai.spt.upload');
+			Route::post('decline','SptController@decline')->name('pegawai.spt.decline');
+			Route::post('get-employees','SptController@getEmployees')->name('pegawai.spt.get-employees');
+			Route::post('set-urutan','SptController@setUrutan')->name('pegawai.spt.set-urutan');
 			Route::delete('delete','SptController@destroy')->name('pegawai.spt.delete');
 		});
 
@@ -217,11 +223,10 @@ Route::middleware('auth')->group(function(){
 				Route::get('create','SptController@create')->name('pegawai.spt-role.create');
 				Route::get('edit/{spt}','SptController@edit')->name('pegawai.spt-role.edit');
 				Route::get('show/{spt}','SptController@show')->name('pegawai.spt-role.show');
-				Route::get('show/{spt}/sppd','SptController@sppd')->name('pegawai.spt-role.sppd');
-				Route::get('show/{spt}/sppd/cetak','SptController@sppdCetak')->name('pegawai.spt-role.sppd-cetak');
 				Route::get('cetak/{spt}','SptController@cetak')->name('pegawai.spt-role.cetak');
 				Route::get('rekapitulasi','SptController@rekapitulasi')->name('pegawai.spt-role.rekapitulasi');
 				Route::post('insert','SptController@store')->name('pegawai.spt-role.insert');
+				Route::post('set-no-spt','SptController@setNoSpt')->name('pegawai.spt-role.set-no-spt');
 				Route::post('get-employees','SptController@getEmployees')->name('pegawai.spt-role.get-employees');
 				Route::post('set-urutan','SptController@setUrutan')->name('pegawai.spt-role.set-urutan');
 				Route::put('update','SptController@update')->name('pegawai.spt-role.update');

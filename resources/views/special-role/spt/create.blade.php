@@ -16,8 +16,9 @@
                             <h2>Tambah SPT</h2>
                         </div>
                         <div class="body">
-                            <form id="form_validation" method="POST" action="{{route('pegawai.spt-role.insert')}}">
+                            <form id="form_validation" method="POST" action="{{route('pegawai.spt.insert')}}">
                             	{{csrf_field()}}
+                                {{-- 
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="text" class="form-control" name="no_spt" required value="{{old('no_spt')}}">
@@ -29,6 +30,7 @@
                                         </span>
                                     @endif
                                 </div>
+                                --}}
                                 <div class="form-group form-float">
                                     <select class="form-control show-tick" name="wilayah_id" required="" data-live-search="true">
                                         <option value="">Pilih Wilayah Tujuan</option>
@@ -200,7 +202,7 @@ $('input[name=tanggal_awal]').bootstrapMaterialDatePicker({
     });
     $.ajax({
         type:'POST',
-        url:"{{route('pegawai.spt-role.get-employees')}}",
+        url:"{{route('pegawai.spt.get-employees')}}",
         data:{tanggal_awal:moment(date).format('YYYY-MM-DD'), tanggal_akhir:moment(date).add(lama, 'day').format('YYYY-MM-DD')},
         success:function(data){
             data.data.forEach(value => {
@@ -222,7 +224,7 @@ if(tgl_awal.val() != '')
     });
     $.ajax({
         type:'POST',
-        url:"{{route('pegawai.spt-role.get-employees')}}",
+        url:"{{route('pegawai.spt.get-employees')}}",
         data:{tanggal_awal:tgl_awal.val(), tanggal_akhir:$("input[name=tanggal_akhir]").val()},
         success:function(data){
             data.data.forEach(value => {

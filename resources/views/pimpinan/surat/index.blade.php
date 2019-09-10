@@ -33,7 +33,7 @@
                                             <th>#</th>
                                             <th>No. Agenda</th>
                                             <th>Surat</th>
-                                            <th>Tanggal Surat</th>>
+                                            <th>Tanggal Surat</th>
                                             <th>Sumber</th>
                                             <th>Pegawai</th>
                                             <th></th>
@@ -45,7 +45,6 @@
                                             <th>No. Agenda</th>
                                             <th>Surat</th>
                                             <th>Tanggal Surat</th>
-                                            <th>Tanggal Terima</th>
                                             <th>Sumber</th>
                                             <th>Pegawai</th>
                                             <th></th>

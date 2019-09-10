@@ -207,12 +207,11 @@
                                                 {{'',$no=1}}
                                                 <?php $suratid = [] ?>
                                                 @foreach($surat_staffs as $histori)
-                                                <?php 
-                                                    $model = $histori->suratKeluar;
-                                                    if(in_array($histori->surat_id,$suratid))
-                                                        continue;
-                                                    $suratid[] = $histori->surat_id;
-                                                ?>
+                                                <?php $model = $histori->suratKeluar; ?>
+                                                    @if(in_array($histori->surat_id,$suratid))
+                                                        @continue;
+                                                    @endif
+                                                <?php $suratid[] = $histori->surat_id; ?>
                                                 <tr>
                                                     <td>{{$no++}}</td>
                                                     <td>
@@ -322,12 +321,11 @@
                                                 {{'',$no=1}}
                                                 <?php $suratid = [] ?>
                                                 @foreach($surat_staffs as $histori)
-                                                <?php 
-                                                    $model = $histori->suratKeluar;
-                                                    if(in_array($histori->surat_id,$suratid))
-                                                        continue;
-                                                    $suratid[] = $histori->surat_id;
-                                                ?>
+                                                <?php $model = $histori->suratKeluar; ?>
+                                                    @if(in_array($histori->surat_id,$suratid))
+                                                        @continue;
+                                                    @endif
+                                                <?php $suratid[] = $histori->surat_id; ?>
                                                 <tr>
                                                     <td>{{$no++}}</td>
                                                     <td>

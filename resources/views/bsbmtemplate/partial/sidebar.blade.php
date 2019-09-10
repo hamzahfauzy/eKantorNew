@@ -143,7 +143,7 @@
                                 </li>
                                 @endif
                                 {{'',$spt_url = route('pegawai.spt.index')}}
-                                @if((auth()->user()->employee->inSpecialRoleUser() && !auth()->user()->employee->isPimpinan()) || auth()->user()->employee->kepala_group_special_role())
+                                @if(auth()->user()->employee->inSpecialRoleUser() && !auth()->user()->employee->kepala_group_special_role())
                                 {{'',$spt_url = route('pegawai.spt-role.index')}}
                                 <li class="@yield('surat-masuk-active')">
                                     <a href="{{route('pegawai.surat-masuk.index')}}">

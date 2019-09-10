@@ -2,6 +2,7 @@
 @section('spt-sppd-active','active')
 @section('spt-active','active')
 @section('content')
+<?php $status = ['Sent','Accepted','Declined']; $bg = ["","bg-teal","bg-pink"] ?>
 		<div class="container-fluid">
             <div class="block-header">
                 <h2>
@@ -17,6 +18,10 @@
                                 List Data SPT
                             </h2>
                             <div class="pull-right">
+                                <a href="{{route('pegawai.spt.create')}}" class="btn btn-primary waves-effect">
+                                    <i class="material-icons">add</i> 
+                                    <span>TAMBAH DATA</span>
+                                </a>
                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-rekapitulasi" class="btn btn-warning waves-effect">
                                     <i class="material-icons">print</i> 
                                     <span>CETAK REKAPITULASI</span>
@@ -66,64 +71,495 @@
 				              </div>
 				              <p></p>
 				            @endif
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>No SPT</th>
-                                            <th>Maksud</th>
-                                            <th>Tujuan</th>
-                                            <th>Selama</th>
-                                            <th>Tanggal</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>No SPT</th>
-                                            <th>Maksud</th>
-                                            <th>Tujuan</th>
-                                            <th>Selama</th>
-                                            <th>Tanggal</th>
-                                            <th></th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        {{'',$no=1}}
-                                        @foreach($spt as $model)
-                                        <?php $maksud_tujuan = explode("\n",$model->maksud_tujuan);?>
-                                        <tr>
-                                            <td>{{$no++}}</td>
-                                            <td>
-                                            {{$model->no_spt}}<br>
-                                            {{$model->tanggal->formatLocalized("%d %B %Y")}}
-                                            </td>
-                                            <td>
-                                            {{$maksud_tujuan[0]}}
-                                            <br>
-                                            <span class="label label-default">{{$model->lama_waktu}} Hari</span>
-                                            </td>
-                                            <td>
-                                            {{$model->tempat_tujuan}}
-                                            </td>
-                                            <td>
-                                            <span class="label label-default">Terhitung Tanggal :</span><br>
-                                            {{$model->tanggal_awal->formatLocalized("%d %B %Y")}} <br><br> 
-                                            <span class="label label-default">Sampai Tanggal :</span><br>
-                                            {{$model->tanggal_akhir->formatLocalized("%d %B %Y")}}
-                                            </td>
-                                            <td>
-                                                <a href="{{route('pegawai.spt.cetak',$model->id)}}" class="btn btn-secondary waves-effect">
-				                                    <i class="material-icons">print</i>
-				                                    <span>Cetak</span>
-				                                </a>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#own_with_icon_title" data-toggle="tab">
+                                        <i class="material-icons">email</i> SPT Anda
+                                    </a>
+                                </li>
+                                @if(!auth()->user()->employee->staffGroup)
+                                <li role="presentation">
+                                    <a href="#staff_with_icon_title" data-toggle="tab">
+                                        <i class="material-icons">email</i> SPT Staff
+                                    </a>
+                                </li>
+                                @endif
+
+                                @if(auth()->user()->employee->inSpecialRole())
+                                <li role="presentation">
+                                    <a href="#staff_with_icon_title" data-toggle="tab">
+                                        <i class="material-icons">email</i> SPT Staff
+                                    </a>
+                                </li>
+                                @endif
+                            </ul>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade in active" id="own_with_icon_title">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th width="20%">No SPT</th>
+                                                    <th>Maksud</th>
+                                                    <th>Tujuan</th>
+                                                    <th>Tanggal</th>
+                                                    <th>Pegawai</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th width="20%">No SPT</th>
+                                                    <th>Maksud</th>
+                                                    <th>Tujuan</th>
+                                                    <th>Tanggal</th>
+                                                    <th>Pegawai</th>
+                                                    <th></th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                {{'',$no=1}}
+                                                @foreach($spt as $model)
+                                                <?php $maksud_tujuan = explode("\n",$model->maksud_tujuan);?>
+                                                <tr>
+                                                    <td>{{$no++}}</td>
+                                                    <td>
+                                                    {!! $model->no_spt ? $model->no_spt : "<i>Belum ada nomor</i>" !!}<br>
+                                                    {{$model->tanggal->formatLocalized("%d %B %Y")}}<br>
+                                                    @if($model->lastHistori)
+                                                        <span class="badge {{$bg[$model->lastHistori->status]}}">{{$status[$model->lastHistori->status]}}</span>
+                                                    @endif
+                                                    @if($model->need_action == -1 && empty($model->file_spt_fix_url) && !empty($model->no_spt) && auth()->user()->employee->id == $model->employee_id)
+                                                        <br><br>
+                                                        <a href="javascript:void(0)" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#modalUpload{{$model->id}}">Upload Surat</a>
+                                                        <div class="modal fade" id="modalUpload{{$model->id}}" tabindex="-1" role="dialog">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title" id="defaultModalLabel">Nomor SPT</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form id="form_validation" method="POST" action="{{route('pegawai.spt.upload')}}" enctype="multipart/form-data">
+                                                                            {{csrf_field()}}
+                                                                            <input type="hidden" name="id" value="{{$model->id}}">
+                                                                            <div class="form-group form-float">
+                                                                                <label>File SPT</label>
+                                                                                <div class="form-line">
+                                                                                    <input type="file" class="form-control" name="file_spt_fix_url" required>
+                                                                                    <label class="form-label">File SPT</label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
+                                                                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                    </td>
+                                                    <td>
+                                                    {{$maksud_tujuan[0]}}
+                                                    <br>
+                                                    <span class="label label-default">{{$model->lama_waktu}} Hari</span>
+                                                    </td>
+                                                    <td>
+                                                    {{$model->tempat_tujuan}}
+                                                    </td>
+                                                    <td>
+                                                    <span class="label label-default">Terhitung Tanggal :</span><br>
+                                                    {{$model->tanggal_awal->formatLocalized("%d %B %Y")}} <br><br> 
+                                                    <span class="label label-default">Sampai Tanggal :</span><br>
+                                                    {{$model->tanggal_akhir->formatLocalized("%d %B %Y")}}
+                                                    </td>
+                                                    <td>
+                                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#defaultModal{{$model->id}}"class="label label-primary">Lihat Pegawai</a>
+                                                        <div class="modal fade" id="defaultModal{{$model->id}}" tabindex="-1" role="dialog">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title" id="defaultModalLabel">Pegawai Pada No SPT : {{$model->no_spt}}</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <table class="table">
+                                                                        @foreach($model->employees()->orderby('no_urut','asc')->get() as $key => $employee)
+                                                                        <tr>
+                                                                            <td rowspan="5">{{++$key}}</td>
+                                                                            <td>Nama</td>
+                                                                            <td>:</td>
+                                                                            <td>{{$employee->employee->nama}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>NIP</td>
+                                                                            <td>:</td>
+                                                                            <td>{{$employee->employee->NIP}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Pangkat/Gol. Ruang</td>
+                                                                            <td>:</td>
+                                                                            <td>{{$employee->employee->golongan->nama}} ({{$employee->employee->golongan->pangkat}})</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Jabatan</td>
+                                                                            <td>:</td>
+                                                                            <td>{{$employee->employee->jabatan}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Urutan</td>
+                                                                            <td>:</td>
+                                                                            <td>
+                                                                            <div class="form-inline">
+                                                                            @if($model->employee_id == auth()->user()->employee->id)
+                                                                            <input type="number" class="form-control" name="urutan_{{$employee->id}}" value="{{$employee->no_urut}}">
+                                                                            <button class="btn btn-primary" onclick="simpanUrutan({{$employee->id}})">Simpan</button>
+                                                                            @else
+                                                                            {{$employee->no_urut}}
+                                                                            @endif
+                                                                            </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        @endforeach
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                    <a href="{{route('pegawai.spt.doupdate')}}" class="btn btn-primary waves-effect" onclick="event.preventDefault();updateAlert({{$model->id}})">
+                                                                        <i class="material-icons">create</i>
+                                                                        Update
+                                                                    </a>
+
+                                                                    <form id="form-update-{{$model->id}}" style="display: none;" method="post" action="{{route('pegawai.spt.doupdate')}}">
+                                                                        {{csrf_field()}}
+                                                                        <input type="hidden" name="_method" value="PUT">
+                                                                        <input type="hidden" name="id" value="{{$model->id}}">
+                                                                    </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{route('pegawai.spt.cetak',$model->id)}}" class="btn btn-secondary waves-effect">
+                                                            <i class="material-icons">visibility</i>
+                                                        </a>
+                                                        @if($model->employee_id == auth()->user()->employee->id)
+                                                        <a href="{{route('pegawai.spt.edit',$model->id)}}" class="btn btn-warning waves-effect">
+                                                            <i class="material-icons">create</i>
+                                                        </a>
+
+                                                        <a href="{{route('pegawai.spt.delete')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();deleteAlert({{$model->id}})">
+                                                            <i class="material-icons">delete</i>
+                                                        </a>
+
+                                                        <form id="form-delete-{{$model->id}}" style="display: none;" method="post" action="{{route('pegawai.spt.delete')}}">
+                                                            {{csrf_field()}}
+                                                            <input type="hidden" name="_method" value="DELETE">
+                                                            <input type="hidden" name="id" value="{{$model->id}}">
+                                                        </form>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                @if(!auth()->user()->employee->staffGroup)
+                                <?php $status = ['Received','Accepted','Declined']; $bg = ["","bg-teal","bg-pink"] ?>
+                                <div role="tabpanel" class="tab-pane fade" id="staff_with_icon_title">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th width="20%">No SPT</th>
+                                                    <th>Maksud</th>
+                                                    <th>Tujuan</th>
+                                                    <th>Tanggal</th>
+                                                    <th>Pegawai</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th width="20%">No SPT</th>
+                                                    <th>Maksud</th>
+                                                    <th>Tujuan</th>
+                                                    <th>Tanggal</th>
+                                                    <th>Pegawai</th>
+                                                    <th></th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                {{'',$no=1}}
+                                                <?php $spt_id = [] ?>
+                                                @foreach($spt_staffs as $histori)
+                                                <?php $model = $histori->spt; ?>
+                                                    @if(in_array($histori->spt_id,$spt_id))
+                                                        @continue;
+                                                    @endif
+                                                <?php $spt_id[] = $histori->spt_id; ?>
+                                                <?php $maksud_tujuan = explode("\n",$model->maksud_tujuan);?>
+                                                <tr>
+                                                    <td>{{$no++}}</td>
+                                                    <td>
+                                                    {!! $model->no_spt ? $model->no_spt : "<i>Belum ada nomor</i>" !!}<br>
+                                                    {{$model->tanggal->formatLocalized("%d %B %Y")}}<br>
+                                                    @if($model->hasAction($histori->user_id))
+                                                        <span class="badge {{$bg[$model->hasAction($histori->user_id)->status]}}">{{$status[$model->hasAction($histori->user_id)->status]}}</span>
+                                                    @endif
+                                                    </td>
+                                                    <td>
+                                                    {{$maksud_tujuan[0]}}
+                                                    <br>
+                                                    <span class="label label-default">{{$model->lama_waktu}} Hari</span>
+                                                    </td>
+                                                    <td>
+                                                    {{$model->tempat_tujuan}}
+                                                    </td>
+                                                    <td>
+                                                    <span class="label label-default">Terhitung Tanggal :</span><br>
+                                                    {{$model->tanggal_awal->formatLocalized("%d %B %Y")}} <br><br> 
+                                                    <span class="label label-default">Sampai Tanggal :</span><br>
+                                                    {{$model->tanggal_akhir->formatLocalized("%d %B %Y")}}
+                                                    </td>
+                                                    <td>
+                                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#spt_staff{{$model->id}}"class="label label-primary">Lihat Pegawai</a>
+                                                    <div class="modal fade" id="spt_staff{{$model->id}}" tabindex="-1" role="dialog">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title" id="defaultModalLabel">Pegawai Pada No SPT : {{$model->no_spt}}</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <table class="table">
+                                                                        @foreach($model->employees()->orderby('no_urut','asc')->get() as $key => $employee)
+                                                                        <tr>
+                                                                            <td rowspan="5">{{++$key}}</td>
+                                                                            <td>Nama</td>
+                                                                            <td>:</td>
+                                                                            <td>{{$employee->employee->nama}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>NIP</td>
+                                                                            <td>:</td>
+                                                                            <td>{{$employee->employee->NIP}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Pangkat/Gol. Ruang</td>
+                                                                            <td>:</td>
+                                                                            <td>{{$employee->employee->golongan->nama}} ({{$employee->employee->golongan->pangkat}})</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Jabatan</td>
+                                                                            <td>:</td>
+                                                                            <td>{{$employee->employee->jabatan}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Urutan</td>
+                                                                            <td>:</td>
+                                                                            <td>
+                                                                            <div class="form-inline">
+                                                                            {{$employee->no_urut}}
+                                                                            </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        @endforeach
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{route('pegawai.surat-keluar.show',$model->id)}}" target="_blank" class="btn btn-info waves-effect">
+                                                            <i class="material-icons">visibility</i>
+                                                            
+                                                        </a>
+
+                                                        @if($model->need_action == $histori->posisi)
+                                                        <a href="{{route('pegawai.spt.accept')}}" class="btn btn-success waves-effect" onclick="event.preventDefault();acceptAlert({{$histori->id}})">
+                                                            <i class="material-icons">done</i>
+                                                            
+                                                        </a>
+
+                                                        <a href="{{route('pegawai.spt.decline')}}" class="btn btn-danger waves-effect" data-toggle="modal" data-target="#defaultModal{{$histori->id}}">
+                                                            <i class="material-icons">clear</i>
+                                                            
+                                                        </a>
+
+                                                        <form id="form-acc-{{$histori->id}}" style="display: none;" method="post" action="{{route('pegawai.spt.accept')}}">
+                                                            {{csrf_field()}}
+                                                            <input type="hidden" name="id" value="{{$histori->id}}">
+                                                        </form>
+
+                                                        <div class="modal fade" id="defaultModal{{$histori->id}}" tabindex="-1" role="dialog">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title" id="defaultModalLabel">Tolak Surat</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form id="form_validation" method="POST" action="{{route('pegawai.spt.decline')}}">
+                                                                            {{csrf_field()}}
+                                                                            <input type="hidden" name="id" value="{{$histori->id}}">
+                                                                            <div class="form-group form-float">
+                                                                                <label>Catatan</label>
+                                                                                <div class="form-line">
+                                                                                    <textarea class="form-control" name="catatan" required></textarea>
+                                                                                    <label class="form-label">Catatan</label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
+                                                                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                @endif
+
+                                @if(auth()->user()->employee->inSpecialRole())
+                                <?php $status = ['Received','Accepted','Declined']; $bg = ["","bg-teal","bg-pink"] ?>
+                                <div role="tabpanel" class="tab-pane fade" id="staff_with_icon_title">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th width="20%">No SPT</th>
+                                                    <th>Maksud</th>
+                                                    <th>Tujuan</th>
+                                                    <th>Tanggal</th>
+                                                    <th>Pegawai</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th width="20%">No SPT</th>
+                                                    <th>Maksud</th>
+                                                    <th>Tujuan</th>
+                                                    <th>Tanggal</th>
+                                                    <th>Pegawai</th>
+                                                    <th></th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                {{'',$no=1}}
+                                                <?php $spt_id = [] ?>
+                                                @foreach($spt_staffs as $histori)
+                                                <?php $model = $histori->spt; ?>
+                                                    @if(in_array($histori->spt_id,$spt_id))
+                                                        @continue;
+                                                    @endif
+                                                <?php $spt_id[] = $histori->spt_id; ?>
+                                                <?php $maksud_tujuan = explode("\n",$model->maksud_tujuan);?>
+                                                <tr>
+                                                    <td>{{$no++}}</td>
+                                                    <td>
+                                                    {!! $model->no_spt ? $model->no_spt : "<i>Belum ada nomor</i>" !!}<br>
+                                                    {{$model->tanggal->formatLocalized("%d %B %Y")}}<br>
+                                                    @if($model->hasAction($histori->user_id))
+                                                        <span class="badge {{$bg[$model->hasAction($histori->user_id)->status]}}">{{$status[$model->hasAction($histori->user_id)->status]}}</span>
+                                                    @endif
+                                                    </td>
+                                                    <td>
+                                                    {{$maksud_tujuan[0]}}
+                                                    <br>
+                                                    <span class="label label-default">{{$model->lama_waktu}} Hari</span>
+                                                    </td>
+                                                    <td>
+                                                    {{$model->tempat_tujuan}}
+                                                    </td>
+                                                    <td>
+                                                    <span class="label label-default">Terhitung Tanggal :</span><br>
+                                                    {{$model->tanggal_awal->formatLocalized("%d %B %Y")}} <br><br> 
+                                                    <span class="label label-default">Sampai Tanggal :</span><br>
+                                                    {{$model->tanggal_akhir->formatLocalized("%d %B %Y")}}
+                                                    </td>
+                                                    <td>
+                                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#spt_staff{{$model->id}}"class="label label-primary">Lihat Pegawai</a>
+                                                        <div class="modal fade" id="spt_staff{{$model->id}}" tabindex="-1" role="dialog">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title" id="defaultModalLabel">Pegawai Pada No SPT : {{$model->no_spt}}</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <table class="table">
+                                                                        @foreach($model->employees()->orderby('no_urut','asc')->get() as $key => $employee)
+                                                                        <tr>
+                                                                            <td rowspan="5">{{++$key}}</td>
+                                                                            <td>Nama</td>
+                                                                            <td>:</td>
+                                                                            <td>{{$employee->employee->nama}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>NIP</td>
+                                                                            <td>:</td>
+                                                                            <td>{{$employee->employee->NIP}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Pangkat/Gol. Ruang</td>
+                                                                            <td>:</td>
+                                                                            <td>{{$employee->employee->golongan->nama}} ({{$employee->employee->golongan->pangkat}})</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Jabatan</td>
+                                                                            <td>:</td>
+                                                                            <td>{{$employee->employee->jabatan}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Urutan</td>
+                                                                            <td>:</td>
+                                                                            <td>
+                                                                            <div class="form-inline">
+                                                                            {{$employee->no_urut}}
+                                                                            </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        @endforeach
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{route('pegawai.surat-keluar.show',$model->id)}}" target="_blank" class="btn btn-info waves-effect">
+                                                            <i class="material-icons">visibility</i>
+                                                            
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -170,6 +606,61 @@ function deleteAlert(id)
             $("#form-delete-"+id).submit()
         }
 	});
+}
+
+function updateAlert(id)
+{
+	swal({
+	    title: 'Apakah anda yakin akan mengupdate data ini?',
+	    text: "Perubahan tidak dapat dikembalikan!",
+	    type: 'warning',
+	    showCancelButton: true,
+	    confirmButtonColor: '#3085d6',
+	    cancelButtonColor: '#d33',
+	    confirmButtonText: 'Ya!',
+	    confirmCancelText: 'Batal!'
+	},function (isConfirm) {
+        if (isConfirm) {
+            $("#form-update-"+id).submit()
+        }
+	});
+}
+
+function acceptAlert(id)
+{
+    swal({
+        title: 'Apakah anda yakin akan menyetujui SPT ini?',
+        text: "Perubahan tidak dapat dikembalikan!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya!',
+        confirmCancelText: 'Batal!'
+    },function (isConfirm) {
+        if (isConfirm) {
+            $("#form-acc-"+id).submit()
+        }
+    });
+}
+
+
+function simpanUrutan(id)
+{
+    var urutan = $('input[name=urutan_'+id+']').val()
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type:'POST',
+        url:"{{route('pegawai.spt.set-urutan')}}",
+        data:{id:id,urutan:urutan},
+        success:function(data){
+            alert('No Urut berhasil disimpan')
+        }
+    });
 }
 </script>
 <!-- Select Plugin Js -->

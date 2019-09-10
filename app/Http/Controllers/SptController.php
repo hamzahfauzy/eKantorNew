@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Surat\{SptList, SptNumber, SptEmployee};
+use App\Model\Surat\{SptList, SptNumber, SptEmployee, HistoriSptList};
 use App\Model\Reference\{WilayahTujuan, Employee};
-use App\Model\Setting;
+use App\Model\{Setting,Notification};
 
 class SptController extends Controller
 {
@@ -28,8 +28,12 @@ class SptController extends Controller
         {
             $model[] = $spt->list;
         }
+
+        $histori_surat = HistoriSptList::where('user_id',auth()->user()->employee->id)->where('status',0)->orderby('id','desc')->get();
+        $surat_staffs = HistoriSptList::where('status',1)->orderby('id','desc')->get();
         return view('special-role.spt.spt-lists',[
-            'spt' => $model
+            'spt' => $model,
+            'spt_staffs' => auth()->user()->employee->inSpecialRole() ? $surat_staffs : $histori_surat,
         ]);
     }
 
@@ -65,7 +69,7 @@ class SptController extends Controller
         $sptNumber = SptNumber::get();
         $wilayah = WilayahTujuan::get();
         $employees = Employee::get();
-        return view('special-role.spt.create-spt',[
+        return view('special-role.spt.create',[
             'spt' => $sptNumber,
             'wilayah' => $wilayah,
             'employees' => $employees,
@@ -81,8 +85,12 @@ class SptController extends Controller
     public function store(Request $request)
     {
         //
+        $customMessages = [
+            'unique' => ':attribute sudah digunakan.'
+        ];
+
         $this->validate($request,[
-            'no_spt' => 'required',
+            // 'no_spt' => 'required|unique:spt_lists',
             'wilayah_id' => 'required',
             'tanggal' => 'required',
             'lama_waktu' => 'required',
@@ -93,10 +101,10 @@ class SptController extends Controller
             'dasar1' => 'required',
             'dasar2' => 'required',
             'dasar3' => 'required',
-        ]);
+        ],$customMessages);
 
         $sptModel = $this->model->create([
-            'no_spt' => $request->no_spt,
+            'no_spt' => '',
             'pimpinan_id' => $request->pimpinan_id,
             'wilayah_id' => $request->wilayah_id,
             'tanggal' => $request->tanggal,
@@ -108,15 +116,76 @@ class SptController extends Controller
             'dasar1' => $request->dasar1,
             'dasar2' => $request->dasar2,
             'dasar3' => $request->dasar3,
-        ]);
-
-        $sptEmployee = new SptEmployee;
-        $sptEmployee->create([
-            'spt_id' => $sptModel->id,
             'employee_id' => auth()->user()->employee->id,
         ]);
 
+        if(!in_array(auth()->user()->employee->id, $request->pengikut))
+        {
+            $sptEmployee = new SptEmployee;
+            $sptEmployee->create([
+                'spt_id' => $sptModel->id,
+                'employee_id' => auth()->user()->employee->id,
+            ]);
+        }
+
+        foreach($request->pengikut as $pengikut)
+        {
+            $sptEmployee = new SptEmployee;
+            $sptEmployee->create([
+                'spt_id' => $sptModel->id,
+                'employee_id' => $pengikut,
+            ]);
+        }
+
+        $pimpinan_id = 0;
+        $posisi = 4;
+        if(auth()->user()->employee->staffGroup)
+        {
+            $pimpinan_id = auth()->user()->employee->staffGroup->subGroups->kepala_id;            
+        }
+        elseif (auth()->user()->employee->kepala_sub_group) 
+        {
+            $pimpinan_id = auth()->user()->employee->kepala_sub_group->group->kepala_id;
+            $posisi = 3;
+        }
+        elseif (auth()->user()->employee->kepala_group) 
+        {
+            $employees = Employee::get();
+            foreach ($employees as $employee) {
+                if($employee->kepala_group_special_role())
+                {
+                    $pimpinan_id = $employee->id;
+                    break;
+                }
+            }
+            if(auth()->user()->employee->id != $pimpinan_id)
+                $posisi = 2;
+            else
+            {
+                $setting = Setting::find(1);
+                $pimpinan_id = $setting->pimpinan_id;
+                $posisi = 1;
+            }
+        }
+
+        HistoriSptList::create([
+            'user_id' => $pimpinan_id,
+            'spt_id' => $sptModel->id,
+            'posisi' => $posisi,
+            'status' => 0
+        ]);
+
+        $this->model->find($sptModel->id)->update(['need_action' => $posisi]);
+
+        $notification = new Notification;
+        $notification->user_id = $pimpinan_id;
+        $notification->status = 0;
+        $notification->url_to = route('pegawai.spt.cetak',$sptModel->id);
+        $notification->deskripsi = "SPT - Dari ".auth()->user()->name;
+        $notification->save();
+
         return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
+
     }
 
     /**
@@ -139,14 +208,16 @@ class SptController extends Controller
     public function edit(SptList $spt)
     {
         //
-        $sptNumber = SptNumber::get();
         $wilayah = WilayahTujuan::get();
         $employees = Employee::get();
-        return view('special-role.spt.edit-spt',[
+        $sptEmployee = [];
+        foreach($spt->employees as $employee)
+            $sptEmployee[] = $employee->employee_id;
+        return view('special-role.spt.edit',[
             'sptModel' => $spt,
-            'spt' => $sptNumber,
             'wilayah' => $wilayah,
             'employees' => $employees,
+            'sptEmployee' => $sptEmployee
         ]);
     }
 
@@ -160,9 +231,22 @@ class SptController extends Controller
     public function update(Request $request)
     {
         //
+        $this->validate($request,[
+            // 'no_spt' => 'required|unique:spt_lists,no_spt,'.$request->id.',id',
+            'wilayah_id' => 'required',
+            'tanggal' => 'required',
+            'lama_waktu' => 'required',
+            'tanggal_awal' => 'required',
+            'tanggal_akhir' => 'required',
+            'tempat_tujuan' => 'required',
+            'maksud_tujuan' => 'required',
+            'dasar1' => 'required',
+            'dasar2' => 'required',
+            'dasar3' => 'required',
+        ]);
 
-        $this->model->find($request->id)->update([
-            'no_spt' => $request->no_spt,
+        $model = $this->model->find($request->id)->update([
+            'no_spt' => '',
             'pimpinan_id' => $request->pimpinan_id,
             'wilayah_id' => $request->wilayah_id,
             'tanggal' => $request->tanggal,
@@ -176,7 +260,226 @@ class SptController extends Controller
             'dasar3' => $request->dasar3,
         ]);
 
+        SptEmployee::where('spt_id',$request->id)->delete();
+        if(!in_array(auth()->user()->employee->id, $request->pengikut))
+        {
+            $sptEmployee = new SptEmployee;
+            $sptEmployee->create([
+                'spt_id' => $sptModel->id,
+                'employee_id' => auth()->user()->employee->id,
+            ]);
+        }
+        foreach($request->pengikut as $pengikut)
+        {
+            $sptEmployee = new SptEmployee;
+            $sptEmployee->create([
+                'spt_id' => $request->id,
+                'employee_id' => $pengikut,
+            ]);
+        }
+
+        $pimpinan_id = 0;
+        $posisi = 4;
+        if(auth()->user()->employee->staffGroup)
+        {
+            $pimpinan_id = auth()->user()->employee->staffGroup->subGroups->kepala_id;            
+        }
+        elseif (auth()->user()->employee->kepala_sub_group) 
+        {
+            $pimpinan_id = auth()->user()->employee->kepala_sub_group->group->kepala_id;
+            $posisi = 3;
+        }
+        elseif (auth()->user()->employee->kepala_group) 
+        {
+            $employees = Employee::get();
+            foreach ($employees as $employee) {
+                if($employee->kepala_group_special_role())
+                {
+                    $pimpinan_id = $employee->id;
+                    break;
+                }
+            }
+            if(auth()->user()->employee->id != $pimpinan_id)
+                $posisi = 2;
+            else
+            {
+                $setting = Setting::find(1);
+                $pimpinan_id = $setting->pimpinan_id;
+                $posisi = 1;
+            }
+        }
+
+        HistoriSptList::create([
+            'user_id' => $pimpinan_id,
+            'spt_id' => $request->id,
+            'posisi' => $posisi,
+            'status' => 0
+        ]);
+
+        $this->model->find($request->id)->update(['need_action' => $posisi]);
+
+        $notification = new Notification;
+        $notification->user_id = $pimpinan_id;
+        $notification->status = 0;
+        $notification->url_to = route('pegawai.spt.cetak',$request->id);
+        $notification->deskripsi = "Update SPT - Dari ".auth()->user()->name;
+        $notification->save();
+
         return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil diupdate']);
+    }
+
+    function doUpdate(Request $request)
+    {
+        $pimpinan_id = 0;
+        $posisi = 4;
+        if(auth()->user()->employee->staffGroup)
+        {
+            $pimpinan_id = auth()->user()->employee->staffGroup->subGroups->kepala_id;            
+        }
+        elseif (auth()->user()->employee->kepala_sub_group) 
+        {
+            $pimpinan_id = auth()->user()->employee->kepala_sub_group->group->kepala_id;
+            $posisi = 3;
+        }
+        elseif (auth()->user()->employee->kepala_group) 
+        {
+            $employees = Employee::get();
+            foreach ($employees as $employee) {
+                if($employee->kepala_group_special_role())
+                {
+                    $pimpinan_id = $employee->id;
+                    break;
+                }
+            }
+            if(auth()->user()->employee->id != $pimpinan_id)
+                $posisi = 2;
+            else
+            {
+                $setting = Setting::find(1);
+                $pimpinan_id = $setting->pimpinan_id;
+                $posisi = 1;
+            }
+        }
+
+        HistoriSptList::create([
+            'user_id' => $pimpinan_id,
+            'spt_id' => $request->id,
+            'posisi' => $posisi,
+            'status' => 0
+        ]);
+
+        $this->model->find($request->id)->update(['need_action' => $posisi]);
+
+        $notification = new Notification;
+        $notification->user_id = $pimpinan_id;
+        $notification->status = 0;
+        $notification->url_to = route('pegawai.spt.cetak',$request->id);
+        $notification->deskripsi = "Update SPT - Dari ".auth()->user()->name;
+        $notification->save();
+
+        return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil diupdate']);
+    }
+
+    public function accept(Request $request)
+    {
+        $histori = HistoriSptList::find($request->id);
+        $surat = SptList::find($histori->spt_id);
+        HistoriSptList::create([
+            'user_id' => $histori->user_id,
+            'spt_id' => $histori->spt_id,
+            'posisi' => $histori->posisi,
+            'status' => 1,
+        ]);
+
+        $notification = new Notification;
+        $notification->user_id = $surat->employee_id;
+        $notification->status = 0;
+        $notification->url_to = route('pegawai.spt.cetak',$surat->id);
+        $notification->deskripsi = "SPT Diterima oleh ".$histori->employee->nama;
+        $notification->save();
+
+        $pimpinan_id = 0;
+        $posisi = $histori->posisi;
+        if($posisi == 1)
+        {
+            $surat->update(['need_action' => -1]);   
+            return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
+        }
+        
+        if (auth()->user()->employee->kepala_sub_group) 
+        {
+            $pimpinan_id = auth()->user()->employee->kepala_sub_group->group->kepala_id;
+        }
+        elseif (auth()->user()->employee->kepala_group) 
+        {
+            $employees = Employee::get();
+            foreach ($employees as $employee) {
+                if($employee->kepala_group_special_role())
+                {
+                    $pimpinan_id = $employee->id;
+                    break;
+                }
+            }
+            if(auth()->user()->employee->id != $pimpinan_id)
+                $posisi = 2;
+            else
+            {
+                $setting = Setting::find(1);
+                $pimpinan_id = $setting->pimpinan_id;
+                $posisi = 1;
+            }
+        }
+
+        if($posisi >= 1)
+        {
+            HistoriSptList::create([
+                'user_id' => $pimpinan_id,
+                'spt_id' => $histori->spt_id,
+                'posisi' => $posisi,
+                'status' => 0
+            ]);
+            $this->model->find($histori->spt_id)->update(['need_action' => $posisi]);
+            $notification = new Notification;
+            $notification->user_id = $pimpinan_id;
+            $notification->status = 0;
+            $notification->url_to = route('pegawai.spt.cetak',$histori->spt_id);
+            $notification->deskripsi = "SPT - Dari ".$histori->spt->employee->nama;
+            $notification->save();
+        }
+        else
+        {
+            $this->model->find($histori->spt_id)->update(['need_action' => -1]);
+        }
+
+        return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
+
+    }
+
+    public function decline(Request $request)
+    {
+        $histori = HistoriSptList::find($request->id);
+        $surat = SptList::find($histori->spt_id);
+        HistoriSptList::create([
+            'user_id' => $histori->user_id,
+            'spt_id' => $histori->spt_id,
+            'posisi' => $histori->posisi,
+            'status' => 2,
+            'keterangan' => $request->catatan,
+        ]);
+
+        $posisi = 0;
+
+        $this->model->find($surat->id)->update(['need_action' => $posisi]);
+
+        $notification = new Notification;
+        $notification->user_id = $surat->employee_id;
+        $notification->status = 0;
+        $notification->url_to = route('pegawai.spt.cetak',$histori->spt_id);
+        $notification->deskripsi = "Surat Ditolak oleh ".$histori->employee->nama;
+        $notification->save();
+
+        return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
+
     }
 
     /**
@@ -188,7 +491,8 @@ class SptController extends Controller
     public function destroy(Request $request)
     {
         //
-        $this->model->find($request->id)->delete();
+        $spt = $this->model->find($request->id);
+        $spt->delete();
         return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil dihapus']);
     }
 
@@ -199,5 +503,67 @@ class SptController extends Controller
             'spt' => $spt,
             'setting' => $setting
         ]);
+    }
+
+    public function setUrutan(Request $request)
+    {
+        SptEmployee::find($request->id)->update([
+            'no_urut' => $request->urutan
+        ]);
+
+        return 1;
+    }
+
+    public function upload(Request $request)
+    {
+        $surat = SptList::find($request->id);
+        if(!empty($request->file('file_spt_fix_url')))
+        {
+            $uploadedFile = $request->file('file_spt_fix_url');
+            $path = $uploadedFile->store('public/spt');
+            $surat->file_spt_fix_url = $path;
+            $surat->save();
+        }
+        return redirect()->route('pegawai.spt.index')->with(['success'=>'Surat berhasil di upload']);
+    }
+
+    public function getEmployees(Request $request)
+    {
+        $employeesModel = Employee::get();
+        $existingSpt = SptList::whereBetween('tanggal_awal',[$request->tanggal_awal,$request->tanggal_akhir])->orwhereBetween('tanggal_akhir',[$request->tanggal_awal,$request->tanggal_akhir])->get();
+        $showEmployee = [];
+        if(!empty($existingSpt) && count($existingSpt) > 0)
+        {
+            $existingEmployees = [];
+            foreach($existingSpt as $spt)
+            {
+                foreach($spt->employees as $employee)
+                {
+                    if(isset($request->id) && $spt->id == $request->id)
+                        continue;
+
+                    $existingEmployees[] = $employee->employee_id;
+                }
+            }
+
+            foreach($employeesModel as $employee)
+                if(!in_array($employee->id,$existingEmployees))
+                    $showEmployee[] = $employee;
+        }
+        else
+        {
+            foreach($employeesModel as $employee)
+                $showEmployee[] = $employee;
+        }
+
+        // if(isset($request->id))
+        // {
+        //     $SptEmployee = SptEmployee::where('spt_id',$request->id)->get();
+        //     foreach($SptEmployee as $employee)
+        //         $showEmployee[] = $employee->employee;
+            
+        // }
+
+        return response()->json(["error" => 0, "message" => "data found", "data" => $showEmployee]);
     }
 }

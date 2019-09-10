@@ -16,10 +16,11 @@
                             <h2>Edit SPT</h2>
                         </div>
                         <div class="body">
-                            <form id="form_validation" method="POST" action="{{route('pegawai.spt-role.update')}}">
+                            <form id="form_validation" method="POST" action="{{route('pegawai.spt.update')}}">
                             	{{csrf_field()}}
                                 <input type="hidden" name="_method" value="PUT">
                                 <input type="hidden" name="id" value="{{$sptModel->id}}">
+                                {{-- 
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="text" class="form-control" name="no_spt" required value="{{$sptModel->no_spt}}">
@@ -31,6 +32,7 @@
                                         </span>
                                     @endif
                                 </div>
+                                --}}
                                 <div class="form-group form-float">
                                     <select class="form-control show-tick" name="wilayah_id" required="" data-live-search="true">
                                         <option value="">Pilih Wilayah Tujuan</option>
@@ -207,7 +209,7 @@ $('input[name=tanggal_awal]').bootstrapMaterialDatePicker({
     });
     $.ajax({
         type:'POST',
-        url:"{{route('pegawai.spt-role.get-employees')}}",
+        url:"{{route('pegawai.spt.get-employees')}}",
         data:{tanggal_awal:moment(date).format('YYYY-MM-DD'), tanggal_akhir:moment(date).add(lama, 'day').format('YYYY-MM-DD'), id:'{{$sptModel->id}}'},
         success:function(data){
             data.data.forEach(value => {

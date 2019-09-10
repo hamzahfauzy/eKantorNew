@@ -275,11 +275,17 @@ class SuratKeluarController extends Controller
         $notification->save();
 
         $pimpinan_id = 0;
-        $posisi = $histori->posisi - 1;
+        $posisi = $histori->posisi;
+        if($posisi == 1)
+        {
+            $surat->update(['need_action' => -1]);   
+            return redirect()->route('pegawai.surat-keluar.index')->with(['success'=>'Data berhasil disimpan']);
+        }
         
         if (auth()->user()->employee->kepala_sub_group) 
         {
             $pimpinan_id = auth()->user()->employee->kepala_sub_group->group->kepala_id;
+            $posisi = $posisi - 1;
         }
         elseif (auth()->user()->employee->kepala_group) 
         {
@@ -301,7 +307,7 @@ class SuratKeluarController extends Controller
             }
         }
 
-        if($posisi > 1)
+        if($posisi >= 1)
         {
             HistoriSuratKeluar::create([
                 'user_id' => $pimpinan_id,
@@ -335,7 +341,7 @@ class SuratKeluarController extends Controller
             'surat_id' => $histori->surat_id,
             'posisi' => $histori->posisi,
             'status' => 2,
-            'catatan' => $request->catatan,
+            'keterangan' => $request->catatan,
         ]);
 
         $posisi = 0;

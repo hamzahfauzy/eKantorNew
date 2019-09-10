@@ -83,7 +83,7 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>No SPT</th>
+                                            <th width="20%">No SPT</th>
                                             <th>Maksud</th>
                                             <th>Tujuan</th>
                                             <th>Tanggal</th>
@@ -94,7 +94,7 @@
                                     <tfoot>
                                         <tr>
                                             <th>#</th>
-                                            <th>No SPT</th>
+                                            <th width="20%">No SPT</th>
                                             <th>Maksud</th>
                                             <th>Tujuan</th>
                                             <th>Tanggal</th>
@@ -109,8 +109,38 @@
                                         <tr>
                                             <td>{{$no++}}</td>
                                             <td>
-                                            {{$model->no_spt}}<br>
-                                            {{$model->tanggal->formatLocalized("%d %B %Y")}}
+                                            {!! $model->no_spt ? $model->no_spt : "<i>Belum ada nomor</i>" !!}<br>
+                                            {{$model->tanggal->formatLocalized("%d %B %Y")}}<br>
+                                            @if($model->need_action == -1 && empty($model->no_spt))
+                                                <br>
+                                                <a href="javascript:void(0)" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#modalNoSpt{{$model->id}}">Set No SPT</a>
+                                                <div class="modal fade" id="modalNoSpt{{$model->id}}" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title" id="defaultModalLabel">Nomor SPT</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form id="form_validation" method="POST" action="{{route('pegawai.spt-role.set-no-spt')}}">
+                                                                    {{csrf_field()}}
+                                                                    <input type="hidden" name="id" value="{{$model->id}}">
+                                                                    <div class="form-group form-float">
+                                                                        <label>No. SPT</label>
+                                                                        <div class="form-line">
+                                                                            <input type="text" class="form-control" name="no_spt" required>
+                                                                            <label class="form-label">No SPT</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
+                                                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                                                </form>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
                                             </td>
                                             <td>
                                             {{$maksud_tujuan[0]}}
@@ -126,74 +156,60 @@
                                             {{$model->tanggal_akhir->formatLocalized("%d %B %Y")}}
                                             </span>
                                             </td>
-                                            <td><a href="javascript:void(0)" data-toggle="modal" data-target="#defaultModal{{$model->id}}"class="label label-primary">Lihat Pegawai</a></td>
+                                            <td>
+                                            <a href="javascript:void(0)" data-toggle="modal" data-target="#defaultModal{{$model->id}}"class="label label-primary">Lihat Pegawai</a>
+                                                        <div class="modal fade" id="defaultModal{{$model->id}}" tabindex="-1" role="dialog">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title" id="defaultModalLabel">Pegawai Pada No SPT : {{$model->no_spt}}</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <table class="table">
+                                                                        @foreach($model->employees()->orderby('no_urut','asc')->get() as $key => $employee)
+                                                                        <tr>
+                                                                            <td rowspan="5">{{++$key}}</td>
+                                                                            <td>Nama</td>
+                                                                            <td>:</td>
+                                                                            <td>{{$employee->employee->nama}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>NIP</td>
+                                                                            <td>:</td>
+                                                                            <td>{{$employee->employee->NIP}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Pangkat/Gol. Ruang</td>
+                                                                            <td>:</td>
+                                                                            <td>{{$employee->employee->golongan->nama}} ({{$employee->employee->golongan->pangkat}})</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Jabatan</td>
+                                                                            <td>:</td>
+                                                                            <td>{{$employee->employee->jabatan}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Urutan</td>
+                                                                            <td>:</td>
+                                                                            <td>
+                                                                            <div class="form-inline">
+                                                                            {{$employee->no_urut}}
+                                                                            </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        @endforeach
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                            </td>
                                             <td>
                                                 <a href="{{route('pegawai.spt-role.cetak',$model->id)}}" class="btn btn-primary waves-effect">
 				                                    <i class="material-icons">visibility</i>
-				                                    <span>Lihat</span>
 				                                </a>
-                                                
-                                                <a href="{{route('pegawai.spt-role.edit',$model->id)}}" class="btn btn-warning waves-effect">
-				                                    <i class="material-icons">create</i>
-				                                    <span>Edit</span>
-				                                </a>
-
-				                                <a href="{{route('pegawai.spt-role.delete')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();deleteAlert({{$model->id}})">
-				                                    <i class="material-icons">delete</i>
-				                                    <span>Hapus</span>
-				                                </a>
-
-				                                <form id="form-delete-{{$model->id}}" style="display: none;" method="post" action="{{route('pegawai.spt-role.delete')}}">
-				                                	{{csrf_field()}}
-				                                	<input type="hidden" name="_method" value="DELETE">
-				                                	<input type="hidden" name="id" value="{{$model->id}}">
-				                                </form>
-                                                <div class="modal fade" id="defaultModal{{$model->id}}" tabindex="-1" role="dialog">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title" id="defaultModalLabel">Pegawai Pada No SPT : {{$model->no_spt}}</h4>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <table class="table">
-                                                                @foreach($model->employees()->orderby('no_urut','asc')->get() as $key => $employee)
-                                                                <tr>
-                                                                    <td rowspan="5">{{++$key}}</td>
-                                                                    <td>Nama</td>
-                                                                    <td>:</td>
-                                                                    <td>{{$employee->employee->nama}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>NIP</td>
-                                                                    <td>:</td>
-                                                                    <td>{{$employee->employee->NIP}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Pangkat/Gol. Ruang</td>
-                                                                    <td>:</td>
-                                                                    <td>{{$employee->employee->golongan->nama}} ({{$employee->employee->golongan->pangkat}})</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Jabatan</td>
-                                                                    <td>:</td>
-                                                                    <td>{{$employee->employee->jabatan}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Urutan</td>
-                                                                    <td>:</td>
-                                                                    <td>
-                                                                    <input type="number" class="form-control" name="urutan_{{$employee->id}}" value="{{$employee->no_urut}}">
-                                                                    <button class="btn btn-primary" onclick="simpanUrutan({{$employee->id}})">Simpan</button>
-                                                                    </td>
-                                                                </tr>
-                                                                @endforeach
-                                                                </table>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </td>
                                         </tr>
                                         @endforeach

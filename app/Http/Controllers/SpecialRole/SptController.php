@@ -220,6 +220,15 @@ class SptController extends Controller
         return 1;
     }
 
+    public function setNoSpt(Request $request)
+    {
+        SptList::find($request->id)->update([
+            'no_spt' => $request->no_spt
+        ]);
+
+        return redirect()->route('pegawai.spt-role.index')->with(['success'=>'Data berhasil dihapus']);
+    }
+
     public function getEmployees(Request $request)
     {
         $employeesModel = Employee::get();
