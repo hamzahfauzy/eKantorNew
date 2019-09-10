@@ -187,7 +187,7 @@
                                                     <th>No. Surat</th>
                                                     <th>Surat</th>
                                                     <th>Tanggal Surat</th>
-                                                    <th>Asal</th>
+                                                    <th>Pegawai</th>
                                                     <th>Tujuan</th>
                                                     <th></th>
                                                 </tr>
@@ -198,7 +198,7 @@
                                                     <th>No. Surat</th>
                                                     <th>Surat</th>
                                                     <th>Tanggal Surat</th>
-                                                    <th>Asal</th>
+                                                    <th>Pegawai</th>
                                                     <th>Tujuan</th>
                                                     <th></th>
                                                 </tr>
@@ -301,7 +301,7 @@
                                                     <th>No. Surat</th>
                                                     <th>Surat</th>
                                                     <th>Tanggal Surat</th>
-                                                    <th>Asal</th>
+                                                    <th>Pegawai</th>
                                                     <th>Tujuan</th>
                                                     <th></th>
                                                 </tr>
@@ -312,7 +312,7 @@
                                                     <th>No. Surat</th>
                                                     <th>Surat</th>
                                                     <th>Tanggal Surat</th>
-                                                    <th>Asal</th>
+                                                    <th>Pegawai</th>
                                                     <th>Tujuan</th>
                                                     <th></th>
                                                 </tr>

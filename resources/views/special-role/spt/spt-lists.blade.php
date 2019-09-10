@@ -380,7 +380,7 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <a href="{{route('pegawai.surat-keluar.show',$model->id)}}" target="_blank" class="btn btn-info waves-effect">
+                                                        <a href="{{route('pegawai.spt.cetak',$model->id)}}" target="_blank" class="btn btn-info waves-effect">
                                                             <i class="material-icons">visibility</i>
                                                             
                                                         </a>
@@ -405,7 +405,7 @@
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h4 class="modal-title" id="defaultModalLabel">Tolak Surat</h4>
+                                                                        <h4 class="modal-title" id="defaultModalLabel">Tolak SPT</h4>
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <form id="form_validation" method="POST" action="{{route('pegawai.spt.decline')}}">

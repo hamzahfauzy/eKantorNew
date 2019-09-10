@@ -226,7 +226,7 @@ class SptController extends Controller
             'no_spt' => $request->no_spt
         ]);
 
-        return redirect()->route('pegawai.spt-role.index')->with(['success'=>'Data berhasil dihapus']);
+        return redirect()->route('pegawai.spt-role.index')->with(['success'=>'No SPT berhasil di tambahkan']);
     }
 
     public function getEmployees(Request $request)
