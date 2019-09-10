@@ -98,9 +98,9 @@
                                                             @endif
                                                         @endif
 
-                                                        @if($model->no_agenda != 0)
+                                                        @if(!empty($model->no_agenda))
                                                             <br>
-                                                            No. Agenda : {{$model->no_agenda}}
+                                                            No. Agenda : {!!$model->no_agenda!!}
                                                         @endif
                                                     </td>
                                                     <td>
@@ -217,9 +217,9 @@
                                                     <td>
                                                         <b>{{$model->no_surat}}</b>
 
-                                                        @if(!$model->no_agenda)
+                                                        @if(!empty($model->no_agenda))
                                                             <br>
-                                                            No. Agenda : {{$model->no_agenda}}
+                                                            No. Agenda : {!!$model->no_agenda!!}
                                                         @endif
                                                     </td>
                                                     <td>
@@ -329,14 +329,13 @@
                                                 <tr>
                                                     <td>{{$no++}}</td>
                                                     <td>
-                                                        <b>{{$model->no_surat}}</b>
-
-                                                        @if($model->no_agenda != 0)
+                                                        <b>{{$model->no_surat}}</b>  
+                                                        @if(!empty($model->no_agenda))
                                                             <br>
-                                                            No. Agenda : {{$model->no_agenda}}
+                                                            No. Agenda : {!!$model->no_agenda!!}
                                                         @endif
 
-                                                        @if($model->no_agenda == 0)
+                                                        @if(empty($model->no_agenda))
 
                                                         <a href="javascript:void(0)" class="btn btn-warning waves-effect" data-toggle="modal" data-target="#defaultModal{{$model->id}}">Set Agenda Surat</a>
 

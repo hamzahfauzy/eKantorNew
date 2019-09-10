@@ -364,6 +364,7 @@ class SuratKeluarController extends Controller
         $this->validate($request,[
             'file_surat' => 'required'
         ]);
+        // return $request->no_agenda;
         $surat = SuratKeluar::find($request->id);
         $surat->no_agenda = $request->no_agenda;
         $surat->save();
