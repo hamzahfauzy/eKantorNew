@@ -27,11 +27,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $suratMasuk = SuratMasuk::count();
-        $suratKeluar = SuratKeluar::count();
-        $spt = SptList::count();
-        $sppd = SppdList::count();
-        $agenda = Agenda::count();
+        if(auth()->user()->level == "admin")
+        {
+            $suratMasuk = SuratMasuk::count();
+            $suratKeluar = SuratKeluar::count();
+            $spt = SptList::count();
+            $sppd = SppdList::count();
+            $agenda = Agenda::count();
+        }
+        else
+        {
+            $suratMasuk = auth()->user()->employee->surat_masuks()->count();
+            $suratKeluar = auth()->user()->employee->surat_keluars()->count();
+            $spt = auth()->user()->employee->sptLists()->count();
+            $sppd = auth()->user()->employee->sppdLists()->count();
+            $agenda = auth()->user()->employee->agendas()->count();
+        }
         return view('home',[
             "suratMasuk" => $suratMasuk,
             "suratKeluar" => $suratKeluar,

@@ -4,8 +4,8 @@ namespace App\Model\Reference;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User;
-use App\Model\{Setting,Notification};
-use App\Model\Surat\{SuratMasuk, SuratKeluar, Disposisi};
+use App\Model\{Setting,Notification,Agenda};
+use App\Model\Surat\{SuratMasuk, SuratKeluar, Disposisi, SptList, SppdList};
 
 class Employee extends Model
 {
@@ -88,6 +88,26 @@ class Employee extends Model
     public function surat_keluars()
     {
         return $this->hasMany(SuratKeluar::class,'pegawai_id','id');
+    }
+
+    public function surat_masuks()
+    {
+        return $this->hasMany(SuratMasuk::class,'pegawai_id','id');
+    }
+
+    public function agendas()
+    {
+        return $this->hasMany(Agenda::class,'employee_id','id');
+    }
+
+    public function sptLists()
+    {
+        return $this->hasMany(SptList::class,'employee_id','id');
+    }
+
+    public function sppdLists()
+    {
+        return $this->hasMany(SppdList::class,'employee_id','id');
     }
 
     public function isPptk()
