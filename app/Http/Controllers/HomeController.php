@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Model\Surat\{Disposisi, SuratMasuk, HistoriSuratMasuk};
+use App\Model\Surat\{Disposisi, SuratMasuk, SuratKeluar, HistoriSuratMasuk, SptList, SppdList};
 use App\Model\Reference\Employee;
-use App\Model\Notification;
+use App\Model\{Notification, Agenda};
 
 class HomeController extends Controller
 {
@@ -27,7 +27,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $suratMasuk = SuratMasuk::count();
+        $suratKeluar = SuratKeluar::count();
+        $spt = SptList::count();
+        $sppd = SppdList::count();
+        $agenda = Agenda::count();
+        return view('home',[
+            "suratMasuk" => $suratMasuk,
+            "suratKeluar" => $suratKeluar,
+            "spt" => $spt,
+            "sppd" => $sppd,
+            "agenda" => $agenda
+        ]);
     }
 
     public function disposisi()

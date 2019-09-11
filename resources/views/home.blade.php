@@ -15,7 +15,7 @@
                         </div>
                         <div class="content">
                             <div class="text">SURAT MASUK</div>
-                            <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20"></div>
+                            <div class="number count-to" data-from="0" data-to="{{$suratMasuk}}" data-speed="15" data-fresh-interval="20">{{$suratMasuk}}</div>
                         </div>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                         </div>
                         <div class="content">
                             <div class="text">SURAT KELUAR</div>
-                            <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20"></div>
+                            <div class="number count-to" data-from="0" data-to="{{$suratKeluar}}" data-speed="1000" data-fresh-interval="20">{{$suratKeluar}}</div>
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                         </div>
                         <div class="content">
                             <div class="text">SPT/SPD</div>
-                            <div class="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20"></div>
+                            <div class="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20">{{$spt}}/{{$sppd}}</div>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                         </div>
                         <div class="content">
                             <div class="text">AGENDA</div>
-                            <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20"></div>
+                            <div class="number count-to" data-from="0" data-to="{{$agenda}}" data-speed="1000" data-fresh-interval="20">{{$agenda}}</div>
                         </div>
                     </div>
                 </div>
