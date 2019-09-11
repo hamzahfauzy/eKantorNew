@@ -17,10 +17,12 @@
                                 List Data Program
                             </h2>
                             <div class="pull-right">
+                                @if(auth()->user()->level == "admin")
                                 <a href="{{route('reference.program.create')}}" class="btn btn-primary waves-effect">
                                     <i class="material-icons">add</i> 
                                     <span>TAMBAH DATA</span>
                                 </a>
+                                @endif
                             </div>
                         	<div class="clearfix"></div>
                         </div>
@@ -58,6 +60,7 @@
                                             <th>{{$model->kd_program}}</th>
                                             <td>{{$model->nama}}</td>
                                             <td>
+                                                @if(auth()->user()->level == "admin")
                                             	<a href="{{route('reference.program.edit',$model->id)}}" class="btn btn-warning waves-effect">
 				                                    <i class="material-icons">create</i>
 				                                    <span>Edit</span>
@@ -73,6 +76,7 @@
 				                                	<input type="hidden" name="_method" value="DELETE">
 				                                	<input type="hidden" name="id" value="{{$model->id}}">
 				                                </form>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach

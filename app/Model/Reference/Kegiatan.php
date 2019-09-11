@@ -9,7 +9,7 @@ class Kegiatan extends Model
 {
     //
     public $timestamps = false;
-    protected $fillable = ['program_id','kd_kegiatan','nama','pagu_kegiatan','pptk_id'];
+    protected $fillable = ['program_id','kd_kegiatan','nama','pagu_kegiatan','pagu_kegiatan_2','pptk_id'];
 
     function getPaguAttribute()
     {

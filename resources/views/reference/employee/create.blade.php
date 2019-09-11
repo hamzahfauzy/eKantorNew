@@ -114,6 +114,19 @@
                                         </span>
                                     @endif
                                 </div>
+                                <div class="form-group form-float">
+                                    <select class="form-control show-tick" name="status_pptk" required="">
+                                        <option value="">Pilih Status PPTK</option>
+                                        @foreach([0 => 'Tidak',1 => 'PPTK'] as $status => $value)
+                                        <option value="{{$status}}" {{old('status_pptk') == $status ? 'selected=""' : '' }}>{{$value}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('status_pptk'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('status_pptk') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
                                 <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
                             </form>
                         </div>

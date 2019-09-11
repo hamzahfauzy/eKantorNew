@@ -158,6 +158,33 @@
                                 </li>
                             </ul>
                         </li>
+                        @if(auth()->user()->employee->isPptk())
+                        <li class="@yield('pkr-active')">
+                            <a href="javascript:void(0);" class="menu-toggle">
+                                <i class="material-icons">text_fields</i>
+                                <span>Program & Kegiatan</span>
+                            </a>
+                            <ul class="ml-menu">
+                                <li class="@yield('program-active')">
+                                    <a href="{{route('reference.program.index')}}">
+                                        Program
+                                    </a>
+                                </li>
+                                <li class="@yield('kegiatan-active')">
+                                    <a href="{{route('reference.kegiatan.index')}}">
+                                        Kegiatan
+                                    </a>
+                                </li>
+                                {{--
+                                <li class="@yield('rekening-active')">
+                                    <a href="{{route('reference.rekening.index')}}">
+                                        Rekening
+                                    </a>
+                                </li>
+                                --}}
+                            </ul>
+                        </li>
+                        @endif
                         <li class="@yield('spt-sppd-active')">
                             <a href="javascript:void(0);" class="menu-toggle">
                                 <i class="material-icons">dvr</i>

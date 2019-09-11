@@ -37,9 +37,10 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Kode Kegiatan</th>
+                                            <th width="15%">Kd Kegiatan</th>
                                             <th>Nama</th>
                                             <th>Program</th>
+                                            <th width="25%">Pagu</th>
                                             <th>PPTK</th>
                                             <th></th>
                                         </tr>
@@ -47,9 +48,10 @@
                                     <tfoot>
                                         <tr>
                                             <th>#</th>
-                                            <th>Kode Kegiatan</th>
+                                            <th width="15%">Kd Kegiatan</th>
                                             <th>Nama</th>
                                             <th>Program</th>
+                                            <th width="25%">Pagu</th>
                                             <th>PPTK</th>
                                             <th></th>
                                         </tr>
@@ -62,11 +64,16 @@
                                             <td>{{$model->program->kd_program.'.'.$model->kd_kegiatan}}</td>
                                             <td>
                                             {{$model->nama}}
-                                            <br>
-                                            Pagu : Rp. <b>{{number_format($model->pagu,2,',','.')}}</b>
                                             </td>
                                             <td>
                                                 {{$model->program->nama}}
+                                            </td>
+                                            <td>
+                                            Pagu Dalam Daerah : 
+                                            <br>Rp. <b>{{number_format($model->pagu_kegiatan ? $model->pagu_kegiatan : 0,2,',','.')}}</b><br>
+                                            <br>
+                                            Pagu Luar Daerah : 
+                                            <br>Rp. <b>{{number_format($model->pagu_kegiatan_2 ? $model->pagu_kegiatan_2 : 0,2,',','.')}}</b><br>
                                             </td>
                                             <td>
                                                 {{ !empty($model->pptk) ? $model->pptk->nama : '-'}}

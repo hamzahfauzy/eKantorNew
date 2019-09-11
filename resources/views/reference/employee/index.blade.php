@@ -42,6 +42,7 @@
                                             <th>Jabatan</th>
                                             <th>Golongan</th>
                                             <th>Eselon</th>
+                                            <th>Status PPTK</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -53,6 +54,7 @@
                                             <th>Jabatan</th>
                                             <th>Golongan</th>
                                             <th>Eselon</th>
+                                            <th>Status PPTK</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
@@ -70,6 +72,13 @@
                                             <td>{{$model->jabatan}}</td>
                                             <td>{{$model->golongan->pangkat}} - {{$model->golongan->nama}}</td>
                                             <td>{{$model->eselon->nama}}</td>
+                                            <td>
+                                                @if($model->status_pptk)
+                                                <span class="badge bg-teal">PPTK</span>
+                                                @else
+                                                <span class="badge bg-pink">Tidak</span>
+                                                @endif
+                                            </td>
                                             <td>
                                             	<a href="{{route('reference.employee.show',$model->id)}}" class="btn btn-info waves-effect">
                                                     <i class="material-icons">web_asset</i>

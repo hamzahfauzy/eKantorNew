@@ -59,7 +59,7 @@
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="text" class="form-control" name="pagu_kegiatan" required value="{{old('pagu_kegiatan') ? old('pagu_kegiatan') : $model->pagu_kegiatan}}">
-                                        <label class="form-label">Pagu Kegiatan</label>
+                                        <label class="form-label">Pagu Kegiatan Dalam Daerah</label>
                                     </div>
                                     @if ($errors->has('pagu_kegiatan'))
                                         <span class="invalid-feedback" role="alert">
@@ -67,6 +67,18 @@
                                         </span>
                                     @endif
                                 </div>
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="text" class="form-control" name="pagu_kegiatan_2" required value="{{old('pagu_kegiatan_2') ? old('pagu_kegiatan_2') : $model->pagu_kegiatan_2}}">
+                                        <label class="form-label">Pagu Kegiatan Luar Daerah</label>
+                                    </div>
+                                    @if ($errors->has('pagu_kegiatan_2'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('pagu_kegiatan_2') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                @if(auth()->user()->level == 'admin')
                                 <div class="form-group form-float">
                                     <select class="form-control show-tick" name="pptk_id" required="" data-live-search="true">
                                         <option value="">Pilih PPTK</option>
@@ -80,6 +92,7 @@
                                         </span>
                                     @endif
                                 </div>
+                                @endif
                                 <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
                             </form>
                         </div>

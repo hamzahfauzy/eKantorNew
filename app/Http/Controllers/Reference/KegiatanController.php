@@ -22,7 +22,10 @@ class KegiatanController extends Controller
     public function index()
     {
         //
-        return view('reference.kegiatan.index')->with('kegiatan',$this->model->orderby('kd_kegiatan')->get());
+        $model = $this->model->orderby('kd_kegiatan')->get();
+        if(auth()->user()->level == 'pegawai')
+            $model = $this->model->where('pptk_id',auth()->user()->employee->id)->orderby('kd_kegiatan')->get();
+        return view('reference.kegiatan.index')->with('kegiatan',$model);
     }
 
     /**
@@ -53,16 +56,26 @@ class KegiatanController extends Controller
             'program_id' => 'required|unique:kegiatans,program_id,'.$request->nama.',nama,program_id,'.$request->program_id.',kd_kegiatan,'.$request->kd_kegiatan,
             'kd_kegiatan' => 'required|unique:kegiatans,kd_kegiatan,'.$request->nama.',nama,program_id,'.$request->program_id.',kd_kegiatan,'.$request->kd_kegiatan,
             'pagu_kegiatan' => 'required',
-            'pptk_id' => 'required'
+            'pagu_kegiatan_2' => 'required',
         ]);
 
-        $this->model->create([
+        $model = $this->model->create([
             'nama' => $request->nama,
             'program_id' => $request->program_id,
             'kd_kegiatan' => $request->kd_kegiatan,
             'pagu_kegiatan' => $request->pagu_kegiatan,
-            'pptk_id' => $request->pptk_id
+            'pagu_kegiatan_2' => $request->pagu_kegiatan_2,
         ]);
+
+        if(auth()->user()->level == 'pegawai')
+        {
+            $model->update(['pptk_id' => auth()->user()->employee->id]);
+        }
+        else
+        {
+            if($request->pptk_id)
+                $model->update(['pptk_id' => $request->pptk_id]);
+        }
 
         return redirect()->route('reference.kegiatan.index')->with(['success'=>'Data berhasil disimpan']);
     }
@@ -110,16 +123,27 @@ class KegiatanController extends Controller
             'program_id' => 'required|unique:kegiatans,program_id,'.$request->id.',id,nama,'.$request->nama.',program_id,'.$request->program_id.',kd_kegiatan,'.$request->kd_kegiatan,
             'kd_kegiatan' => 'required|unique:kegiatans,kd_kegiatan,'.$request->id.',id,nama,'.$request->nama.',program_id,'.$request->program_id.',kd_kegiatan,'.$request->kd_kegiatan,
             'pagu_kegiatan' => 'required',
-            'pptk_id' => 'required'
+            'pagu_kegiatan_2' => 'required',
         ]);
 
-        $this->model->find($request->id)->update([
+        $model = $this->model->find($request->id);
+        $model->update([
             'nama' => $request->nama,
             'program_id' => $request->program_id,
             'kd_kegiatan' => $request->kd_kegiatan,
             'pagu_kegiatan' => $request->pagu_kegiatan,
-            'pptk_id' => $request->pptk_id
+            'pagu_kegiatan_2' => $request->pagu_kegiatan_2,
         ]);
+
+        if(auth()->user()->level == 'pegawai')
+        {
+            $model->update(['pptk_id' => auth()->user()->employee->id]);
+        }
+        else
+        {
+            if($request->pptk_id)
+                $model->update(['pptk_id' => $request->pptk_id]);
+        }
 
         return redirect()->route('reference.kegiatan.index')->with(['success'=>'Data berhasil diupdate']);;
     }

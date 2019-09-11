@@ -59,6 +59,7 @@ class EmployeeController extends Controller
             'email' => 'required:unique:users',
             'password' => 'required',
             'level' => 'required',
+            'status_pptk' => 'required'
         ]);
 
         $user = User::create([
@@ -75,6 +76,7 @@ class EmployeeController extends Controller
             'golongan_id' => $request->golongan_id,
             'eselon_id' => $request->eselon_id,
             'user_id' => $user->id,
+            'status_pptk' => $request->status_pptk
         ]);
 
         return redirect()->route('reference.employee.index')->with(['success'=>'Data berhasil disimpan']);;
@@ -129,6 +131,7 @@ class EmployeeController extends Controller
             'eselon_id' => 'required',
             'email' => 'required:unique:users,email,'.$employee->user_id.',id,email,'.$request->email,
             'level' => 'required',
+            'status_pptk' => 'required'
         ]);
 
         $user = User::find($employee->user_id)->update([
@@ -150,6 +153,7 @@ class EmployeeController extends Controller
             'jabatan' => $request->jabatan,
             'golongan_id' => $request->golongan_id,
             'eselon_id' => $request->eselon_id,
+            'status_pptk' => $request->status_pptk
         ]);
 
         return redirect()->route('reference.employee.index')->with(['success'=>'Data berhasil diupdate']);;

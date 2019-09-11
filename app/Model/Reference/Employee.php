@@ -10,7 +10,7 @@ use App\Model\Surat\{SuratMasuk, SuratKeluar, Disposisi, SptList, SppdList};
 class Employee extends Model
 {
     //
-    protected $fillable = ['NIP','nama','jabatan','golongan_id','eselon_id','user_id'];
+    protected $fillable = ['NIP','nama','jabatan','golongan_id','eselon_id','user_id','status_pptk'];
 
     public function golongan()
     {
@@ -112,7 +112,8 @@ class Employee extends Model
 
     public function isPptk()
     {
-        return $this->hasOne(Kegiatan::class,'pptk_id','id');
+        return $this->status_pptk;
+        // return $this->hasOne(Kegiatan::class,'pptk_id','id');
     }
 
     public function kegiatans()
