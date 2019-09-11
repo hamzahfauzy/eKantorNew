@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Surat\{SptList, SptNumber, SptEmployee, HistoriSptList};
 use App\Model\Reference\{WilayahTujuan, Employee};
-use App\Model\{Setting,Notification};
+use App\Model\{Setting,Notification,Agenda};
 
 class SptController extends Controller
 {
@@ -402,7 +402,20 @@ class SptController extends Controller
         $posisi = $histori->posisi;
         if($posisi == 1)
         {
-            $surat->update(['need_action' => -1]);   
+            $surat->update(['need_action' => -1]);
+            $agenda = new Agenda;
+            $agenda->create([
+                'employee_id' => $surat->employee_id,
+                'tanggal_awal' => $surat->tanggal_awal,
+                'tanggal_akhir' => $surat->tanggal_akhir,
+                'waktu_mulai' => '',
+                'waktu_selesai' => '',
+                'kegiatan' => $surat->maksud_tujuan,
+                'tempat' => $surat->tempat_tujuan,
+                'keterangan' => '',
+                'file_url' => '',
+                'status' => 1
+            ]); 
             return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
         }
         
@@ -432,6 +445,25 @@ class SptController extends Controller
 
         if($posisi >= 1)
         {
+            if($pimpinan_id == $surat->pimpinan_id)
+            {
+                $surat->update(['need_action' => -1]);   
+                $agenda = new Agenda;
+                $agenda->create([
+                    'employee_id' => $surat->employee_id,
+                    'tanggal_awal' => $surat->tanggal_awal,
+                    'tanggal_akhir' => $surat->tanggal_akhir,
+                    'waktu_mulai' => '',
+                    'waktu_selesai' => '',
+                    'kegiatan' => $surat->maksud_tujuan,
+                    'tempat' => $surat->tempat_tujuan,
+                    'keterangan' => '',
+                    'file_url' => '',
+                    'status' => 1
+                ]);
+                return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
+            }
+
             HistoriSptList::create([
                 'user_id' => $pimpinan_id,
                 'spt_id' => $histori->spt_id,

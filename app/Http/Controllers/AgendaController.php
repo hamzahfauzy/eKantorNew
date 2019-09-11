@@ -46,13 +46,14 @@ class AgendaController extends Controller
         $model = $this->model->create([
             'employee_id' => auth()->user()->employee->id,
             'tanggal_awal' => $request->tanggal_awal,
-            'tanggal_akhir' => $request->tanggal_awal,
+            'tanggal_akhir' => $request->tanggal_akhir,
             'waktu_mulai' => $request->waktu_mulai ? $request->waktu_mulai : '',
             'waktu_selesai' => $request->waktu_selesai ? $request->waktu_selesai : '',
             'kegiatan' => $request->kegiatan,
             'tempat' => $request->tempat,
             'keterangan' => $request->keterangan,
             'file_url' => $path,
+            'status' => 0
         ]);
 
         return redirect()->route('agenda.index')->with(['success'=>'Data berhasil disimpan']);
@@ -78,12 +79,13 @@ class AgendaController extends Controller
         $this->model->find($request->id)->update([
             'employee_id' => auth()->user()->employee->id,
             'tanggal_awal' => $request->tanggal_awal,
-            'tanggal_akhir' => $request->tanggal_awal,
+            'tanggal_akhir' => $request->tanggal_akhir,
             'waktu_mulai' => $request->waktu_mulai ? $request->waktu_mulai : '',
             'waktu_selesai' => $request->waktu_selesai ? $request->waktu_selesai : '',
             'kegiatan' => $request->kegiatan,
             'tempat' => $request->tempat,
             'keterangan' => $request->keterangan,
+            'status' => 0
         ]);
 
         $path = "";

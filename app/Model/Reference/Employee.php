@@ -112,8 +112,7 @@ class Employee extends Model
 
     public function isPptk()
     {
-        return $this->status_pptk;
-        // return $this->hasOne(Kegiatan::class,'pptk_id','id');
+        return $this->hasMany(Kegiatan::class, 'pptk_id','id');
     }
 
     public function kegiatans()
