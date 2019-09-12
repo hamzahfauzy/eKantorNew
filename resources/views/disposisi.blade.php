@@ -61,6 +61,13 @@
                                                     
                                                 </a>
 
+                                                @if(auth()->user()->employee->kepala_group)
+                                                <a href="#" class="btn btn-info waves-effect">
+                                                    <i class="material-icons">get_app</i>
+                                                    
+                                                </a>
+                                                @endif
+
                                                 <a href="{{route('detail-surat-masuk',$model->surat_masuk_id)}}" class="btn btn-warning waves-effect">
                                                     <i class="material-icons">visibility</i>
                                                     

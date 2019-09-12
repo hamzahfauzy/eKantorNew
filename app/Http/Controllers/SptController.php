@@ -69,10 +69,32 @@ class SptController extends Controller
         $sptNumber = SptNumber::get();
         $wilayah = WilayahTujuan::get();
         $employees = Employee::get();
+        $menugaskan = [];
+        foreach($employees as $employee)
+        {
+            if($employee->isPimpinan())
+                $menugaskan[] = $employee;
+            
+            if($employee->kepala_group_special_role())
+                $menugaskan[] = $employee;
+        }
+
+        $employee = auth()->user()->employee;
+        if($employee->kepala_sub_group)
+        {
+            $menugaskan[] = $employee->kepala_sub_group->group->kepala;
+        }
+
+        if($employee->staffGroup)
+        {
+            $menugaskan[] = $employee->staffGroup->subGroup->kepala;
+            $menugaskan[] = $employee->staffGroup->subGroup->group->kepala;
+        }
+
         return view('special-role.spt.create',[
             'spt' => $sptNumber,
             'wilayah' => $wilayah,
-            'employees' => $employees,
+            'employees' => $menugaskan,
         ]);
     }
 
@@ -213,10 +235,32 @@ class SptController extends Controller
         $sptEmployee = [];
         foreach($spt->employees as $employee)
             $sptEmployee[] = $employee->employee_id;
+
+        $menugaskan = [];
+        foreach($employees as $employee)
+        {
+            if($employee->isPimpinan())
+                $menugaskan[] = $employee;
+            
+            if($employee->kepala_group_special_role())
+                $menugaskan[] = $employee;
+        }
+
+        $employee = auth()->user()->employee;
+        if($employee->kepala_sub_group)
+        {
+            $menugaskan[] = $employee->kepala_sub_group->group->kepala;
+        }
+
+        if($employee->staffGroup)
+        {
+            $menugaskan[] = $employee->staffGroup->subGroup->kepala;
+            $menugaskan[] = $employee->staffGroup->subGroup->group->kepala;
+        }
         return view('special-role.spt.edit',[
             'sptModel' => $spt,
             'wilayah' => $wilayah,
-            'employees' => $employees,
+            'employees' => $menugaskan,
             'sptEmployee' => $sptEmployee
         ]);
     }
