@@ -41,8 +41,9 @@
                                             <th>Nama</th>
                                             <th>Program</th>
                                             <th width="20%">Pagu Dalam Daerah</th>
+                                            <th>Sisa Pagu</th>
                                             <th width="20%">Pagu Luar Daerah</th>
-                                            <th>Saldo</th>
+                                            <th>Sisa Pagu</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -53,8 +54,9 @@
                                             <th>Nama</th>
                                             <th>Program</th>
                                             <th width="20%">Pagu Dalam Daerah</th>
+                                            <th>Sisa Pagu</th>
                                             <th width="20%">Pagu Luar Daerah</th>
-                                            <th>Saldo</th>
+                                            <th>Sisa Pagu</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
@@ -71,13 +73,16 @@
                                                 {{$model->program->nama}}
                                             </td>
                                             <td>
+                                            Rp. <b>{{number_format($model->pagu_kegiatan,2,',','.')}}</b><br>
+                                            </td>
+                                            <td>
                                             Rp. <b>{{number_format($model->pagu_dalam_daerah,2,',','.')}}</b><br>
                                             </td>
                                             <td>
-                                            Rp. <b>{{number_format($model->pagu_luar_daerah,2,',','.')}}</b><br>
+                                            Rp. <b>{{number_format($model->pagu_kegiatan_2,2,',','.')}}</b><br>
                                             </td>
                                             <td>
-                                            Rp. <b>{{number_format($model->pagu_dalam_daerah+$model->pagu_luar_daerah,2,',','.')}}</b>
+                                            Rp. <b>{{number_format($model->pagu_luar_daerah,2,',','.')}}</b><br>
                                             </td>
                                             <td>
                                             	<a href="{{route('reference.kegiatan.edit',$model->id)}}" class="btn btn-warning waves-effect">
