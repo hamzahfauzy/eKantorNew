@@ -32,7 +32,7 @@ class Kegiatan extends Model
             if($wilayah->sebagai == 2)
                 $total += $sppd->total_biaya;
         }
-        return $this->pagu_kegiatan - $total;
+        return $this->pagu_kegiatan_2 - $total;
     }
 
     function program()
