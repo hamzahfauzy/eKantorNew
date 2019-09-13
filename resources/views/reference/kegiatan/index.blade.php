@@ -40,9 +40,9 @@
                                             <th width="15%">Kd Kegiatan</th>
                                             <th>Nama</th>
                                             <th>Program</th>
-                                            <th>Sisa Pakai Dalam Daerah</th>
+                                            <th>Sisa Pagu Dalam Daerah</th>
                                             <th>Pemakaian</th>
-                                            <th>Sisa Pakai Luar Daerah</th>
+                                            <th>Sisa Pagu Luar Daerah</th>
                                             <th>Pemakaian</th>
                                             <th></th>
                                         </tr>
@@ -53,9 +53,9 @@
                                             <th width="15%">Kd Kegiatan</th>
                                             <th>Nama</th>
                                             <th>Program</th>
-                                            <th>Sisa Pakai Dalam Daerah</th>
+                                            <th>Sisa Pagu Dalam Daerah</th>
                                             <th>Pemakaian</th>
-                                            <th>Sisa Pakai Luar Daerah</th>
+                                            <th>Sisa Pagu Luar Daerah</th>
                                             <th>Pemakaian</th>
                                             <th></th>
                                         </tr>
