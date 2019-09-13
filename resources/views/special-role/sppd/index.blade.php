@@ -126,7 +126,7 @@
                                             </td>
                                             <td>
                                                 {{$model->transportation->nama}}
-                                                @if($model->transportation->status_maskapai && !auth()->user()->inSpecialRole())
+                                                @if($model->transportation->status_maskapai && !auth()->user()->employee->inSpecialRole())
                                                 <style>
                                                 .maskapai .form-group {
                                                     margin-bottom:25px !important;
