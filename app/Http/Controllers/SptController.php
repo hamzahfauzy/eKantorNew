@@ -443,12 +443,31 @@ class SptController extends Controller
         $notification->save();
 
         $pimpinan_id = 0;
-        $posisi = $histori->posisi;
-        
-        
+
+        if($histori->posisi == 1)
+        {
+            $surat->update(['need_action' => -1]);
+            $agenda = new Agenda;
+            $agenda->create([
+                'employee_id' => $surat->employee_id,
+                'tanggal_awal' => $surat->tanggal_awal,
+                'tanggal_akhir' => $surat->tanggal_akhir,
+                'waktu_mulai' => '',
+                'waktu_selesai' => '',
+                'kegiatan' => $surat->maksud_tujuan,
+                'tempat' => $surat->tempat_tujuan,
+                'keterangan' => '',
+                'file_url' => '',
+                'status' => 1
+            ]); 
+            return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
+        }
+
+        $posisi = 4;
         if (auth()->user()->employee->kepala_sub_group) 
         {
             $pimpinan_id = auth()->user()->employee->kepala_sub_group->group->kepala_id;
+            $posisi = 3;
         }
         elseif (auth()->user()->employee->kepala_group) 
         {
@@ -470,28 +489,9 @@ class SptController extends Controller
             }
         }
 
-        if($posisi == 1)
+        if($posisi >= 1)
         {
-            $surat->update(['need_action' => -1]);
-            $agenda = new Agenda;
-            $agenda->create([
-                'employee_id' => $surat->employee_id,
-                'tanggal_awal' => $surat->tanggal_awal,
-                'tanggal_akhir' => $surat->tanggal_akhir,
-                'waktu_mulai' => '',
-                'waktu_selesai' => '',
-                'kegiatan' => $surat->maksud_tujuan,
-                'tempat' => $surat->tempat_tujuan,
-                'keterangan' => '',
-                'file_url' => '',
-                'status' => 1
-            ]); 
-            return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
-        }
-
-        if($posisi > 1)
-        {
-            if($pimpinan_id == $surat->pimpinan_id)
+            if(auth()->user()->employee->id == $surat->pimpinan_id)
             {
                 $surat->update(['need_action' => -1]);   
                 $agenda = new Agenda;
