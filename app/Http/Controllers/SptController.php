@@ -505,6 +505,22 @@ class SptController extends Controller
                     'file_url' => '',
                     'status' => 1
                 ]);
+
+                HistoriSptList::create([
+                    'user_id' => $pimpinan_id,
+                    'spt_id' => $histori->spt_id,
+                    'posisi' => $posisi,
+                    'status' => 0
+                ]);
+                
+                $this->model->find($histori->spt_id)->update(['need_action' => $posisi]);
+                $notification = new Notification;
+                $notification->user_id = $pimpinan_id;
+                $notification->status = 0;
+                $notification->url_to = route('pegawai.spt.cetak',$histori->spt_id);
+                $notification->deskripsi = "SPT - Dari ".$histori->spt->employee->nama;
+                $notification->save();
+
                 return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
             }
 
