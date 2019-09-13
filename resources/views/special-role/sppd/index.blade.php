@@ -126,13 +126,14 @@
                                             </td>
                                             <td>
                                                 {{$model->transportation->nama}}
-                                                @if($model->transportation->status_maskapai)
+                                                @if($model->transportation->status_maskapai && !auth()->user()->inSpecialRole())
                                                 <style>
                                                 .maskapai .form-group {
                                                     margin-bottom:25px !important;
                                                 }
                                                 </style>
                                                 @if(!empty(auth()->user()->employee->isPptk))
+                                                <br>
                                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#maskapai{{$model->id}}"class="label label-primary">Set Maskapai</a>
                                                 <div class="modal fade maskapai" id="maskapai{{$model->id}}" tabindex="-1" role="dialog">
                                                     <div class="modal-dialog" role="document">
