@@ -167,6 +167,9 @@ Route::middleware('auth')->group(function(){
 			Route::get('/','AgendaController@index')->name('agenda.index');
 			Route::get('create','AgendaController@create')->name('agenda.create');
 			Route::get('edit/{agenda}','AgendaController@edit')->name('agenda.edit');
+			Route::get('show/{agenda}','AgendaController@show')->name('agenda.show');
+			Route::get('acc/{agenda}','AgendaController@acc')->name('agenda.acc');
+			Route::get('tolak/{agenda}','AgendaController@tolak')->name('agenda.tolak');
 			Route::post('insert','AgendaController@store')->name('agenda.insert');
 			Route::put('update','AgendaController@update')->name('agenda.update');
 			Route::delete('delete','AgendaController@destroy')->name('agenda.delete');

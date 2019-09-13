@@ -87,24 +87,6 @@
                             --}}
                         </ul>
                     </li>
-                    <li class="@yield('spt-sppd-active')">
-                            <a href="javascript:void(0);" class="menu-toggle">
-                                <i class="material-icons">dvr</i>
-                                <span>SPT & SPPD</span>
-                            </a>
-                            <ul class="ml-menu">
-                                <li class="@yield('spt-active')">
-                                    <a href="#">
-                                        SPT
-                                    </a>
-                                </li>
-                                <li class="@yield('sppd-active')">
-                                    <a href="#">
-                                        SPPD
-                                    </a>
-                                </li>
-                            </ul>
-                    </li>
                     <li class="@yield('wilayah-active')">
                         <a href="{{route('reference.wilayah.index')}}">
                             <i class="material-icons">flight_takeoff</i>

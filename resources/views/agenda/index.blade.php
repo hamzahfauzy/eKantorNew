@@ -39,8 +39,8 @@
                                             <th>Tanggal</th>
                                             <th>Waktu</th>
                                             <th>Kegiatan</th>
-                                            <th>Tempat</th>
                                             <th>Keterangan</th>
+                                            <th>Status</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -50,8 +50,8 @@
                                             <th>Tanggal</th>
                                             <th>Waktu</th>
                                             <th>Kegiatan</th>
-                                            <th>Tempat</th>
                                             <th>Keterangan</th>
+                                            <th>Status</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
@@ -75,13 +75,19 @@
                                                 {{$model->waktu_selesai}} 
                                             </td>
                                             <td>
-                                                {{$model->kegiatan}}
-                                            </td>
-                                            <td>
-                                                {{$model->tempat}}
+                                                {{$model->kegiatan}} di {{$model->tempat}}
                                             </td>
                                             <td>
                                                 {{$model->keterangan}} 
+                                            </td>
+                                            <td>
+                                                @if($model->status == 0)
+                                                <label class="label bg-orange">Belum disetujui</label>
+                                                @elseif($model->status == 1)
+                                                <label class="label bg-teal">Disetujui</label>
+                                                @else
+                                                <label class="label bg-pink">Ditolak</label>
+                                                @endif
                                             </td>
                                             <td>
                                             	<a href="{{route('agenda.edit',$model->id)}}" class="btn btn-warning waves-effect">
