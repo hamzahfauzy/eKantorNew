@@ -38,6 +38,7 @@
                                             <th>#</th>
                                             <th>Kode</th>
                                             <th>Keterangan</th>
+                                            <th>Sebagai</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -46,16 +47,19 @@
                                             <th>#</th>
                                             <th>Kode</th>
                                             <th>Keterangan</th>
+                                            <th>Sebagai</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         {{'',$no=1}}
                                         @foreach($wilayah as $model)
+                                        <?php $sebagai=['Tidak Ada','Pagu Dalam Daerah','Pagu Luar Daerah'] ?>
                                         <tr>
                                             <td>{{$no++}}</td>
                                             <th>{{$model->kode}}</th>
                                             <td>{{$model->keterangan}}</td>
+                                            <td>{{$sebagai[$model->sebagai]}}</td>
                                             <td>
                                             	<a href="{{route('reference.wilayah.edit',$model->id)}}" class="btn btn-warning waves-effect">
 				                                    <i class="material-icons">create</i>

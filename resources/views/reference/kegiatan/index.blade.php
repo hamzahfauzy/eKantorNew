@@ -70,10 +70,10 @@
                                             </td>
                                             <td>
                                             Pagu Dalam Daerah : 
-                                            <br>Rp. <b>{{number_format($model->pagu_kegiatan ? $model->pagu_kegiatan : 0,2,',','.')}}</b><br>
+                                            <br>Rp. <b>{{number_format($model->pagu_dalam_daerah,2,',','.')}}</b><br>
                                             <br>
                                             Pagu Luar Daerah : 
-                                            <br>Rp. <b>{{number_format($model->pagu_kegiatan_2 ? $model->pagu_kegiatan_2 : 0,2,',','.')}}</b><br>
+                                            <br>Rp. <b>{{number_format($model->pagu_luar_daerah,2,',','.')}}</b><br>
                                             </td>
                                             <td>
                                                 {{ !empty($model->pptk) ? $model->pptk->nama : '-'}}

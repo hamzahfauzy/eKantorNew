@@ -41,6 +41,17 @@
                                         </span>
                                     @endif
                                 </div>
+                                <div>
+                                    <label>Sebagai</label>
+                                    <div class="demo-radio-button">
+                                        <input name="sebagai" type="radio" id="radio_1" {{$wilayah->sebagai == "0" ? 'checked=""' : ''}} value="0">
+                                        <label for="radio_1">Tidak Ada</label>
+                                        <input name="sebagai" type="radio" id="radio_2" {{$wilayah->sebagai == "1" ? 'checked=""' : ''}} value="1">
+                                        <label for="radio_2">Pagu Dalam Daerah</label>
+                                        <input name="sebagai" type="radio" id="radio_3" {{$wilayah->sebagai == "2" ? 'checked=""' : ''}} value="2">
+                                        <label for="radio_3">Pagu Luar Daerah</label>
+                                    </div>
+                                </div>
                                 <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
                                 <a class="btn btn-warning waves-effect" href="{{url()->previous()}}">KEMBALI</a>
                             </form>

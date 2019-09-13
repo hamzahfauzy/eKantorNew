@@ -53,6 +53,7 @@ class WilayahController extends Controller
         $this->model->create([
             'kode' => $request->kode,
             'keterangan' => $request->keterangan,
+            'sebagai' => $request->sebagai ? $request->sebagai : '',
         ]);
 
         return redirect()->route('reference.wilayah.index')->with(['success'=>'Data berhasil disimpan']);
@@ -99,6 +100,7 @@ class WilayahController extends Controller
         $this->model->find($request->id)->update([
             'kode' => $request->kode,
             'keterangan' => $request->keterangan,
+            'sebagai' => $request->sebagai ? $request->sebagai : '',
         ]);
 
         return redirect()->route('reference.wilayah.index')->with(['success'=>'Data berhasil diupdate']);;
