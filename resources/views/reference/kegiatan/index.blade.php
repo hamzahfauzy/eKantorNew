@@ -77,7 +77,7 @@
                                             Rp. <b>{{number_format($model->pagu_luar_daerah,2,',','.')}}</b><br>
                                             </td>
                                             <td>
-                                                {{number_format($model->pagu_dalam_daerah+$model->pagu_luar_daerah,2,',','.')}}
+                                            Rp. <b>{{number_format($model->pagu_dalam_daerah+$model->pagu_luar_daerah,2,',','.')}}</b>
                                             </td>
                                             <td>
                                             	<a href="{{route('reference.kegiatan.edit',$model->id)}}" class="btn btn-warning waves-effect">
