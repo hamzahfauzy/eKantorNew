@@ -40,8 +40,9 @@
                                             <th width="15%">Kd Kegiatan</th>
                                             <th>Nama</th>
                                             <th>Program</th>
-                                            <th width="25%">Pagu Dalam Daerah</th>
-                                            <th width="25%">Pagu Luar Daerah</th>
+                                            <th width="20%">Pagu Dalam Daerah</th>
+                                            <th width="20%">Pagu Luar Daerah</th>
+                                            <th>Saldo</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -51,8 +52,9 @@
                                             <th width="15%">Kd Kegiatan</th>
                                             <th>Nama</th>
                                             <th>Program</th>
-                                            <th width="25%">Pagu Dalam Daerah</th>
-                                            <th width="25%">Pagu Luar Daerah</th>
+                                            <th width="20%">Pagu Dalam Daerah</th>
+                                            <th width="20%">Pagu Luar Daerah</th>
+                                            <th>Saldo</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
@@ -75,7 +77,7 @@
                                             Rp. <b>{{number_format($model->pagu_luar_daerah,2,',','.')}}</b><br>
                                             </td>
                                             <td>
-                                                {{ !empty($model->pptk) ? $model->pptk->nama : '-'}}
+                                                {{number_format($model->pagu_dalam_daerah+$model->pagu_luar_daerah,2,',','.')}}
                                             </td>
                                             <td>
                                             	<a href="{{route('reference.kegiatan.edit',$model->id)}}" class="btn btn-warning waves-effect">
