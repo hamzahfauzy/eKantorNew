@@ -142,9 +142,7 @@
                                     </a>
                                 </li>
                                 @endif
-                                {{'',$spt_url = route('pegawai.spt.index')}}
-                                @if(auth()->user()->employee->inSpecialRoleUser() && !auth()->user()->employee->kepala_group_special_role())
-                                {{'',$spt_url = route('pegawai.spt-role.index')}}
+                                @if(auth()->user()->employee->inSpecialRoleUser() || auth()->user()->employee->kepala_group_special_role())
                                 <li class="@yield('surat-masuk-active')">
                                     <a href="{{route('pegawai.surat-masuk.index')}}">
                                         Surat Masuk
@@ -158,7 +156,7 @@
                                 </li>
                             </ul>
                         </li>
-                        @if(auth()->user()->employee->isPptk())
+                        @if(auth()->user()->employee->status_pptk)
                         <li class="@yield('pkr-active')">
                             <a href="javascript:void(0);" class="menu-toggle">
                                 <i class="material-icons">text_fields</i>
@@ -184,6 +182,10 @@
                                 --}}
                             </ul>
                         </li>
+                        @endif
+                        {{'',$spt_url = route('pegawai.spt.index')}}
+                        @if(auth()->user()->employee->inSpecialRoleUser() && !auth()->user()->employee->kepala_group_special_role())
+                        {{'',$spt_url = route('pegawai.spt-role.index')}}
                         @endif
                         <li class="@yield('spt-sppd-active')">
                             <a href="javascript:void(0);" class="menu-toggle">

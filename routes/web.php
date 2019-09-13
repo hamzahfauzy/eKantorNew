@@ -271,6 +271,7 @@ Route::middleware('auth')->group(function(){
 		Route::post('set-disposisi/{surat}','SpecialRole\SuratMasukController@setDisposisi')->name('sekretaris.surat.set-disposisi');
 
 		Route::get('disposisi','HomeController@disposisi')->name('disposisi');
+		Route::post('set-disposisi','HomeController@setDisposisi')->name('set-disposisi');
 		Route::get('profil','HomeController@profil')->name('profil');
 		Route::get('detail-surat-masuk/{surat}','HomeController@detailSuratMasuk')->name('detail-surat-masuk');
 	});

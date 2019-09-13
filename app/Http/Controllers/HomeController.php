@@ -55,9 +55,58 @@ class HomeController extends Controller
     public function disposisi()
     {
         $disposisi = Disposisi::where('pegawai_id',auth()->user()->employee->id)->orderby('id','desc')->get();
+        $employees = [];
+        if(auth()->user()->employee->kepala_group)
+        {
+            $group = auth()->user()->employee->kepala_group;
+            foreach($group->subGroups as $subGroup)
+            {
+                $employees[] = $subGroup->kepala;
+                foreach($subGroup->subGroupStaffs as $staff)
+                    $employees[] = $staff->employee;
+            }
+        }
+        if(auth()->user()->employee->kepala_sub_group)
+        {
+            $subGroup = auth()->user()->employee->kepala_sub_group;
+            foreach($subGroup->subGroupStaffs as $staff)
+                    $employees[] = $staff->employee;
+        }
         return view('disposisi',[
-            'disposisis' => $disposisi
+            'disposisis' => $disposisi,
+            'employees' => $employees
         ]);
+    }
+
+    public function setDisposisi(Request $request)
+    {
+        $id = $request->surat_id;
+        foreach($request->pegawai as $pegawai)
+        {
+            $disposisi = new Disposisi;
+            $disposisi->pegawai_id = $pegawai;
+            $disposisi->surat_masuk_id = $id;
+            $disposisi->catatan = $request->catatan;
+            $disposisi->save();
+
+            $employee = Employee::find($pegawai);
+
+            HistoriSuratMasuk::create([
+                'surat_masuk_id' => $id,
+                'status' => 'Surat sudah di disposisikan oleh '.auth()->user()->employee->nama.' ke '.$employee->nama
+            ]);
+
+            $surat = SuratMasuk::find($id);
+
+            $notification = new Notification;
+            $notification->user_id = $pegawai;
+            $notification->status = 0;
+            $notification->url_to = route('detail-surat-masuk',$surat->id);
+            $notification->deskripsi = "Dispoisisi - ".$surat->sifat_surat.' - '.$surat->sumber_surat;
+            $notification->save();
+        }
+
+        return redirect()->route('disposisi')->with(['success'=>'Surat telah di Disposisikan']);
     }
 
     public function detailSuratMasuk(SuratMasuk $surat)
