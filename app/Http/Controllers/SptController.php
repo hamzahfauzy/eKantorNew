@@ -444,24 +444,7 @@ class SptController extends Controller
 
         $pimpinan_id = 0;
         $posisi = $histori->posisi;
-        if($posisi == 1)
-        {
-            $surat->update(['need_action' => -1]);
-            $agenda = new Agenda;
-            $agenda->create([
-                'employee_id' => $surat->employee_id,
-                'tanggal_awal' => $surat->tanggal_awal,
-                'tanggal_akhir' => $surat->tanggal_akhir,
-                'waktu_mulai' => '',
-                'waktu_selesai' => '',
-                'kegiatan' => $surat->maksud_tujuan,
-                'tempat' => $surat->tempat_tujuan,
-                'keterangan' => '',
-                'file_url' => '',
-                'status' => 1
-            ]); 
-            return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
-        }
+        
         
         if (auth()->user()->employee->kepala_sub_group) 
         {
@@ -487,7 +470,26 @@ class SptController extends Controller
             }
         }
 
-        if($posisi >= 1)
+        if($posisi == 1)
+        {
+            $surat->update(['need_action' => -1]);
+            $agenda = new Agenda;
+            $agenda->create([
+                'employee_id' => $surat->employee_id,
+                'tanggal_awal' => $surat->tanggal_awal,
+                'tanggal_akhir' => $surat->tanggal_akhir,
+                'waktu_mulai' => '',
+                'waktu_selesai' => '',
+                'kegiatan' => $surat->maksud_tujuan,
+                'tempat' => $surat->tempat_tujuan,
+                'keterangan' => '',
+                'file_url' => '',
+                'status' => 1
+            ]); 
+            return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
+        }
+
+        if($posisi > 1)
         {
             if($pimpinan_id == $surat->pimpinan_id)
             {
@@ -505,22 +507,7 @@ class SptController extends Controller
                     'file_url' => '',
                     'status' => 1
                 ]);
-
-                HistoriSptList::create([
-                    'user_id' => $pimpinan_id,
-                    'spt_id' => $histori->spt_id,
-                    'posisi' => $posisi,
-                    'status' => 0
-                ]);
                 
-                $this->model->find($histori->spt_id)->update(['need_action' => $posisi]);
-                $notification = new Notification;
-                $notification->user_id = $pimpinan_id;
-                $notification->status = 0;
-                $notification->url_to = route('pegawai.spt.cetak',$histori->spt_id);
-                $notification->deskripsi = "SPT - Dari ".$histori->spt->employee->nama;
-                $notification->save();
-
                 return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
             }
 
@@ -567,7 +554,7 @@ class SptController extends Controller
         $notification->user_id = $surat->employee_id;
         $notification->status = 0;
         $notification->url_to = route('pegawai.spt.cetak',$histori->spt_id);
-        $notification->deskripsi = "Surat Ditolak oleh ".$histori->employee->nama;
+        $notification->deskripsi = "SPT Ditolak oleh ".$histori->employee->nama;
         $notification->save();
 
         return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
