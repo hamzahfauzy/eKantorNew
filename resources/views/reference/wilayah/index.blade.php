@@ -59,7 +59,7 @@
                                             <td>{{$no++}}</td>
                                             <th>{{$model->kode}}</th>
                                             <td>{{$model->keterangan}}</td>
-                                            <td>{{$sebagai ? $sebagai[$model->sebagai] : ''}}</td>
+                                            <td>{{$model->sebagai ? $sebagai[$model->sebagai] : ''}}</td>
                                             <td>
                                             	<a href="{{route('reference.wilayah.edit',$model->id)}}" class="btn btn-warning waves-effect">
 				                                    <i class="material-icons">create</i>
