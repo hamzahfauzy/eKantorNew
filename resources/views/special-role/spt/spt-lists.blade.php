@@ -18,10 +18,12 @@
                                 List Data SPT
                             </h2>
                             <div class="pull-right">
+                                @if(auth()->user()->employee->status_pptk)
                                 <a href="{{route('pegawai.spt.create')}}" class="btn btn-primary waves-effect">
                                     <i class="material-icons">add</i> 
                                     <span>TAMBAH DATA</span>
                                 </a>
+                                @endif
                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-rekapitulasi" class="btn btn-warning waves-effect">
                                     <i class="material-icons">print</i> 
                                     <span>CETAK REKAPITULASI</span>
@@ -287,7 +289,7 @@
                                                         <a href="{{route('pegawai.spt.cetak',$model->id)}}" class="btn btn-secondary waves-effect">
                                                             <i class="material-icons">visibility</i>
                                                         </a>
-                                                        @if($model->employee_id == auth()->user()->employee->id)
+                                                        @if($model->employee_id == auth()->user()->employee->id && auth()->user()->employee->status_pptk)
                                                         <a href="{{route('pegawai.spt.edit',$model->id)}}" class="btn btn-warning waves-effect">
                                                             <i class="material-icons">create</i>
                                                         </a>

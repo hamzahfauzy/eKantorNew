@@ -41,6 +41,9 @@
                                             <th>Kegiatan</th>
                                             <th>Keterangan</th>
                                             <th>Status</th>
+                                            @if(auth()->user()->employee->inSpecialRoleUser() && !auth()->user()->employee->kepala_group_special_role())
+                                            <th>Pegawai</th>
+                                            @endif
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -52,6 +55,9 @@
                                             <th>Kegiatan</th>
                                             <th>Keterangan</th>
                                             <th>Status</th>
+                                            @if(auth()->user()->employee->inSpecialRoleUser() && !auth()->user()->employee->kepala_group_special_role())
+                                            <th>Pegawai</th>
+                                            @endif
                                             <th></th>
                                         </tr>
                                     </tfoot>
@@ -89,7 +95,11 @@
                                                 <label class="label bg-pink">Ditolak</label>
                                                 @endif
                                             </td>
+                                            @if(auth()->user()->employee->inSpecialRoleUser() && !auth()->user()->employee->kepala_group_special_role())
+                                            <td>{{$model->employee->nama}}</td>
+                                            @endif
                                             <td>
+                                                @if($model->employee_id == auth()->user()->employee->id)
                                             	<a href="{{route('agenda.edit',$model->id)}}" class="btn btn-warning waves-effect">
 				                                    <i class="material-icons">create</i>
 				                                    <span>Edit</span>
@@ -105,6 +115,7 @@
 				                                	<input type="hidden" name="_method" value="DELETE">
 				                                	<input type="hidden" name="id" value="{{$model->id}}">
 				                                </form>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach

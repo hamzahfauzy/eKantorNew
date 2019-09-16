@@ -16,8 +16,11 @@ class AgendaController extends Controller
 
     function index()
     {
+        $agendas = $this->model->where('employee_id',auth()->user()->employee->id)->get();
+        if(auth()->user()->employee->inSpecialRoleUser() && !auth()->user()->employee->kepala_group_special_role())
+            $agendas = $this->model->get();
         return view('agenda.index',[
-            'agendas' => $this->model->where('employee_id',auth()->user()->employee->id)->get()
+            'agendas' => $agendas
         ]);
     }
     
