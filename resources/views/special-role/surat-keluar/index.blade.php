@@ -90,7 +90,7 @@
                                                     <td>
                                                         <b>{{$model->no_surat}}</b>
                                                         @if($model->arsip_pegawai)
-                                                            No. Arsip : {{$model->arsip_pegawai->no_arsip}}
+                                                            <br>No. Arsip : {{$model->arsip_pegawai->no_arsip}}
                                                         @else
                                                             @if($model->need_action == -1)
                                                             <br>
