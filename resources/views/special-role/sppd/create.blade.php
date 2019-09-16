@@ -21,11 +21,17 @@
                                 <div class="form-group form-float">
                                     <select class="form-control show-tick" name="spt_id" required="" data-live-search="true">
                                         <option value="">Pilih SPT</option>
+
+                                        {{--
                                         @foreach($sptEmployee as $spt)
                                         @if(empty($spt->list->no_spt))
                                         @continue 
                                         @endif
                                         <option value="{{$spt->spt_id}}" {{old('spt_id') == $spt->spt_id ? 'selected=""' : '' }}>{{$spt->list->no_spt}}</option>
+                                        @endforeach
+                                        --}}
+                                        @foreach($sptLists as $spt)
+                                        <option value="{{$spt->id}}" {{old('spt_id') == $spt->id ? 'selected=""' : '' }}>{{$spt->no_spt}}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('spt_id'))

@@ -98,8 +98,10 @@ class SppdController extends Controller
     {
         //
         $sptEmployee = SptEmployee::where('employee_id',auth()->user()->employee->id)->get();
+        $spt = SptList::where('no_spt','!=','')->get();
         return view('special-role.sppd.create',[
             'sptEmployee' => $sptEmployee,
+            'sptLists' => $spt,
             'transportations' => $this->transportation
         ]);
     }
@@ -181,9 +183,12 @@ class SppdController extends Controller
         $employees = [];
         foreach($allSptEmployee as $employee)
             $employees[] = $employee->employee_id;
+
+        $spt = SptList::where('no_spt','!=','')->get();
         return view('special-role.sppd.edit',[
             'sptEmployee' => $sptEmployee,
             'employees' => $employees,
+            'sptLists' => $spt,
             'sppd' => $sppd,
             'transportations' => $this->transportation
         ]);
