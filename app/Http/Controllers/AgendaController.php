@@ -73,10 +73,10 @@ class AgendaController extends Controller
             foreach($kepala_id as $k_id)
             {
                 $notification = new Notification;
-                $notification->user_id = $id;
+                $notification->user_id = $k_id;
                 $notification->status = 0;
                 $notification->url_to = route('agenda.show',$model->id);
-                $notification->deskripsi = "Agenda oleh ".auth()->user()->employee->nama;
+                $notification->deskripsi = "Agenda oleh ".auth()->user()->employee->nama.' ('.auth()->user()->employee->jabatan.')';
                 $notification->save();
             }
         }
