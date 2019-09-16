@@ -226,6 +226,15 @@ class SptController extends Controller
             'no_spt' => $request->no_spt
         ]);
 
+        $surat = SptList::find($request->id);
+        if(!empty($request->file('file_spt_fix_url')))
+        {
+            $uploadedFile = $request->file('file_spt_fix_url');
+            $path = $uploadedFile->store('public/spt');
+            $surat->file_spt_fix_url = $path;
+            $surat->save();
+        }
+
         return redirect()->route('pegawai.spt-role.index')->with(['success'=>'No SPT berhasil di tambahkan']);
     }
 

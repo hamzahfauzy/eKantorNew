@@ -173,36 +173,6 @@
                                                     @if($model->lastHistori)
                                                         <span class="badge {{$bg[$model->lastHistori->status]}}">{{$status[$model->lastHistori->status]}}</span>
                                                     @endif
-                                                    @if($model->need_action == -1 && empty($model->file_spt_fix_url) && !empty($model->no_spt) && auth()->user()->employee->id == $model->employee_id)
-                                                        <br><br>
-                                                        <a href="javascript:void(0)" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#modalUpload{{$model->id}}">Upload Surat</a>
-                                                        <div class="modal fade" id="modalUpload{{$model->id}}" tabindex="-1" role="dialog">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h4 class="modal-title" id="defaultModalLabel">Nomor SPT</h4>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <form id="form_validation" method="POST" action="{{route('pegawai.spt.upload')}}" enctype="multipart/form-data">
-                                                                            {{csrf_field()}}
-                                                                            <input type="hidden" name="id" value="{{$model->id}}">
-                                                                            <div class="form-group form-float">
-                                                                                <label>File SPT</label>
-                                                                                <div class="form-line">
-                                                                                    <input type="file" class="form-control" name="file_spt_fix_url" required>
-                                                                                    <label class="form-label">File SPT</label>
-                                                                                </div>
-                                                                            </div>
-                                                                            <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
-                                                                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                                                                        </form>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @endif
                                                     </td>
                                                     <td>
                                                     {{$maksud_tujuan[0]}}

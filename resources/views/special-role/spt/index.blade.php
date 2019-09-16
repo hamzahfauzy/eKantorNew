@@ -162,7 +162,7 @@
                                                                 <h4 class="modal-title" id="defaultModalLabel">Nomor SPT</h4>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form id="form_validation" method="POST" action="{{route('pegawai.spt-role.set-no-spt')}}">
+                                                                <form id="form_validation" method="POST" action="{{route('pegawai.spt-role.set-no-spt')}}" enctype="multipart/form-data">
                                                                     {{csrf_field()}}
                                                                     <input type="hidden" name="id" value="{{$model->id}}">
                                                                     <div class="form-group form-float">
@@ -170,6 +170,13 @@
                                                                         <div class="form-line">
                                                                             <input type="text" class="form-control" name="no_spt" required>
                                                                             <label class="form-label">No SPT</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group form-float">
+                                                                        <label>File SPT</label>
+                                                                        <div class="form-line">
+                                                                            <input type="file" class="form-control" name="file_spt_fix_url" required>
+                                                                            <label class="form-label">File SPT</label>
                                                                         </div>
                                                                     </div>
                                                                     <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
