@@ -18,7 +18,7 @@
                             </h2>
                             
                             <div class="pull-right">
-                                @if(!empty(auth()->user()->employee->isPptk))
+                                @if(!empty(auth()->user()->employee->status_pptk))
                                 <a href="{{route('pegawai.sppd.create')}}" class="btn btn-primary waves-effect">
                                     <i class="material-icons">add</i> 
                                     <span>TAMBAH DATA</span>
@@ -119,7 +119,7 @@
                                             </td>
                                             <td>
                                                 {{$model->no_sppd}}
-                                                @if(!empty(auth()->user()->employee->isPptk))
+                                                @if(!empty(auth()->user()->employee->status_pptk))
                                                 <br>
                                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#defaultModal{{$model->id}}" class="label label-primary">Lihat Pegawai</a>
                                                 @endif
@@ -132,7 +132,7 @@
                                                     margin-bottom:25px !important;
                                                 }
                                                 </style>
-                                                @if(!empty(auth()->user()->employee->isPptk))
+                                                @if(!empty(auth()->user()->employee->status_pptk))
                                                 <br>
                                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#maskapai{{$model->id}}"class="label label-primary">Set Maskapai</a>
                                                 <div class="modal fade maskapai" id="maskapai{{$model->id}}" tabindex="-1" role="dialog">
@@ -233,7 +233,7 @@
                                             </td>
                                             <td>
                                             {{number_format($model->total_biaya)}}
-                                            @if(!empty(auth()->user()->employee->isPptk))
+                                            @if(!empty(auth()->user()->employee->status_pptk))
                                             <br>
                                             <a href="{{route('pegawai.sppd.detail-biaya',$model->id)}}">Detail Biaya</a>
                                             @endif
@@ -243,7 +243,7 @@
 				                                    <i class="material-icons">visibility</i>
 				                                    <span>Lihat</span>
 				                                </a>
-                                                @if(!empty(auth()->user()->employee->isPptk))
+                                                @if(!empty(auth()->user()->employee->status_pptk))
                                                 <a href="{{route('pegawai.sppd.edit',$model->id)}}" class="btn btn-warning waves-effect">
 				                                    <i class="material-icons">create</i>
 				                                    <span>Edit</span>
