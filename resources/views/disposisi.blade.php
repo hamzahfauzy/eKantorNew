@@ -87,7 +87,7 @@
                                                                         <label>Disposisikan Ke:</label>
                                                                         <select class="form-control show-tick" name="pegawai[]" required="" data-live-search="true" multiple="">
                                                                             @foreach($employees as $employee)
-                                                                            <option value="{{$employee->id}}">{{$employee->nama}}</option>
+                                                                            <option value="{{$employee->id}}">{{$employee->nama}} ({{$employee->jabatan}})</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>

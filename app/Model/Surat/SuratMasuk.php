@@ -30,4 +30,9 @@ class SuratMasuk extends Model
     {
         return ArsipSurat::where('surat_id',$this->id)->where('jenis_surat','Surat Masuk')->first();
     }
+
+    public function lampiran()
+    {
+        return $this->hasMany(LampiranSuratMasuk::class, 'surat_masuk_id','id');
+    }
 }

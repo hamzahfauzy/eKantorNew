@@ -30,17 +30,18 @@
                                             <tr>
                                                 <td>
                                                 Index
-                                                <br><br><br>
-                                                </td>
-                                                <td>
-                                                Kode
                                                 <br>
                                                 <h3>{{explode("/",$surat->no_agenda)[0]}}</h3>
                                                 </td>
                                                 <td>
-                                                No. Urut
+                                                Kode
                                                 <br>
                                                 <h3>{{explode("/",$surat->no_agenda)[1]}}</h3>
+                                                </td>
+                                                <td>
+                                                No. Urut
+                                                <br>
+                                                <h3>{{explode("/",$surat->no_agenda)[2]}}</h3>
                                                 </td>
                                             </tr>
                                         </table>
@@ -66,8 +67,7 @@
                                                 </td>
                                                 <td>
                                                     <p>Lampiran</p>
-                                                    <span id="jumlah_lampiran"></span>
-                                                    <input type="text" id="lampiran" class="form-control" value="Tidak Ada">
+                                                    {{$surat->jumlah_lampiran}} {{$surat->satuan_lampiran}}
                                                 </td>
                                             </tr>
                                             <tr>

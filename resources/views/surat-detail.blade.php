@@ -100,6 +100,18 @@
                                 <input type="hidden" name="id" value="{{$surat->id}}">
                             </form>
                             @endif
+
+                            @if(!empty($surat->lampiran) && count($surat->lampiran) > 0)
+                            <div>
+                                <br>
+                                <span>Lampiran</span>
+                                <ul>
+                                    @foreach($surat->lampiran as $key => $lampiran)
+                                    <li><a href="{{Storage::url($lampiran->file_lampiran_url)}}" target="_blank">Lampiran {{$key+1}}</a></li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -150,7 +162,7 @@
                                     <label>Disposisikan Ke:</label>
                                     <select class="form-control show-tick" name="pegawai[]" required="" data-live-search="true" multiple="">
                                         @foreach($employees as $employee)
-                                        <option value="{{$employee->id}}">{{$employee->nama}}</option>
+                                        <option value="{{$employee->id}}">{{$employee->nama}} ({{$employee->jabatan}})</option>
                                         @endforeach
                                     </select>
                                 </div>
