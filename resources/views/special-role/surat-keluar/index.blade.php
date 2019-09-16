@@ -89,8 +89,8 @@
                                                     <td>{{$no++}}</td>
                                                     <td>
                                                         <b>{{$model->no_surat}}</b>
-                                                        @if($model->arsip)
-                                                            No. Arsip : {{$model->arsip->no_arsip}}
+                                                        @if($model->arsip_pegawai)
+                                                            No. Arsip : {{$model->arsip_pegawai->no_arsip}}
                                                         @else
                                                             @if($model->need_action == -1)
                                                             <br>
@@ -147,6 +147,7 @@
                                                                 <form id="form_validation" method="POST" action="{{route('pegawai.surat-keluar.arsip')}}">
                                                                     {{csrf_field()}}
                                                                     <input type="hidden" name="id" value="{{$model->id}}">
+                                                                    <input type="hidden" name="tipe_arsip" value="arsip pegawai">
                                                                     <div class="form-group form-float">
                                                                         <label>No. Arsip</label>
                                                                         <div class="form-line">
@@ -330,6 +331,50 @@
                                                     <td>{{$no++}}</td>
                                                     <td>
                                                         <b>{{$model->no_surat}}</b>  
+                                                        @if($model->arsip_operator)
+                                                            <br>
+                                                            No. Arsip : {{$model->arsip_operator->no_arsip}}
+                                                        @else
+                                                            @if($model->need_action == -1)
+                                                            <br>
+                                                            <a href="javascript:void(0)" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#modalArsip{{$model->id}}">Arsipkan Surat</a>
+                                                            <div class="modal fade" id="modalArsip{{$model->id}}" tabindex="-1" role="dialog">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title" id="defaultModalLabel">Arsip Surat Keluar</h4>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <form id="form_validation" method="POST" action="{{route('pegawai.surat-keluar.arsip')}}">
+                                                                                {{csrf_field()}}
+                                                                                <input type="hidden" name="id" value="{{$model->id}}">
+                                                                                <input type="hidden" name="tipe_arsip" value="arsip operator">
+                                                                                <div class="form-group form-float">
+                                                                                    <label>No. Arsip</label>
+                                                                                    <div class="form-line">
+                                                                                        <input type="text" class="form-control" name="no_arsip" required>
+                                                                                        <label class="form-label">No Arsip</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group form-float">
+                                                                                    <label>Catatan</label>
+                                                                                    <div class="form-line">
+                                                                                        <textarea class="form-control" name="catatan" required></textarea>
+                                                                                        <label class="form-label">Catatan</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
+                                                                                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @endif
+                                                        @endif
+
                                                         @if(!empty($model->no_agenda))
                                                             <br>
                                                             No. Agenda : {!!$model->no_agenda!!}

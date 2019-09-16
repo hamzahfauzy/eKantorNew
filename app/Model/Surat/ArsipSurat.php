@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class ArsipSurat extends Model
 {
     //
+    protected $guarded = [];
 }

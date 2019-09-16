@@ -200,6 +200,7 @@ Route::middleware('auth')->group(function(){
 			Route::put('update','SptController@update')->name('pegawai.spt.update');
 			Route::put('doupdate','SptController@doupdate')->name('pegawai.spt.doupdate');
 			Route::post('accept','SptController@accept')->name('pegawai.spt.accept');
+			Route::post('arsip','SptController@arsip')->name('pegawai.spt.arsip');
 			Route::post('upload','SptController@upload')->name('pegawai.spt.upload');
 			Route::post('decline','SptController@decline')->name('pegawai.spt.decline');
 			Route::post('get-employees','SptController@getEmployees')->name('pegawai.spt.get-employees');
@@ -247,6 +248,7 @@ Route::middleware('auth')->group(function(){
 				Route::get('cetak/{spt}','SptController@cetak')->name('pegawai.spt-role.cetak');
 				Route::get('rekapitulasi','SptController@rekapitulasi')->name('pegawai.spt-role.rekapitulasi');
 				Route::post('insert','SptController@store')->name('pegawai.spt-role.insert');
+				Route::post('arsip','SptController@arsip')->name('pegawai.spt-role.arsip');
 				Route::post('set-no-spt','SptController@setNoSpt')->name('pegawai.spt-role.set-no-spt');
 				Route::post('get-employees','SptController@getEmployees')->name('pegawai.spt-role.get-employees');
 				Route::post('set-urutan','SptController@setUrutan')->name('pegawai.spt-role.set-urutan');

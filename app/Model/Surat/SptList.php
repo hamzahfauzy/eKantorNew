@@ -45,6 +45,18 @@ class SptList extends Model
     {
         return HistoriSptList::where('spt_id',$this->id)->orderby('id','desc')->first();
     }
+
+    public function getArsipPegawaiAttribute()
+    {
+        $model = ArsipSurat::where('surat_id',$this->id)->where('jenis_surat','SPT')->where('tipe_arsip','arsip pegawai')->first();
+        return $model;
+    }
+
+    public function getArsipOperatorAttribute()
+    {
+        $model = ArsipSurat::where('surat_id',$this->id)->where('jenis_surat','SPT')->where('tipe_arsip','arsip operator')->first();
+        return $model;
+    }
     
 
 }

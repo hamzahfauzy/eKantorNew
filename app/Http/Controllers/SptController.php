@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Surat\{SptList, SptNumber, SptEmployee, HistoriSptList};
+use App\Model\Surat\{SptList, SptNumber, SptEmployee, HistoriSptList, ArsipSurat};
 use App\Model\Reference\{WilayahTujuan, Employee};
 use App\Model\{Setting,Notification,Agenda};
 
@@ -644,5 +644,16 @@ class SptController extends Controller
         // }
 
         return response()->json(["error" => 0, "message" => "data found", "data" => $showEmployee]);
+    }
+
+    public function arsip(Request $request)
+    {
+        $arsip = new ArsipSurat;
+        $arsip->surat_id = $request->id;
+        $arsip->no_arsip = $request->no_arsip;
+        $arsip->jenis_surat = "SPT";
+        $arsip->tipe_arsip = $request->tipe_arsip;
+        $arsip->save();
+        return redirect()->route('pegawai.spt.index')->with(['success'=>'Surat telah di arsipkan']);
     }
 }

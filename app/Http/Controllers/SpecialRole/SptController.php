@@ -291,4 +291,15 @@ class SptController extends Controller
 
         // $pdf->stream();
     }
+
+    public function arsip(Request $request)
+    {
+        $arsip = new ArsipSurat;
+        $arsip->surat_id = $request->id;
+        $arsip->no_arsip = $request->no_arsip;
+        $arsip->jenis_surat = "SPT";
+        $arsip->tipe_arsip = $request->tipe_arsip;
+        $arsip->save();
+        return redirect()->route('pegawai.spt-role.index')->with(['success'=>'Surat telah di arsipkan']);
+    }
 }

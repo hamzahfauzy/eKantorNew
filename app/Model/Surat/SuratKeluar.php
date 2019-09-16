@@ -36,8 +36,15 @@ class SuratKeluar extends Model
         return HistoriSuratKeluar::where('surat_id',$this->id)->orderby('id','desc')->first();
     }
 
-    public function getArsipAttribute()
+    public function getArsipPegawaiAttribute()
     {
-        return 0;
+        $model = ArsipSurat::where('surat_id',$this->id)->where('jenis_surat','Surat Keluar')->where('tipe_arsip','arsip pegawai')->first();
+        return $model;
+    }
+
+    public function getArsipOperatorAttribute()
+    {
+        $model = ArsipSurat::where('surat_id',$this->id)->where('jenis_surat','Surat Keluar')->where('tipe_arsip','arsip operator')->first();
+        return $model;
     }
 }

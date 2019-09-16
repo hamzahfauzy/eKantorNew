@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Model\Surat\{SuratKeluar,HistoriSuratKeluar};
+use App\Model\Surat\{SuratKeluar,HistoriSuratKeluar, ArsipSurat};
 use App\Model\Reference\{SubGroup,Employee};
 use App\Model\{Notification,Setting};
 
@@ -378,5 +378,16 @@ class SuratKeluarController extends Controller
         }
 
         return redirect()->route('pegawai.surat-keluar.index')->with(['success'=>'Surat Berhasil diagendakan']);
+    }
+
+    public function arsip(Request $request)
+    {
+        $arsip = new ArsipSurat;
+        $arsip->surat_id = $request->id;
+        $arsip->no_arsip = $request->no_arsip;
+        $arsip->jenis_surat = "Surat Keluar";
+        $arsip->tipe_arsip = $request->tipe_arsip;
+        $arsip->save();
+        return redirect()->route('pegawai.surat-keluar.index')->with(['success'=>'Surat telah di arsipkan']);
     }
 }

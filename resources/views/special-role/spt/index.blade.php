@@ -110,6 +110,47 @@
                                             <td>{{$no++}}</td>
                                             <td>
                                             {!! $model->no_spt ? $model->no_spt : "<i>Belum ada nomor</i>" !!}<br>
+                                            @if($model->arsip_operator)
+                                                No. Arsip : {{$model->arsip_operator->no_arsip}}<br>
+                                            @else
+                                                @if($model->need_action == -1)
+                                                <a href="javascript:void(0)" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#modalArsip{{$model->id}}">Arsipkan Surat</a><br>
+                                                <div class="modal fade" id="modalArsip{{$model->id}}" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title" id="defaultModalLabel">Arsip Surat Keluar</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form id="form_validation" method="POST" action="{{route('pegawai.spt-role.arsip')}}">
+                                                                    {{csrf_field()}}
+                                                                    <input type="hidden" name="id" value="{{$model->id}}">
+                                                                    <input type="hidden" name="tipe_arsip" value="arsip operator">
+                                                                    <div class="form-group form-float">
+                                                                        <label>No. Arsip</label>
+                                                                        <div class="form-line">
+                                                                            <input type="text" class="form-control" name="no_arsip" required>
+                                                                            <label class="form-label">No Arsip</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group form-float">
+                                                                        <label>Catatan</label>
+                                                                        <div class="form-line">
+                                                                            <textarea class="form-control" name="catatan" required></textarea>
+                                                                            <label class="form-label">Catatan</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
+                                                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                                                </form>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @endif
+                                            @endif
                                             {{$model->tanggal->formatLocalized("%d %B %Y")}}<br>
                                             @if($model->need_action == -1 && empty($model->no_spt))
                                                 <br>
