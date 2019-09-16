@@ -98,7 +98,7 @@ class HomeController extends Controller
 
             HistoriSuratMasuk::create([
                 'surat_masuk_id' => $id,
-                'status' => 'Surat sudah di disposisikan oleh '.auth()->user()->employee->nama.' ke '.$employee->nama
+                'status' => 'Surat sudah di disposisikan oleh '.auth()->user()->employee->nama.' ('.auth()->user()->employee->jabatan.')'.' ke '.$employee->nama.' ('.$employee->nama.')'
             ]);
 
             $surat = SuratMasuk::find($id);

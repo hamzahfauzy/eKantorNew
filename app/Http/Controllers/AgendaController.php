@@ -46,7 +46,7 @@ class AgendaController extends Controller
             $path = $uploadedFile->store('public/file_agenda');
         }
 
-        $status = auth()->user()->employee->kepala_group || auth()->user()->employee->kepala_group_special_role ? 1 : 0;
+        $status = auth()->user()->employee->kepala_group || auth()->user()->employee->kepala_group_special_role() ? 1 : 0;
 
         $model = $this->model->create([
             'employee_id' => auth()->user()->employee->id,
