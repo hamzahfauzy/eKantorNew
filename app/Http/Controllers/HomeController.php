@@ -54,6 +54,11 @@ class HomeController extends Controller
 
     public function disposisi()
     {
+        // set disposisi as read
+        $disposisi = Disposisi::where('pegawai_id',auth()->user()->employee->id)->whereNull('status')->orderby('id','desc')->get();
+        if(!empty($disposisi) && count($disposisi) > 0)
+            Disposisi::where('pegawai_id',auth()->user()->employee->id)->whereNull('status')->update(['status' => 1]);
+
         $disposisi = Disposisi::where('pegawai_id',auth()->user()->employee->id)->orderby('id','desc')->get();
         $employees = [];
         if(auth()->user()->employee->kepala_group)

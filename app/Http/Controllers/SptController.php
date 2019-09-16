@@ -203,7 +203,7 @@ class SptController extends Controller
         $notification->user_id = $pimpinan_id;
         $notification->status = 0;
         $notification->url_to = route('pegawai.spt.cetak',$sptModel->id);
-        $notification->deskripsi = "SPT - Dari ".auth()->user()->name;
+        $notification->deskripsi = "SPT - Dari ".auth()->user()->name." (".auth()->user()->employee->jabatan.")";
         $notification->save();
 
         return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
@@ -366,7 +366,7 @@ class SptController extends Controller
         $notification->user_id = $pimpinan_id;
         $notification->status = 0;
         $notification->url_to = route('pegawai.spt.cetak',$request->id);
-        $notification->deskripsi = "Update SPT - Dari ".auth()->user()->name;
+        $notification->deskripsi = "Update SPT - Dari ".auth()->user()->name." (".auth()->user()->employee->jabatan.")";
         $notification->save();
 
         return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil diupdate']);
@@ -418,7 +418,7 @@ class SptController extends Controller
         $notification->user_id = $pimpinan_id;
         $notification->status = 0;
         $notification->url_to = route('pegawai.spt.cetak',$request->id);
-        $notification->deskripsi = "Update SPT - Dari ".auth()->user()->name;
+        $notification->deskripsi = "Update SPT - Dari ".auth()->user()->name." (".auth()->user()->employee->jabatan.")";
         $notification->save();
 
         return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil diupdate']);
@@ -439,7 +439,7 @@ class SptController extends Controller
         $notification->user_id = $surat->employee_id;
         $notification->status = 0;
         $notification->url_to = route('pegawai.spt.cetak',$surat->id);
-        $notification->deskripsi = "SPT Diterima oleh ".$histori->employee->nama;
+        $notification->deskripsi = "SPT Diterima oleh ".$histori->employee->nama." (".$histori->employee->jabatan.")";
         $notification->save();
 
         $pimpinan_id = 0;
@@ -522,7 +522,7 @@ class SptController extends Controller
             $notification->user_id = $pimpinan_id;
             $notification->status = 0;
             $notification->url_to = route('pegawai.spt.cetak',$histori->spt_id);
-            $notification->deskripsi = "SPT - Dari ".$histori->spt->employee->nama;
+            $notification->deskripsi = "SPT - Dari ".$histori->spt->employee->nama." (".$histori->spt->employee->jabatan.")";
             $notification->save();
         }
         else
@@ -554,7 +554,7 @@ class SptController extends Controller
         $notification->user_id = $surat->employee_id;
         $notification->status = 0;
         $notification->url_to = route('pegawai.spt.cetak',$histori->spt_id);
-        $notification->deskripsi = "SPT Ditolak oleh ".$histori->employee->nama;
+        $notification->deskripsi = "SPT Ditolak oleh ".$histori->employee->nama." (".$histori->employee->jabatan.")";
         $notification->save();
 
         return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);

@@ -120,7 +120,7 @@ class SuratKeluarController extends Controller
         $notification->user_id = $pimpinan_id;
         $notification->status = 0;
         $notification->url_to = route('pegawai.surat-keluar.show',$model->id);
-        $notification->deskripsi = "Surat Keluar - Dari ".auth()->user()->name;
+        $notification->deskripsi = "Surat Keluar - Dari ".auth()->user()->name." (".auth()->user()->employee->jabatan.")";
         $notification->save();
 
         return redirect()->route('pegawai.surat-keluar.index')->with(['success'=>'Data berhasil disimpan']);
@@ -236,7 +236,7 @@ class SuratKeluarController extends Controller
         $notification->user_id = $pimpinan_id;
         $notification->status = 0;
         $notification->url_to = route('pegawai.surat-keluar.show',$request->id);
-        $notification->deskripsi = "Update Surat Keluar - Dari ".auth()->user()->name;
+        $notification->deskripsi = "Update Surat Keluar - Dari ".auth()->user()->name." (".auth()->user()->employee->jabatan.")";
         $notification->save();
 
         return redirect()->route('pegawai.surat-keluar.index')->with(['success'=>'Data berhasil diupdate']);
@@ -271,7 +271,7 @@ class SuratKeluarController extends Controller
         $notification->user_id = $surat->pegawai_id;
         $notification->status = 0;
         $notification->url_to = route('pegawai.surat-keluar.show',$surat->id);
-        $notification->deskripsi = "Surat Diterima oleh ".$histori->employee->nama;
+        $notification->deskripsi = "Surat Diterima oleh ".$histori->employee->nama." (".$histori->employee->jabatan.")";
         $notification->save();
 
         $pimpinan_id = 0;
@@ -320,7 +320,7 @@ class SuratKeluarController extends Controller
             $notification->user_id = $pimpinan_id;
             $notification->status = 0;
             $notification->url_to = route('pegawai.surat-keluar.show',$histori->surat_id);
-            $notification->deskripsi = "Surat Keluar - Dari ".$histori->suratKeluar->employee->nama;
+            $notification->deskripsi = "Surat Keluar - Dari ".$histori->suratKeluar->employee->nama." (".$histori->suratKeluar->employee->jabatan.")";
             $notification->save();
         }
         else
@@ -352,7 +352,7 @@ class SuratKeluarController extends Controller
         $notification->user_id = $surat->pegawai_id;
         $notification->status = 0;
         $notification->url_to = route('pegawai.surat-keluar.show',$histori->surat_id);
-        $notification->deskripsi = "Surat Ditolak oleh ".$histori->employee->nama;
+        $notification->deskripsi = "Surat Ditolak oleh ".$histori->employee->nama." (".$histori->employee->jabatan.")";
         $notification->save();
 
         return redirect()->route('pegawai.surat-keluar.index')->with(['success'=>'Data berhasil disimpan']);

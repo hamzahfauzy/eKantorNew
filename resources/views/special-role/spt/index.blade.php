@@ -17,12 +17,10 @@
                                 List Data SPT
                             </h2>
                             <div class="pull-right">
-                                @if(auth()->user()->employee->status_pptk)
                                 <a href="{{route('pegawai.spt-role.create')}}" class="btn btn-primary waves-effect">
                                     <i class="material-icons">add</i> 
                                     <span>TAMBAH DATA</span>
                                 </a>
-                                @endif
                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-rekapitulasi" class="btn btn-warning waves-effect">
                                     <i class="material-icons">print</i> 
                                     <span>CETAK REKAPITULASI</span>

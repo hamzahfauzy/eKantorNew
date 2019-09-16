@@ -18,10 +18,12 @@
                                 List Data Surat Keluar
                             </h2>
                             <div class="pull-right">
+                                @if(auth()->user()->employee->status_pptk)
                                 <a href="{{route('pegawai.surat-keluar.create')}}" class="btn btn-primary waves-effect">
                                     <i class="material-icons">add</i> 
                                     <span>TAMBAH DATA</span>
                                 </a>
+                                @endif
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -113,18 +115,18 @@
                                                     <td>{{$model->tanggal->format('j F Y')}}</td>
                                                     <td>{{$model->tujuan}}</td>
                                                     <td>
-                                                        <a href="{{route('pegawai.surat-keluar.show',$model->id)}}" target="_blank" class="btn btn-info waves-effect">
+                                                        <a href="{{route('pegawai.surat-keluar.show',$model->id)}}" target="_blank" class="btn btn-info waves-effect" title="Lihat Surat">
                                                             <i class="material-icons">visibility</i>
                                                             
                                                         </a>
 
                                                         @if($model->need_action > -1)
-                                                        <a href="{{route('pegawai.surat-keluar.edit',$model->id)}}" class="btn btn-warning waves-effect">
+                                                        <a href="{{route('pegawai.surat-keluar.edit',$model->id)}}" class="btn btn-warning waves-effect"  title="Edit Surat">
                                                             <i class="material-icons">create</i>
                                                             
                                                         </a>
 
-                                                        <a href="{{route('pegawai.surat-keluar.delete')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();deleteAlert({{$model->id}})">
+                                                        <a href="{{route('pegawai.surat-keluar.delete')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();deleteAlert({{$model->id}})"  title="Hapus Surat">
                                                             <i class="material-icons">delete</i>
                                                             
                                                         </a>
@@ -234,18 +236,18 @@
                                                     <td>{{$model->employee->nama}}</td>
                                                     <td>{{$model->tujuan}}</td>
                                                     <td>
-                                                        <a href="{{route('pegawai.surat-keluar.show',$model->id)}}" target="_blank" class="btn btn-info waves-effect">
+                                                        <a href="{{route('pegawai.surat-keluar.show',$model->id)}}" target="_blank" class="btn btn-info waves-effect" title="Lihat Surat">
                                                             <i class="material-icons">visibility</i>
                                                             
                                                         </a>
 
                                                         @if($model->need_action == $histori->posisi)
-                                                        <a href="{{route('pegawai.surat-keluar.accept')}}" class="btn btn-success waves-effect" onclick="event.preventDefault();acceptAlert({{$histori->id}})">
+                                                        <a href="{{route('pegawai.surat-keluar.accept')}}" class="btn btn-success waves-effect" onclick="event.preventDefault();acceptAlert({{$histori->id}})" title="Acc Surat">
                                                             <i class="material-icons">done</i>
                                                             
                                                         </a>
 
-                                                        <a href="{{route('pegawai.surat-keluar.decline')}}" class="btn btn-danger waves-effect" data-toggle="modal" data-target="#defaultModal{{$histori->id}}">
+                                                        <a href="{{route('pegawai.surat-keluar.decline')}}" class="btn btn-danger waves-effect" data-toggle="modal" data-target="#defaultModal{{$histori->id}}" title="Tolak Surat">
                                                             <i class="material-icons">clear</i>
                                                             
                                                         </a>
@@ -385,7 +387,7 @@
                                                         @if($model->need_action == -1)
                                                         <a href="javascript:void(0)" class="btn btn-warning waves-effect" data-toggle="modal" data-target="#defaultModal{{$model->id}}">Set Agenda Surat</a>
                                                         @else
-                                                        <a href="javascript:void(0)" class="btn btn-warning waves-effect">Set Agenda Surat</a>
+                                                        <a href="javascript:void(0)" class="btn btn-secondary waves-effect">Set Agenda Surat</a>
                                                         @endif
 
                                                         <div class="modal fade" id="defaultModal{{$model->id}}" tabindex="-1" role="dialog">
@@ -467,7 +469,7 @@
                                                     <td>{{$model->employee->nama}}</td>
                                                     <td>{{$model->tujuan}}</td>
                                                     <td>
-                                                        <a href="{{route('pegawai.surat-keluar.show',$model->id)}}" target="_blank" class="btn btn-info waves-effect">
+                                                        <a href="{{route('pegawai.surat-keluar.show',$model->id)}}" target="_blank" class="btn btn-info waves-effect" title="Lihat Surat">
                                                             <i class="material-icons">visibility</i>
                                                             
                                                         </a>

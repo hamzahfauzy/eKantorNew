@@ -36,6 +36,7 @@
                                             <th>Sumber</th>
                                             <th>Catatan</th>
                                             <th>Disposisi Ke</th>
+                                            <th>Status</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -47,6 +48,7 @@
                                             <th>Sumber</th>
                                             <th>Catatan</th>
                                             <th>Disposisi Ke</th>
+                                            <th>Status</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
@@ -68,6 +70,13 @@
                                             <td>{{$model->catatan}}</td>
                                             <td>
                                                 {{$model->employee->nama}}
+                                            </td>
+                                            <td>
+                                                @if($model->status)
+                                                    <span class="label label-success">Sudah dibaca</span>
+                                                @else
+                                                    <span class="label label-warning">Belum dibaca</span>
+                                                @endif
                                             </td>
                                             <td>
                                             	<a href="{{Storage::url($model->surat_masuk->file_url_surat)}}" target="_blank" class="btn btn-info waves-effect">
