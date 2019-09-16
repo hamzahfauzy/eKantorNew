@@ -447,19 +447,22 @@ class SptController extends Controller
         if($histori->posisi == 1)
         {
             $surat->update(['need_action' => -1]);
-            $agenda = new Agenda;
-            $agenda->create([
-                'employee_id' => $surat->employee_id,
-                'tanggal_awal' => $surat->tanggal_awal,
-                'tanggal_akhir' => $surat->tanggal_akhir,
-                'waktu_mulai' => '',
-                'waktu_selesai' => '',
-                'kegiatan' => $surat->maksud_tujuan,
-                'tempat' => $surat->tempat_tujuan,
+            foreach($surat->employees as $employee)
+            {
+                $agenda = new Agenda;
+                $agenda->create([
+                    'employee_id' => $employee->employee_id,
+                    'tanggal_awal' => $surat->tanggal_awal,
+                    'tanggal_akhir' => $surat->tanggal_akhir,
+                    'waktu_mulai' => '',
+                    'waktu_selesai' => '',
+                    'kegiatan' => $surat->maksud_tujuan,
+                    'tempat' => $surat->tempat_tujuan,
                 'keterangan' => '',
                 'file_url' => '',
                 'status' => 1
-            ]); 
+                ]); 
+            }
             return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
         }
 
