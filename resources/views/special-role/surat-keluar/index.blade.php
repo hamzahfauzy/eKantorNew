@@ -381,8 +381,12 @@
                                                         @endif
 
                                                         @if(empty($model->no_agenda))
-
+                                                        <br>
+                                                        @if($model->need_action == -1)
                                                         <a href="javascript:void(0)" class="btn btn-warning waves-effect" data-toggle="modal" data-target="#defaultModal{{$model->id}}">Set Agenda Surat</a>
+                                                        @else
+                                                        <a href="javascript:void(0)" class="btn btn-warning waves-effect">Set Agenda Surat</a>
+                                                        @endif
 
                                                         <div class="modal fade" id="defaultModal{{$model->id}}" tabindex="-1" role="dialog">
                                                             <div class="modal-dialog" role="document">
