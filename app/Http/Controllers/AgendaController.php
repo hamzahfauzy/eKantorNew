@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\{Agenda,Setting};
+use App\Model\{Agenda,Setting,Notification};
 
 class AgendaController extends Controller
 {
