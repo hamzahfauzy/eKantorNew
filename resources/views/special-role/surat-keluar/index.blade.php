@@ -18,12 +18,10 @@
                                 List Data Surat Keluar
                             </h2>
                             <div class="pull-right">
-                                @if(auth()->user()->employee->status_pptk)
                                 <a href="{{route('pegawai.surat-keluar.create')}}" class="btn btn-primary waves-effect">
                                     <i class="material-icons">add</i> 
                                     <span>TAMBAH DATA</span>
                                 </a>
-                                @endif
                             </div>
                             <div class="clearfix"></div>
                         </div>
