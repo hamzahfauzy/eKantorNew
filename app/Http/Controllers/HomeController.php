@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Model\Surat\{Disposisi, SuratMasuk, SuratKeluar, HistoriSuratMasuk, SptList, SppdList};
 use App\Model\Reference\Employee;
-use App\Model\{Notification, Agenda};
+use App\Model\{Notification, Agenda, Avatar};
+use App\User;
 
 class HomeController extends Controller
 {
@@ -177,6 +178,63 @@ class HomeController extends Controller
     public function profil()
     {
         return view('profil');
+    }
+
+    public function editProfil()
+    {
+        return view('edit-profil');
+    }
+
+    public function updateProfil(Request $request)
+    {
+        $employee = Employee::find($request->id);
+        //
+        $this->validate($request,[
+            'NIP' => 'required|unique:employees,NIP,'.$request->id.',id,NIP,'.$request->NIP,
+            'nama' => 'required',
+        ]);
+
+        $user = User::find($employee->user_id)->update([
+            'name' => $request->nama,
+            'email' => $request->email,
+        ]);
+
+        if(!empty($request->password))
+        {
+            User::find($employee->user_id)->update([
+                'password' => bcrypt($request->password)
+            ]);
+        }
+
+        $employee->update([
+            'NIP' => $request->NIP,
+            'nama' => $request->nama,
+        ]);
+
+        return redirect()->route('profil')->with(['success'=>'Profil berhasil diupdate']);;
+    }
+
+    public function updateAvatar(Request $request)
+    {
+        $uploadedFile = $request->file('avatar');
+        $path = $uploadedFile->store('public/avatar');
+        $ava = Avatar::where('user_id',auth()->user()->id)->first();
+        if(empty($ava))
+        {
+            $ava = new Avatar;
+            $ava->create([
+                'user_id' => auth()->user()->id,
+                'avatar_url' => $path
+            ]);
+        }
+        else
+        {
+            $ava->update([
+                'avatar_url' => $path
+            ]);
+        }
+
+        return redirect()->route('profil')->with(['success'=>'Avatar berhasil di update']);
     }
 
     public function agenda()

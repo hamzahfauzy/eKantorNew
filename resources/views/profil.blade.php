@@ -17,26 +17,23 @@
                                 {{$pegawai->nama}}
                             </h2>
                             <div class="pull-right">
-                                <!-- <span>
-                                    <a href="{{route('reference.employee.edit',$pegawai->id)}}" class="btn btn-primary">
-                                        <i class="material-icons" style="font-size: 14px">create</i>
-                                    </a>
-                                </span>
-
                                 <span>
-                                    <a href="{{route('reference.employee.delete')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();deleteAlert({{$pegawai->id}})">
-                                        <i class="material-icons" style="font-size: 14px">delete</i>
+                                    <a href="{{route('edit-profil')}}" class="btn btn-primary">
+                                        <i class="material-icons" style="font-size: 14px">create</i>
+                                        Edit Profil
                                     </a>
                                 </span>
-                                <form id="form-delete-{{$pegawai->id}}" style="display: none;" method="post" action="{{route('reference.employee.delete')}}">
-                                    {{csrf_field()}}
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" name="id" value="{{$pegawai->id}}">
-                                </form> -->
                             </div>
                             <div class="clearfix"></div>
                         </div>
                         <div class="body">
+                            @if ($message = Session::get('success'))
+                              <div class="alert alert-success alert-block">
+                                <button type="button" class="close" data-dismiss="alert">×</button> 
+                                  <strong>{{ $message }}</strong>
+                              </div>
+                              <p></p>
+                            @endif
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-12">
