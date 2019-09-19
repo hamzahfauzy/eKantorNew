@@ -172,6 +172,9 @@
                                                     {{$model->tanggal->formatLocalized("%d %B %Y")}}<br>
                                                     @if($model->lastHistori)
                                                         <span class="badge {{$bg[$model->lastHistori->status]}}">{{$status[$model->lastHistori->status]}}</span>
+                                                        @if($model->lastHistori->status == 2)
+                                                            <br>{{$model->lastHistori->keterangan}}
+                                                        @endif
                                                     @endif
                                                     </td>
                                                     <td>
@@ -257,7 +260,7 @@
                                                         <a href="{{route('pegawai.spt.cetak',$model->id)}}" class="btn btn-secondary waves-effect">
                                                             <i class="material-icons">visibility</i>
                                                         </a>
-                                                        @if($model->employee_id == auth()->user()->employee->id && auth()->user()->employee->status_pptk)
+                                                        @if($model->employee_id == auth()->user()->employee->id)
                                                         <a href="{{route('pegawai.spt.edit',$model->id)}}" class="btn btn-warning waves-effect">
                                                             <i class="material-icons">create</i>
                                                         </a>

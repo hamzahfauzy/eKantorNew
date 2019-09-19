@@ -29,6 +29,10 @@ Route::get('/nip-patch',function(){
 Route::middleware('auth')->group(function(){
 	Route::get('notification-redirector/{notification}','HomeController@notificationRedirector')->name('notification-redirector');
 	Route::get('file-viewer','HomeController@fileViewer')->name('file-viewer');
+	Route::get('profil','HomeController@profil')->name('profil');
+	Route::get('edit-profil','HomeController@editProfil')->name('edit-profil');
+	Route::put('update-profil','HomeController@updateProfil')->name('update-profil');
+	Route::post('update-avatar','HomeController@updateAvatar')->name('update-avatar');
 	// Route::get('agenda','HomeController@agenda')->name('agenda');
 	Route::middleware('admin')->group(function(){
 		Route::prefix('reference')->namespace('Reference')->group(function(){
@@ -277,10 +281,6 @@ Route::middleware('auth')->group(function(){
 
 		Route::get('disposisi','HomeController@disposisi')->name('disposisi');
 		Route::post('set-disposisi','HomeController@setDisposisi')->name('set-disposisi');
-		Route::get('profil','HomeController@profil')->name('profil');
-		Route::get('edit-profil','HomeController@editProfil')->name('edit-profil');
-		Route::put('update-profil','HomeController@updateProfil')->name('update-profil');
-		Route::post('update-avatar','HomeController@updateAvatar')->name('update-avatar');
 		Route::get('detail-surat-masuk/{surat}','HomeController@detailSuratMasuk')->name('detail-surat-masuk');
 	});
 });

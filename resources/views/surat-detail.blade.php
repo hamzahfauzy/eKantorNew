@@ -68,13 +68,22 @@
                                     </div>
                                     @endif
                                 </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        @if(env('APP_ENV') == 'local')
+                                        <iframe src="{{Storage::url($surat->file_url_surat)}}" style="width: 100%;height: 500px;" frameborder="0"></iframe>
+                                        @else
+                                        <iframe src="http://docs.google.com/viewer?url={{Storage::url($surat->file_url_surat)}}&embedded=true" style="width: 100%;height: 500px;" frameborder="0"></iframe>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="header">
-                            <a href="{{Storage::url($surat->file_url_surat)}}" class="btn btn-success waves-effect">
+                            <!-- <a href="{{Storage::url($surat->file_url_surat)}}" class="btn btn-success waves-effect">
                                 <i class="material-icons">visibility</i>
                                 <span>Lihat Surat</span>
-                            </a>
+                            </a> -->
                             @if((empty($surat->disposisis) || count($surat->disposisis) == 0) && (auth()->user()->employee->isPimpinan() || auth()->user()->employee->kepala_group_special_role()) )
                             <a href="javascript:void(0)" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#defaultModal">
                                 <i class="material-icons">arrow_forward</i>

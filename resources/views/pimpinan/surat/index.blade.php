@@ -36,6 +36,7 @@
                                             <th>Tanggal Surat</th>
                                             <th>Sumber</th>
                                             <th>Pegawai</th>
+                                            <th>Status</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -47,6 +48,7 @@
                                             <th>Tanggal Surat</th>
                                             <th>Sumber</th>
                                             <th>Pegawai</th>
+                                            <th>Status</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
@@ -69,6 +71,13 @@
                                             <td>{{$model->tanggal_surat->format('j F Y')}}</td>
                                             <td>{{$model->sumber_surat}}</td>
                                             <td>{{$model->employee->nama}}</td>
+                                            <td>
+                                                @if(count($model->disposisis))
+                                                <label class="badge bg-teal">Sudah di disposisikan</label>
+                                                @else
+                                                <label class="badge bg-yellow">Belum di disposisikan</label>
+                                                @endif
+                                            </td>
                                             <td>
                                             	<a href="{{Storage::url($model->file_url_surat)}}" target="_blank" class="btn btn-info waves-effect">
                                                     <i class="material-icons">get_app</i>
