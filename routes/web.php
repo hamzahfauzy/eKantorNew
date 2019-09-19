@@ -81,23 +81,23 @@ Route::middleware('auth')->group(function(){
 				Route::delete('show/{group}/staff/{sub}/delete','SubGroupStaffController@destroy')->name('reference.group.sub.staff.delete');
 			});
 
-			Route::prefix('program')->group(function(){
-				Route::get('/','ProgramController@index')->name('reference.program.index');
-				Route::get('create','ProgramController@create')->name('reference.program.create');
-				Route::get('edit/{program}','ProgramController@edit')->name('reference.program.edit');
-				Route::post('insert','ProgramController@store')->name('reference.program.insert');
-				Route::put('update','ProgramController@update')->name('reference.program.update');
-				Route::delete('delete','ProgramController@destroy')->name('reference.program.delete');
-			});
+			// Route::prefix('program')->group(function(){
+			// 	Route::get('/','ProgramController@index')->name('reference.program.index');
+			// 	Route::get('create','ProgramController@create')->name('reference.program.create');
+			// 	Route::get('edit/{program}','ProgramController@edit')->name('reference.program.edit');
+			// 	Route::post('insert','ProgramController@store')->name('reference.program.insert');
+			// 	Route::put('update','ProgramController@update')->name('reference.program.update');
+			// 	Route::delete('delete','ProgramController@destroy')->name('reference.program.delete');
+			// });
 
-			Route::prefix('kegiatan')->group(function(){
-				Route::get('/','KegiatanController@index')->name('reference.kegiatan.index');
-				Route::get('create','KegiatanController@create')->name('reference.kegiatan.create');
-				Route::get('edit/{kegiatan}','KegiatanController@edit')->name('reference.kegiatan.edit');
-				Route::post('insert','KegiatanController@store')->name('reference.kegiatan.insert');
-				Route::put('update','KegiatanController@update')->name('reference.kegiatan.update');
-				Route::delete('delete','KegiatanController@destroy')->name('reference.kegiatan.delete');
-			});
+			// Route::prefix('kegiatan')->group(function(){
+			// 	Route::get('/','KegiatanController@index')->name('reference.kegiatan.index');
+			// 	Route::get('create','KegiatanController@create')->name('reference.kegiatan.create');
+			// 	Route::get('edit/{kegiatan}','KegiatanController@edit')->name('reference.kegiatan.edit');
+			// 	Route::post('insert','KegiatanController@store')->name('reference.kegiatan.insert');
+			// 	Route::put('update','KegiatanController@update')->name('reference.kegiatan.update');
+			// 	Route::delete('delete','KegiatanController@destroy')->name('reference.kegiatan.delete');
+			// });
 
 			Route::prefix('rekening')->group(function(){
 				Route::get('/','RekeningController@index')->name('reference.rekening.index');
@@ -143,25 +143,25 @@ Route::middleware('auth')->group(function(){
 		});
 	});
 
+	Route::prefix('program')->namespace('Reference')->group(function(){
+		Route::get('/','ProgramController@index')->name('reference.program.index');
+		Route::get('create','ProgramController@create')->name('reference.program.create');
+		Route::get('edit/{program}','ProgramController@edit')->name('reference.program.edit');
+		Route::post('insert','ProgramController@store')->name('reference.program.insert');
+		Route::put('update','ProgramController@update')->name('reference.program.update');
+		Route::delete('delete','ProgramController@destroy')->name('reference.program.delete');
+	});
+
+	Route::prefix('kegiatan')->namespace('Reference')->group(function(){
+		Route::get('/','KegiatanController@index')->name('reference.kegiatan.index');
+		Route::get('create','KegiatanController@create')->name('reference.kegiatan.create');
+		Route::get('edit/{kegiatan}','KegiatanController@edit')->name('reference.kegiatan.edit');
+		Route::post('insert','KegiatanController@store')->name('reference.kegiatan.insert');
+		Route::put('update','KegiatanController@update')->name('reference.kegiatan.update');
+		Route::delete('delete','KegiatanController@destroy')->name('reference.kegiatan.delete');
+	});
+
 	Route::middleware('pegawai')->group(function(){
-
-		Route::prefix('program')->namespace('Reference')->group(function(){
-			Route::get('/','ProgramController@index')->name('reference.program.index');
-			Route::get('create','ProgramController@create')->name('reference.program.create');
-			Route::get('edit/{program}','ProgramController@edit')->name('reference.program.edit');
-			Route::post('insert','ProgramController@store')->name('reference.program.insert');
-			Route::put('update','ProgramController@update')->name('reference.program.update');
-			Route::delete('delete','ProgramController@destroy')->name('reference.program.delete');
-		});
-
-		Route::prefix('kegiatan')->namespace('Reference')->group(function(){
-			Route::get('/','KegiatanController@index')->name('reference.kegiatan.index');
-			Route::get('create','KegiatanController@create')->name('reference.kegiatan.create');
-			Route::get('edit/{kegiatan}','KegiatanController@edit')->name('reference.kegiatan.edit');
-			Route::post('insert','KegiatanController@store')->name('reference.kegiatan.insert');
-			Route::put('update','KegiatanController@update')->name('reference.kegiatan.update');
-			Route::delete('delete','KegiatanController@destroy')->name('reference.kegiatan.delete');
-		});
 
 		Route::prefix('agenda')->group(function(){
 			Route::get('/','AgendaController@index')->name('agenda.index');
