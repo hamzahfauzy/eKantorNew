@@ -95,7 +95,8 @@ class AgendaController extends Controller
             $setting = Setting::find(1);
             $kepala_id[] = $setting->pimpinan_id;
             $kepala_id[] = $setting->special->group->kepala_id;
-            $kepala_id[] = auth()->user()->employee->kepala_sub_group->group->kepala_id;
+            if(auth()->user()->employee->id != auth()->user()->employee->kepala_sub_group->group->kepala_id)
+                $kepala_id[] = auth()->user()->employee->kepala_sub_group->group->kepala_id;
             // if(auth()->user()->employee->kepala_sub_group)
             // else
             //     $kepala_id[] = auth()->user()->employee->staffGroup->subGroups->group->kepala_id;
@@ -185,8 +186,10 @@ class AgendaController extends Controller
         {
             $kepala_id = [];
             $setting = Setting::find(1);
+            $kepala_id[] = $setting->pimpinan_id;
             $kepala_id[] = $setting->special->group->kepala_id;
-            $kepala_id[] = auth()->user()->employee->kepala_sub_group->group->kepala_id;
+            if(auth()->user()->employee->id != auth()->user()->employee->kepala_sub_group->group->kepala_id)
+                $kepala_id[] = auth()->user()->employee->kepala_sub_group->group->kepala_id;
             // if(auth()->user()->employee->kepala_sub_group)
             //     $kepala_id[] = auth()->user()->employee->kepala_sub_group->group->kepala_id;
             // else
