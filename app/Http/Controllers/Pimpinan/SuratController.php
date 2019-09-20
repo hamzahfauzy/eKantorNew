@@ -62,6 +62,11 @@ class SuratController extends Controller
 
     public function setDisposisi(Request $request, $id)
     {
+        HistoriSuratMasuk::create([
+            'surat_masuk_id' => $id,
+            'status' => 'Surat sudah di disposisikan oleh Pimpinan'
+        ]);
+        
         foreach($request->pegawai as $pegawai)
         {
             $disposisi = new Disposisi;
@@ -69,11 +74,6 @@ class SuratController extends Controller
             $disposisi->surat_masuk_id = $id;
             $disposisi->catatan = $request->catatan;
             $disposisi->save();
-
-            HistoriSuratMasuk::create([
-                'surat_masuk_id' => $id,
-                'status' => 'Surat sudah di disposisikan oleh Pimpinan'
-            ]);
 
             $surat = SuratMasuk::find($id);
 
