@@ -161,7 +161,7 @@
                                 <div class="form-group form-float">
                                     <select class="form-control show-tick" name="pengikut[]" required="" data-live-search="true" multiple="">
                                         <option value="">Pengikut</option>
-                                        @foreach($employees as $model)
+                                        @foreach($pengikut as $model)
                                         <option value="{{$model->id}}" {{ in_array($model->id, $sptEmployee) ? 'selected=""' : '' }}>{{$model->nama}}</option>
                                         @endforeach
                                     </select>

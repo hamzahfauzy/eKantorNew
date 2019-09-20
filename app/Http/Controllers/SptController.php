@@ -261,6 +261,7 @@ class SptController extends Controller
             'sptModel' => $spt,
             'wilayah' => $wilayah,
             'employees' => $menugaskan,
+            'pengikut' => $employees,
             'sptEmployee' => $sptEmployee
         ]);
     }

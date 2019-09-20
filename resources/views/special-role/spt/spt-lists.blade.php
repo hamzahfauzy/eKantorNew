@@ -128,6 +128,7 @@
                                                     <td>{{$no++}}</td>
                                                     <td>
                                                     {!! $model->no_spt ? $model->no_spt : "<i>Belum ada nomor</i>" !!}<br>
+                                                    {{$model->tanggal->formatLocalized("%d %B %Y")}}<br>
                                                     @if($model->arsip_pegawai)
                                                         No. Arsip : {{$model->arsip_pegawai->no_arsip}}<br>
                                                     @else
@@ -169,7 +170,7 @@
                                                         </div>
                                                         @endif
                                                     @endif
-                                                    {{$model->tanggal->formatLocalized("%d %B %Y")}}<br>
+                                                    
                                                     @if($model->lastHistori)
                                                         <span class="badge {{$bg[$model->lastHistori->status]}}">{{$status[$model->lastHistori->status]}}</span>
                                                         @if($model->lastHistori->status == 2)
@@ -257,15 +258,15 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <a href="{{route('pegawai.spt.cetak',$model->id)}}" class="btn btn-secondary waves-effect">
+                                                        <a href="{{route('pegawai.spt.cetak',$model->id)}}" class="btn btn-secondary waves-effect" title="Lihat SPT">
                                                             <i class="material-icons">visibility</i>
                                                         </a>
                                                         @if($model->employee_id == auth()->user()->employee->id)
-                                                        <a href="{{route('pegawai.spt.edit',$model->id)}}" class="btn btn-warning waves-effect">
+                                                        <a href="{{route('pegawai.spt.edit',$model->id)}}" class="btn btn-warning waves-effect" title="Edit SPT">
                                                             <i class="material-icons">create</i>
                                                         </a>
 
-                                                        <a href="{{route('pegawai.spt.delete')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();deleteAlert({{$model->id}})">
+                                                        <a href="{{route('pegawai.spt.delete')}}" class="btn btn-danger waves-effect" title="Hapus SPT" onclick="event.preventDefault();deleteAlert({{$model->id}})">
                                                             <i class="material-icons">delete</i>
                                                         </a>
 

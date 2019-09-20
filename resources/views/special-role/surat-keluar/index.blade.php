@@ -465,6 +465,12 @@
                                                     <td>
                                                         Perihal: {{$model->perihal}}<br>
                                                         {{$model->keterangan}}<br>
+                                                        @if($model->lastHistori)
+                                                            <span class="badge {{$bg[$model->lastHistori->status]}}">{{$status[$model->lastHistori->status]}}</span>
+                                                            @if($model->lastHistori->status == 2)
+                                                                <br>{{$model->lastHistori->keterangan}}
+                                                            @endif
+                                                        @endif
                                                     </td>
                                                     <td>{{$model->tanggal->format('j F Y')}}</td>
                                                     <td>{{$model->employee->nama}}</td>

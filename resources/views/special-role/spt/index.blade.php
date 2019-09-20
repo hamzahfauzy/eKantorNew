@@ -2,6 +2,7 @@
 @section('spt-sppd-active','active')
 @section('spt-active','active')
 @section('content')
+<?php $status = ['Sent','Accepted','Declined']; $bg = ["","bg-teal","bg-pink"] ?>
 		<div class="container-fluid">
             <div class="block-header">
                 <h2>
@@ -110,6 +111,14 @@
                                             <td>{{$no++}}</td>
                                             <td>
                                             {!! $model->no_spt ? $model->no_spt : "<i>Belum ada nomor</i>" !!}<br>
+                                            {{$model->tanggal->formatLocalized("%d %B %Y")}}<br>
+                                            @if($model->lastHistori)
+                                                <span class="badge {{$bg[$model->lastHistori->status]}}">{{$status[$model->lastHistori->status]}}</span><br>
+                                                @if($model->lastHistori->status == 2)
+                                                    {{$model->lastHistori->keterangan}}<br>
+                                                @endif
+                                                <p></p>
+                                            @endif
                                             @if($model->arsip_operator)
                                                 No. Arsip : {{$model->arsip_operator->no_arsip}}<br>
                                             @else
@@ -151,7 +160,7 @@
                                                 </div>
                                                 @endif
                                             @endif
-                                            {{$model->tanggal->formatLocalized("%d %B %Y")}}<br>
+                                            
                                             @if($model->need_action == -1 && empty($model->no_spt))
                                                 <br>
                                                 <a href="javascript:void(0)" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#modalNoSpt{{$model->id}}">Set No SPT</a>
