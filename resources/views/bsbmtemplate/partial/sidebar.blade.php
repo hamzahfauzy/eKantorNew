@@ -109,13 +109,13 @@
                         <li class="@yield('surat-active')">
                             <a href="javascript:void(0);" class="menu-toggle">
                                 <i class="material-icons">email</i>
-                                <span>Surat Masuk</span>
+                                <span>Surat</span>
                             </a>
                             <ul class="ml-menu">
                                 @if(auth()->user()->employee->isPimpinan())
                                 <li class="@yield('surat-masuk-pimpinan-active')">
                                     <a href="{{route('pimpinan.surat.index')}}">
-                                        Surat
+                                        Surat Masuk
                                     </a>
                                 </li>
                                 <li class="@yield('disposisi-active')">
