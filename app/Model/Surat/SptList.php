@@ -36,6 +36,11 @@ class SptList extends Model
         return $this->hasOne(WilayahTujuan::class,'id','wilayah_id');
     }
 
+    public function historis()
+    {
+        return $this->hasMany(HistoriSptList::class,'spt_id','id');
+    }
+
     public function hasAction($user_id)
     {
         return HistoriSptList::where('spt_id',$this->id)->where('user_id',$user_id)->orderby('id','desc')->first();

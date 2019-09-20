@@ -87,7 +87,7 @@
 
                                     <div class="col-12">
                                         <label>{{$surat->created_at->format('j F Y H:i:s')}}</label><br>
-                                        <p>Surat Dibuat oleh {{$surat->employee->nama}} ({{$histori->employee->jabatan}})</p>
+                                        <p>Surat Dibuat oleh {{$surat->employee->nama}} ({{$surat->employee->jabatan}})</p>
                                     </div>
                                 </div>
                             </div>
