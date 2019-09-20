@@ -14,4 +14,9 @@ class Agenda extends Model
     {
         return $this->hasOne(Employee::class,'id','employee_id');
     }
+
+    function employeeFor()
+    {
+        return $this->hasOne(Employee::class,'id','employee_for_id');
+    }
 }

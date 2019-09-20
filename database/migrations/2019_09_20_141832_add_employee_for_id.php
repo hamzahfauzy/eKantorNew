@@ -15,6 +15,8 @@ class AddEmployeeForId extends Migration
     {
         Schema::table('agendas', function (Blueprint $table) {
             //
+            $table->bigInteger('employee_for_id')->unsigned()->nullable();
+            $table->foreign('employee_for_id')->references('id')->on('employees')->onDelete('cascade');
         });
     }
 
@@ -25,8 +27,6 @@ class AddEmployeeForId extends Migration
      */
     public function down()
     {
-        Schema::table('agendas', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('agendas');
     }
 }

@@ -18,6 +18,20 @@
                             <form id="form_validation" method="POST" action="{{route('agenda.insert')}}">
                             	{{csrf_field()}}
                                 <div class="form-group form-float">
+                                    <label>Agenda Untuk </label>
+                                    <select class="form-control show-tick" name="employee_for_id" required="" data-live-search="true">
+                                        <option value="{{auth()->user()->employee->id}}">Untuk Saya Sendiri</option>
+                                        @foreach($atasan as $model)
+                                        <option value="{{$model->id}}" {{old('employee_for_id') == $model->id ? 'selected=""' : '' }}>{{$model->nama}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('employee_for_id'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('employee_for_id') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group form-float">
                                     <div class="form-line">
                                         <label>Tanggal Mulai</label>
                                         <input type="text" class="datepicker date form-control" name="tanggal_awal" placeholder="Tanggal Mulai" required="" value="{{old('tanggal_awal')}}">

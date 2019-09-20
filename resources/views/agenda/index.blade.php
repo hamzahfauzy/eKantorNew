@@ -41,9 +41,7 @@
                                             <th>Kegiatan</th>
                                             <th>Keterangan</th>
                                             <th>Status</th>
-                                            @if(auth()->user()->employee->inSpecialRoleUser() && !auth()->user()->employee->kepala_group_special_role())
                                             <th>Pegawai</th>
-                                            @endif
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -55,9 +53,7 @@
                                             <th>Kegiatan</th>
                                             <th>Keterangan</th>
                                             <th>Status</th>
-                                            @if(auth()->user()->employee->inSpecialRoleUser() && !auth()->user()->employee->kepala_group_special_role())
                                             <th>Pegawai</th>
-                                            @endif
                                             <th></th>
                                         </tr>
                                     </tfoot>
@@ -95,19 +91,17 @@
                                                 <label class="label bg-pink">Ditolak</label>
                                                 @endif
                                             </td>
-                                            @if(auth()->user()->employee->inSpecialRoleUser() && !auth()->user()->employee->kepala_group_special_role())
-                                            <td>{{$model->employee->nama}}</td>
-                                            @endif
+                                            <td>
+                                                {{$model->employee_for_id != null ? $model->employeeFor->nama : $model->employee->nama}}
+                                            </td>
                                             <td>
                                                 @if($model->employee_id == auth()->user()->employee->id)
-                                            	<a href="{{route('agenda.edit',$model->id)}}" class="btn btn-warning waves-effect">
+                                            	<a href="{{route('agenda.edit',$model->id)}}" class="btn btn-warning waves-effect" title="Edit Agenda">
 				                                    <i class="material-icons">create</i>
-				                                    <span>Edit</span>
 				                                </a>
 
-				                                <a href="{{route('agenda.delete')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();deleteAlert({{$model->id}})">
+				                                <a href="{{route('agenda.delete')}}" class="btn btn-danger waves-effect" onclick="event.preventDefault();deleteAlert({{$model->id}})" title="Hapus Agenda">
 				                                    <i class="material-icons">delete</i>
-				                                    <span>Hapus</span>
 				                                </a>
 
 				                                <form id="form-delete-{{$model->id}}" style="display: none;" method="post" action="{{route('agenda.delete')}}">
