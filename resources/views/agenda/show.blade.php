@@ -119,7 +119,7 @@ function acceptAlert(url)
 function declineAlert(url)
 {
     swal({
-        title: 'Apakah anda yakin tidak menyetujui agenda ini?',
+        title: 'Apakah anda yakin menolak agenda ini?',
         text: "Perubahan tidak dapat dikembalikan!",
         type: 'warning',
         showCancelButton: true,
