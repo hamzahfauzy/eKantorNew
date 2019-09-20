@@ -87,6 +87,7 @@ class HomeController extends Controller
     public function setDisposisi(Request $request)
     {
         $id = $request->surat_id;
+        $nama = "";
         foreach($request->pegawai as $pegawai)
         {
             $disposisi = new Disposisi;
@@ -97,11 +98,6 @@ class HomeController extends Controller
 
             $employee = Employee::find($pegawai);
 
-            HistoriSuratMasuk::create([
-                'surat_masuk_id' => $id,
-                'status' => 'Surat sudah di disposisikan oleh '.auth()->user()->employee->nama.' ('.auth()->user()->employee->jabatan.')'.' ke '.$employee->nama.' ('.$employee->nama.')'
-            ]);
-
             $surat = SuratMasuk::find($id);
 
             $notification = new Notification;
@@ -110,7 +106,16 @@ class HomeController extends Controller
             $notification->url_to = route('detail-surat-masuk',$surat->id);
             $notification->deskripsi = "Dispoisisi - ".$surat->sifat_surat.' - '.$surat->sumber_surat;
             $notification->save();
+
+            $nama .= $employee->nama.' ('.$employee->nama.'), ';
         }
+
+        $nama = rtrim($nama, ', ');
+
+        HistoriSuratMasuk::create([
+            'surat_masuk_id' => $id,
+            'status' => 'Surat sudah di disposisikan oleh '.auth()->user()->employee->nama.' ('.auth()->user()->employee->jabatan.')'.' ke '.$nama
+        ]);
 
         return redirect()->route('disposisi')->with(['success'=>'Surat telah di Disposisikan']);
     }
