@@ -16,7 +16,7 @@
                                 {{$agenda->employee->nama}}
                             </h2>
                             <div class="pull-right">
-                                @if((auth()->user()->employee->kepala_group_special_role() || auth()->user()->employee->kepala_group) && $agenda->status == 0)
+                                @if((auth()->user()->employee->kepala_group_special_role() || auth()->user()->employee->isPimpinan()) && $agenda->status == 0)
                                 <span>
                                     <a href="{{route('agenda.acc',$agenda->id)}}" class="btn btn-success">
                                         <i class="material-icons" style="font-size: 14px">check</i>
