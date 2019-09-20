@@ -18,14 +18,14 @@
                             <div class="pull-right">
                                 @if((auth()->user()->employee->kepala_group_special_role() || auth()->user()->employee->isPimpinan() || count(auth()->user()->employee->kepala_group)) && $agenda->status == 0)
                                 <span>
-                                    <a href="{{route('agenda.acc',$agenda->id)}}" class="btn btn-success">
+                                    <a href="javascript:void(0)" class="btn btn-success" onclick="acceptAlert('{{route('agenda.acc',$agenda->id)}}')">
                                         <i class="material-icons" style="font-size: 14px">check</i>
                                         Setuju
                                     </a>
                                 </span>
 
                                 <span>
-                                    <a href="{{route('agenda.tolak',$agenda->id)}}" class="btn btn-warning waves-effect" >
+                                    <a href="javascript:void(0)" class="btn btn-warning waves-effect" onclick="declineAlert('{{route('agenda.tolak',$agenda->id)}}')">
                                         <i class="material-icons" style="font-size: 14px">close</i>
                                         Tolak
                                     </a>
@@ -98,10 +98,10 @@
 <script src="{{asset('template/bsbm/plugins/bootstrap-select/js/bootstrap-select.js')}}"></script>
 <script src="{{asset('template/bsbm/plugins/sweetalert/sweetalert.min.js')}}"></script>
 <script type="text/javascript">
-function deleteAlert(id)
+function acceptAlert(url)
 {
     swal({
-        title: 'Apakah anda yakin akan menghapus data ini?',
+        title: 'Apakah anda yakin menyetujui ini?',
         text: "Perubahan tidak dapat dikembalikan!",
         type: 'warning',
         showCancelButton: true,
@@ -111,7 +111,25 @@ function deleteAlert(id)
         confirmCancelText: 'Batal!'
     },function (isConfirm) {
         if (isConfirm) {
-            $("#form-delete-"+id).submit()
+            location=url
+        }
+    });
+}
+
+function declineAlert(url)
+{
+    swal({
+        title: 'Apakah anda yakin tidak menyetujui agenda ini?',
+        text: "Perubahan tidak dapat dikembalikan!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya!',
+        confirmCancelText: 'Batal!'
+    },function (isConfirm) {
+        if (isConfirm) {
+            location=url
         }
     });
 }
