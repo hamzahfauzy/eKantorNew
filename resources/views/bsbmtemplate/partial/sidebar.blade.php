@@ -109,7 +109,7 @@
                         <li class="@yield('surat-active')">
                             <a href="javascript:void(0);" class="menu-toggle">
                                 <i class="material-icons">email</i>
-                                <span>Surat</span>
+                                <span>Surat Masuk</span>
                             </a>
                             <ul class="ml-menu">
                                 @if(auth()->user()->employee->isPimpinan())
