@@ -155,7 +155,7 @@ function initFabric()
 
 		pdfData.push(fabricObj)
 		fabricObj.setBackgroundImage(bg, fabricObj.renderAll.bind(fabricObj));
-		fabricObj.isDrawingMode = true;
+		// fabricObj.isDrawingMode = true;
 		fabricObj.freeDrawingBrush.color = 'red';
 
 		fabricObj.upperCanvasEl.addEventListener('click', function (event) {
