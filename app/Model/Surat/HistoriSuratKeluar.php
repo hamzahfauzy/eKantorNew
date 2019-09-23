@@ -8,7 +8,7 @@ use App\Model\Reference\Employee;
 class HistoriSuratKeluar extends Model
 {
     //
-    protected $fillable = ['user_id','surat_id','posisi','status','keterangan'];
+    protected $fillable = ['user_id','surat_id','posisi','status','keterangan','pdf_serialize'];
     protected $dates = ['created_at','updated_at'];
 
     public function suratKeluar()

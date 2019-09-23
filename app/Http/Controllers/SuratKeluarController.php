@@ -60,7 +60,7 @@ class SuratKeluarController extends Controller
             'tujuan' => 'required',
             'perihal' => 'required',
             'keterangan' => 'required',
-            'file_surat' => 'required',
+            'file_surat' => 'required|mimes:pdf',
         ]);
 
         $uploadedFile = $request->file('file_surat');
@@ -176,6 +176,9 @@ class SuratKeluarController extends Controller
         $path = "";
         if(!empty($request->file('file_surat')))
         {
+            $this->validate($request,[
+                'file_surat' => 'required|mimes:pdf'
+            ]);
             $uploadedFile = $request->file('file_surat');
             $path = $uploadedFile->store('public/surat_keluar');
             $this->model->find($request->id)->update([
@@ -332,6 +335,24 @@ class SuratKeluarController extends Controller
 
     }
 
+    public function declineEditor(HistoriSuratKeluar $histori)
+    {
+        $surat = SuratKeluar::find($histori->surat_id);
+        return view('special-role.surat-keluar.decline-editor',[
+            'surat' => $surat,
+            'histori' => $histori
+        ]);
+    }
+
+    public function declineViewer(HistoriSuratKeluar $histori)
+    {
+        $surat = SuratKeluar::find($histori->surat_id);
+        return view('special-role.surat-keluar.decline-viewer',[
+            'surat' => $surat,
+            'histori' => $histori
+        ]);
+    }
+
     public function decline(Request $request)
     {
         $histori = HistoriSuratKeluar::find($request->id);
@@ -342,6 +363,7 @@ class SuratKeluarController extends Controller
             'posisi' => $histori->posisi,
             'status' => 2,
             'keterangan' => $request->catatan,
+            'pdf_serialize' => serialize(json_decode($request->pdfData))
         ]);
 
         $posisi = 0;
@@ -355,7 +377,9 @@ class SuratKeluarController extends Controller
         $notification->deskripsi = "Surat Ditolak oleh ".$histori->employee->nama." (".$histori->employee->jabatan.")";
         $notification->save();
 
-        return redirect()->route('pegawai.surat-keluar.index')->with(['success'=>'Data berhasil disimpan']);
+        return response()->json(['success' => 1]);
+
+        // return redirect()->route('pegawai.surat-keluar.index')->with(['success'=>'Data berhasil disimpan']);
 
     }
 

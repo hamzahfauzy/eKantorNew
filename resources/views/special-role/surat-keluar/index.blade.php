@@ -230,7 +230,11 @@
                                                         Perihal: {{$model->perihal}}<br>
                                                         {{$model->keterangan}}<br>
                                                         @if($model->hasAction($histori->user_id))
-                                                        <span class="badge {{$bg[$model->hasAction($histori->user_id)->status]}}">{{$status[$model->hasAction($histori->user_id)->status]}}</span>
+                                                            @if($model->lastHistori->status == 2)
+                                                            <a href='{{route("pegawai.surat-keluar.decline-viewer",$model->lastHistori->id)}}' class="badge {{$bg[$model->hasAction($histori->user_id)->status]}}">{{$status[$model->hasAction($histori->user_id)->status]}}</a>
+                                                            @else
+                                                            <span class="badge {{$bg[$model->hasAction($histori->user_id)->status]}}">{{$status[$model->hasAction($histori->user_id)->status]}}</span>
+                                                            @endif
                                                         @endif
                                                     </td>
                                                     <td>{{$model->tanggal->format('j F Y')}}</td>
@@ -248,7 +252,7 @@
                                                             
                                                         </a>
 
-                                                        <a href="{{route('pegawai.surat-keluar.decline')}}" class="btn btn-danger waves-effect" data-toggle="modal" data-target="#defaultModal{{$histori->id}}" title="Tolak Surat">
+                                                        <a href="{{route('pegawai.surat-keluar.decline-editor',$histori->id)}}" class="btn btn-danger waves-effect" title="Tolak Surat">
                                                             <i class="material-icons">clear</i>
                                                             
                                                         </a>

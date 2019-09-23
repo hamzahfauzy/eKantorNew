@@ -184,6 +184,8 @@ Route::middleware('auth')->group(function(){
 			Route::get('create','SuratKeluarController@create')->name('pegawai.surat-keluar.create');
 			Route::get('edit/{surat}','SuratKeluarController@edit')->name('pegawai.surat-keluar.edit');
 			Route::get('show/{surat}','SuratKeluarController@show')->name('pegawai.surat-keluar.show');
+			Route::get('decline-editor/{histori}','SuratKeluarController@declineEditor')->name('pegawai.surat-keluar.decline-editor');
+			Route::get('decline-viewer/{histori}','SuratKeluarController@declineViewer')->name('pegawai.surat-keluar.decline-viewer');
 			Route::post('insert','SuratKeluarController@store')->name('pegawai.surat-keluar.insert');
 			Route::post('accept','SuratKeluarController@accept')->name('pegawai.surat-keluar.accept');
 			Route::post('decline','SuratKeluarController@decline')->name('pegawai.surat-keluar.decline');
