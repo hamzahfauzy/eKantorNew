@@ -107,9 +107,10 @@
                                                         Perihal: {{$model->perihal}}<br>
                                                         {{$model->keterangan}}<br>
                                                         @if($model->lastHistori)
-                                                            <span class="badge {{$bg[$model->lastHistori->status]}}">{{$status[$model->lastHistori->status]}}</span>
                                                             @if($model->lastHistori->status == 2)
-                                                                <br>{{$model->lastHistori->keterangan}}
+                                                            <a href='{{route("pegawai.surat-keluar.decline-viewer",$model->lastHistori->id)}}' class="badge {{$bg[$model->lastHistori->status]}}">{{$status[$model->lastHistori->status]}}</a>
+                                                            @else
+                                                                <span class="badge {{$bg[$model->lastHistori->status]}}">{{$status[$model->lastHistori->status]}}</span>
                                                             @endif
                                                         @endif
                                                     </td>
