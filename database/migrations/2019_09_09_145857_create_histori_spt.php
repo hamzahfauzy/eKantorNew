@@ -22,7 +22,7 @@ class CreateHistoriSpt extends Migration
             $table->text('keterangan')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('employees')->onDelete('cascade');
             $table->foreign('spt_id')->references('id')->on('spt_lists')->onDelete('cascade');
         });
     }
