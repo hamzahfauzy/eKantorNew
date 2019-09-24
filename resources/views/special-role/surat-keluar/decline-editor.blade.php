@@ -112,7 +112,7 @@ var activeCanvas = null;
 let pdfDoc = null,
 	context = null;
 
-const scale = 1.3,
+const scale = 1,
 	  pdf_canvas = document.getElementById("pdf_canvas"),
 	  canvas_wrapper = document.getElementById("canvas-wrapper");
 
