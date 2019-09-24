@@ -25,7 +25,11 @@
 		display: block;
 		background-color: #333;
 		padding: 25px;
-		z-index: 1;
+		z-index: 2;
+	}
+	.scroll-pad {
+		position:absolute;
+		z-index:1;
 	}
 	.canvas-wrapper {
 		padding-top: 90px;
@@ -94,8 +98,10 @@
 	<button class="btn btn-default" id="pencilBtn"><i class="fa fa-pencil"></i></button>
 	<button class="btn btn-default" id="fontBtn"><i class="fa fa-font"></i></button>
 	<button class="btn btn-default" id="trashBtn"><i class="fa fa-trash"></i></button>
+	<button class="btn btn-default" id="scrollBtn"><i class="fa fa-hand-stop-o"></i></button>
 	<a href="{{route('pegawai.surat-keluar.index')}}" class="btn btn-default" id="backBtn"><i class="fa fa-arrow-left"></i></a>
 </div>
+<div class="scroll-pad"></div>
 <div class="canvas-wrapper" id="canvas-wrapper"></div>
 <!-- Jquery Core Js -->
 <script src="{{asset('template/bsbm/plugins/jquery/jquery.min.js')}}"></script>
@@ -108,6 +114,8 @@ const pdfFileUrl = '{{Storage::url($surat->file_surat_url)}}';
 var pdfData = [];
 var enableText = false;
 var activeCanvas = null;
+var scrollWidth = 0, scrollHeight = 0;
+var enableScrollStatus = true;
 
 let pdfDoc = null,
 	context = null;
@@ -140,12 +148,15 @@ pdfjsLib.getDocument(pdfFileUrl).promise.then( doc => {
 			cvs.className = 'pdf-canvas'
 			cvs.width = viewport.width
 			cvs.height = viewport.height
+			scrollWidth = viewport.width
+			scrollHeight = scrollHeight + viewport.height
 			context = cvs.getContext('2d')
 
 			const renderCtx = {
 				canvasContext: context,
 				viewport: viewport
 			}
+
 			page.render(renderCtx).promise.then(() => {
 				var canvasEl = document.querySelectorAll('.pdf-canvas')
 				canvasEl.forEach((el, index) => {
@@ -167,12 +178,7 @@ document.querySelector("#pointerBtn").addEventListener('click',enablePointer)
 document.querySelector("#pencilBtn").addEventListener('click',enablePencil)
 document.querySelector("#fontBtn").addEventListener('click',enableAddText)
 document.querySelector("#trashBtn").addEventListener('click',deleteObject)
-window.addEventListener('keydown', function(event) {
-    const key = event.key; // const {key} = event; ES6+
-    if (key === "Delete") {
-        deleteObject()
-    }
-});
+document.querySelector("#scrollBtn").addEventListener('click',enableScroll)
 
 function initFabric()
 {
@@ -197,10 +203,21 @@ function initFabric()
 		pdfData.push(fabricObj)
 	})
 
-	$('.canvas-container').on('touchmove', function(evt){
-        evt.preventDefault();
-    });
+	$(".scroll-pad").css('height',scrollHeight)
+	$(".scroll-pad").css('width',scrollWidth)
+}
 
+function enableScroll()
+{
+	enableScrollStatus = true;
+	$(".scroll-pad").show()
+
+}
+
+function disableScroll()
+{
+	enableScrollStatus = false;
+	$(".scroll-pad").hide()
 }
 
 function loadFromJSON()
@@ -217,6 +234,7 @@ function loadFromJSON()
 
 function enablePointer()
 {
+	disableScroll()
 	enableText = false
 	pdfData.forEach((fabricObj, index) => {
 		fabricObj.isDrawingMode = false
@@ -225,6 +243,7 @@ function enablePointer()
 
 function enableAddText()
 {
+	disableScroll()
 	enableText = true
 	pdfData.forEach((fabricObj, index) => {
 		fabricObj.isDrawingMode = false
@@ -233,6 +252,7 @@ function enableAddText()
 
 function enablePencil()
 {
+	disableScroll()
 	enableText = false
 	pdfData.forEach((fabricObj, index) => {
 		fabricObj.isDrawingMode = true
@@ -271,6 +291,13 @@ $("#form_tolak").submit(() => {
         console.log(res)
     })
 })
+
+window.addEventListener('keydown', function(event) {
+    const key = event.key; // const {key} = event; ES6+
+    if (key === "Delete") {
+        deleteObject()
+    }
+});
 </script>
 </body>
 </html>

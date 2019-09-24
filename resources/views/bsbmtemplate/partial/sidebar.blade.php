@@ -136,6 +136,11 @@
                                         Surat Keluar
                                     </a>
                                 </li>
+                                <li class="@yield('surat-keputusan-active')">
+                                    <a href="#">
+                                        Surat Keputusan
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         @if(auth()->user()->employee->status_pptk)
