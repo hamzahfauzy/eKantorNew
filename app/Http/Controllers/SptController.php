@@ -87,8 +87,8 @@ class SptController extends Controller
 
         if($employee->staffGroup)
         {
-            $menugaskan[] = $employee->staffGroup->subGroup->kepala;
-            $menugaskan[] = $employee->staffGroup->subGroup->group->kepala;
+            $menugaskan[] = $employee->staffGroup->subGroups->kepala;
+            $menugaskan[] = $employee->staffGroup->subGroups->group->kepala;
         }
 
         return view('special-role.spt.create',[
@@ -254,8 +254,8 @@ class SptController extends Controller
 
         if($employee->staffGroup)
         {
-            $menugaskan[] = $employee->staffGroup->subGroup->kepala;
-            $menugaskan[] = $employee->staffGroup->subGroup->group->kepala;
+            $menugaskan[] = $employee->staffGroup->subGroups->kepala;
+            $menugaskan[] = $employee->staffGroup->subGroups->group->kepala;
         }
         return view('special-role.spt.edit',[
             'sptModel' => $spt,
