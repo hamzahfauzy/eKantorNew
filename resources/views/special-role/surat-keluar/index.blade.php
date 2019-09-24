@@ -247,7 +247,7 @@
                                                             
                                                         </a>
 
-                                                        @if($model->need_action == $histori->posisi)
+                                                        @if($model->need_action == $model->lastHistori->posisi)
                                                         <a href="{{route('pegawai.surat-keluar.accept')}}" class="btn btn-success waves-effect" onclick="event.preventDefault();acceptAlert({{$histori->id}})" title="Acc Surat">
                                                             <i class="material-icons">done</i>
                                                             
