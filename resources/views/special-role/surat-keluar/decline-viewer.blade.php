@@ -57,8 +57,8 @@
 <div class="top">
 	<!-- <button id="pdfData">PDF Data</button>
 	<button id="loadPDFData">Load PDF Data</button> -->
-	<button id="saveBtn" class="btn btn-primary" data-toggle="modal" data-target="#defaultModal"><i class="fa fa-file"></i> Catatan</button>
-	<a href="{{route('pegawai.surat-keluar.index')}}" class="btn btn-warning" id="backBtn"><i class="fa fa-arrow-left"></i> Kembali</a>
+	<button id="saveBtn" class="btn btn-default" data-toggle="modal" data-target="#defaultModal"><i class="fa fa-file"></i> Catatan</button>
+	<a href="{{route('pegawai.surat-keluar.index')}}" class="btn btn-default" id="backBtn"><i class="fa fa-arrow-left"></i> Kembali</a>
 </div>
 <div class="canvas-wrapper" id="canvas-wrapper"></div>
 <!-- Jquery Core Js -->
@@ -121,7 +121,9 @@ function initFabric()
 	var allCanvas = document.querySelectorAll('#canvas-wrapper canvas');
 	allCanvas.forEach((el, index) => {
 		var bg = el.toDataURL("image/png");
-		var fabricObj = new fabric.Canvas(el.id);
+		var fabricObj = new fabric.StaticCanvas(el.id,{
+			allowTouchScrolling: true
+        });
 		pdfData.push(fabricObj)
 		fabricObj.setBackgroundImage(bg, fabricObj.renderAll.bind(fabricObj));
 	})

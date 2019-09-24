@@ -8,8 +8,12 @@
     <link href="{{asset('template/bsbm/plugins/bootstrap/css/bootstrap.css')}}" rel="stylesheet">
 	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.1.266/build/pdf.min.js"></script>
-	<script src="{{asset('js/fabric.min.js')}}"></script>
+	<!-- <script src="{{asset('js/fabric.min.js')}}"></script> -->
+	<script src="http://fabricjs.com/lib/fabric_with_gestures.js"></script>
 	<style type="text/css">
+	html, body {
+		-webkit-overflow-scrolling: auto;
+	}
 	body {
 		margin:0;
 		padding:0;
@@ -33,6 +37,29 @@
 	    margin-left: auto;
 	    margin-right: auto;
 	}
+	/* !important is needed sometimes */
+	/* ::-webkit-scrollbar {
+		width: 12px !important;
+	} */
+
+	/* Track */
+	/* ::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3) !important;
+	-webkit-border-radius: 10px !important;
+	border-radius: 10px !important;
+	} */
+
+	/* Handle */
+	/* ::-webkit-scrollbar-thumb {
+	-webkit-border-radius: 10px !important;
+	border-radius: 10px !important;
+	background: #41617D !important; 
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5) !important; 
+
+	}
+	::-webkit-scrollbar-thumb:window-inactive {
+	background: #41617D !important; 
+	} */
 	</style>
 </head>
 <body>
@@ -62,11 +89,12 @@
 <div class="top">
 	<!-- <button id="pdfData">PDF Data</button>
 	<button id="loadPDFData">Load PDF Data</button> -->
-	<button id="saveBtn" data-toggle="modal" data-target="#defaultModal"><i class="fa fa-save"></i> Simpan</button>
-	<button id="pointerBtn"><i class="fa fa-mouse-pointer"></i></button>
-	<button id="pencilBtn"><i class="fa fa-pencil"></i></button>
-	<button id="fontBtn"><i class="fa fa-font"></i></button>
-	<button id="trashBtn"><i class="fa fa-trash"></i></button>
+	<button class="btn btn-default" id="saveBtn" data-toggle="modal" data-target="#defaultModal"><i class="fa fa-save"></i> Simpan</button>
+	<button class="btn btn-default" id="pointerBtn"><i class="fa fa-mouse-pointer"></i></button>
+	<button class="btn btn-default" id="pencilBtn"><i class="fa fa-pencil"></i></button>
+	<button class="btn btn-default" id="fontBtn"><i class="fa fa-font"></i></button>
+	<button class="btn btn-default" id="trashBtn"><i class="fa fa-trash"></i></button>
+	<a href="{{route('pegawai.surat-keluar.index')}}" class="btn btn-default" id="backBtn"><i class="fa fa-arrow-left"></i></a>
 </div>
 <div class="canvas-wrapper" id="canvas-wrapper"></div>
 <!-- Jquery Core Js -->
@@ -91,6 +119,11 @@ const scale = 1.3,
 var showPdfData = () => {
 	var string = JSON.stringify(pdfData);
 	console.log(string)
+}
+
+function deleteObject()
+{
+	activeCanvas.remove(activeCanvas.getActiveObject());
 }
 
 pdfjsLib.getDocument(pdfFileUrl).promise.then( doc => {
@@ -153,16 +186,20 @@ function initFabric()
 			}
 		});
 
-		pdfData.push(fabricObj)
 		fabricObj.setBackgroundImage(bg, fabricObj.renderAll.bind(fabricObj));
-		// fabricObj.isDrawingMode = true;
 		fabricObj.freeDrawingBrush.color = 'red';
+		fabricObj.allowTouchScrolling = true;
 
 		fabricObj.upperCanvasEl.addEventListener('click', function (event) {
 	        canvasClick(event, fabricObj);
 	    });
 
+		pdfData.push(fabricObj)
 	})
+
+	$('.canvas-container').on('touchmove', function(evt){
+        evt.preventDefault();
+    });
 
 }
 
@@ -180,6 +217,7 @@ function loadFromJSON()
 
 function enablePointer()
 {
+	enableText = false
 	pdfData.forEach((fabricObj, index) => {
 		fabricObj.isDrawingMode = false
 	})
@@ -195,6 +233,7 @@ function enableAddText()
 
 function enablePencil()
 {
+	enableText = false
 	pdfData.forEach((fabricObj, index) => {
 		fabricObj.isDrawingMode = true
 	})
@@ -213,11 +252,6 @@ function canvasClick(event, fabricObj) {
 	    fabricObj.add(text);
 	    enableText = false
 	}
-}
-
-function deleteObject()
-{
-	activeCanvas.remove(activeCanvas.getActiveObject());
 }
 
 $("#form_tolak").submit(() => {
