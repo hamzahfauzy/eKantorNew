@@ -172,38 +172,7 @@
                                                     @endif
                                                     
                                                     @if($model->lastHistori)
-                                                        <span class="badge {{$bg[$model->lastHistori->status]}}" data-toggle="modal" data-target="#modal-histori-{{$model->id}}" style="cursor:pointer;">{{$status[$model->lastHistori->status]}}</span>
-                                                        @if($model->lastHistori->status == 2)
-                                                            <br>{{$model->lastHistori->keterangan}}
-                                                        @endif
-                                                        <div class="modal fade" id="modal-histori-{{$model->id}}" tabindex="-1" role="dialog">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h4 class="modal-title" id="defaultModalLabel">Histori SPT</h4>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <div class="box">
-                                                                            <div class="container">
-                                                                                <div class="row">
-                                                                                    @foreach($model->historis()->orderby('id','desc')->get() as $histori)
-                                                                                    <div class="col-12">
-                                                                                        <label>{{$histori->created_at->format('j F Y H:i:s')}}</label><br>
-                                                                                        <p>{{$status[$histori->status].' '.$histori->employee->nama}} ({{$histori->employee->jabatan}})</p>
-                                                                                    </div>
-                                                                                    @endforeach
-
-                                                                                    <div class="col-12">
-                                                                                        <label>{{$model->created_at->format('j F Y H:i:s')}}</label><br>
-                                                                                        <p>SPT Dibuat oleh {{$model->employee->nama}} ({{$model->employee->jabatan}})</p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        <span class="badge {{$bg[$model->lastHistori->status]}}">{{$status[$model->lastHistori->status]}}</span>
                                                     @endif
                                                     </td>
                                                     <td>
@@ -305,6 +274,36 @@
                                                             <input type="hidden" name="id" value="{{$model->id}}">
                                                         </form>
                                                         @endif
+                                                        <p></p>
+                                                        <a href="javascript:void(0)" class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-histori-{{$model->id}}" style="cursor:pointer;">Lihat Histori</a>
+                                                        <div class="modal fade" id="modal-histori-{{$model->id}}" tabindex="-1" role="dialog">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title" id="defaultModalLabel">Histori SPT</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="box">
+                                                                            <div class="container">
+                                                                                <div class="row">
+                                                                                    @foreach($model->historis()->orderby('id','desc')->get() as $histori)
+                                                                                    <div class="col-12">
+                                                                                        <label>{{$histori->created_at->format('j F Y H:i:s')}}</label><br>
+                                                                                        <p>{{$status[$histori->status].' '.$histori->employee->nama}} ({{$histori->employee->jabatan}})</p>
+                                                                                    </div>
+                                                                                    @endforeach
+
+                                                                                    <div class="col-12">
+                                                                                        <label>{{$model->created_at->format('j F Y H:i:s')}}</label><br>
+                                                                                        <p>SPT Dibuat oleh {{$model->employee->nama}} ({{$model->employee->jabatan}})</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -356,35 +355,7 @@
                                                     {!! $model->no_spt ? $model->no_spt : "<i>Belum ada nomor</i>" !!}<br>
                                                     {{$model->tanggal->formatLocalized("%d %B %Y")}}<br>
                                                     @if($model->hasAction($histori->user_id))
-                                                        <span class="badge {{$bg[$model->hasAction($histori->user_id)->status]}}" data-toggle="modal" data-target="#modal-hist-{{$model->id}}">{{$status[$model->hasAction($histori->user_id)->status]}}</span>
-                                                        <div class="modal fade" id="modal-hist-{{$model->id}}" tabindex="-1" role="dialog">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h4 class="modal-title" id="defaultModalLabel">Histori SPT</h4>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <div class="box">
-                                                                            <div class="container">
-                                                                                <div class="row">
-                                                                                    @foreach($model->historis()->orderby('id','desc')->get() as $histori)
-                                                                                    <div class="col-12">
-                                                                                        <label>{{$histori->created_at->format('j F Y H:i:s')}}</label><br>
-                                                                                        <p>{{$status[$histori->status].' '.$histori->employee->nama}} ({{$histori->employee->jabatan}})</p>
-                                                                                    </div>
-                                                                                    @endforeach
-
-                                                                                    <div class="col-12">
-                                                                                        <label>{{$model->created_at->format('j F Y H:i:s')}}</label><br>
-                                                                                        <p>SPT Dibuat oleh {{$model->employee->nama}} ({{$model->employee->jabatan}})</p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        <span class="badge {{$bg[$model->hasAction($histori->user_id)->status]}}">{{$status[$model->hasAction($histori->user_id)->status]}}</span>
                                                     @endif
                                                     </td>
                                                     <td>
@@ -403,7 +374,7 @@
                                                     </td>
                                                     <td>
                                                     <a href="javascript:void(0)" data-toggle="modal" data-target="#spt_staff{{$model->id}}" class="label label-primary">Lihat Pegawai</a>
-                                                    <div class="modal fade" id="spt_staff{{$model->id}}" tabindex="-1" role="dialog">
+                                                        <div class="modal fade" id="spt_staff{{$model->id}}" tabindex="-1" role="dialog">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
@@ -500,6 +471,39 @@
                                                             </div>
                                                         </div>
                                                         @endif
+                                                        
+                                                        <p></p>
+                                                        <a href="javascript:void(0)" class="btn btn-block btn-success" data-toggle="modal" data-target="#default{{$model->id}}">Lihat Histori</a>
+                                                        <div class="modal fade" id="default{{$model->id}}" tabindex="-1" role="dialog">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title" id="defaultModalLabel">Histori SPT</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="box">
+                                                                            <div class="container">
+                                                                                <div class="row">
+                                                                                    @foreach($model->historis()->orderby('id','desc')->get() as $histori)
+                                                                                    <div class="col-12">
+                                                                                        <label>{{$histori->created_at->format('j F Y H:i:s')}}</label><br>
+                                                                                        <p>{{$status[$histori->status].' '.$histori->employee->nama}} ({{$histori->employee->jabatan}})</p>
+                                                                                    </div>
+                                                                                    @endforeach
+
+                                                                                    <div class="col-12">
+                                                                                        <label>{{$model->created_at->format('j F Y H:i:s')}}</label><br>
+                                                                                        <p>SPT Dibuat oleh {{$model->employee->nama}} ({{$model->employee->jabatan}})</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -552,35 +556,7 @@
                                                     {!! $model->no_spt ? $model->no_spt : "<i>Belum ada nomor</i>" !!}<br>
                                                     {{$model->tanggal->formatLocalized("%d %B %Y")}}<br>
                                                     @if($model->hasAction($histori->user_id))
-                                                        <span class="badge {{$bg[$model->hasAction($histori->user_id)->status]}}" data-toggle="modal" data-target="#modal-his-{{$model->id}}">{{$status[$model->hasAction($histori->user_id)->status]}}</span>
-                                                        <div class="modal fade" id="modal-his-{{$model->id}}" tabindex="-1" role="dialog">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h4 class="modal-title" id="defaultModalLabel">Histori SPT</h4>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <div class="box">
-                                                                            <div class="container">
-                                                                                <div class="row">
-                                                                                    @foreach($model->historis()->orderby('id','desc')->get() as $histori)
-                                                                                    <div class="col-12">
-                                                                                        <label>{{$histori->created_at->format('j F Y H:i:s')}}</label><br>
-                                                                                        <p>{{$status[$histori->status].' '.$histori->employee->nama}} ({{$histori->employee->jabatan}})</p>
-                                                                                    </div>
-                                                                                    @endforeach
-
-                                                                                    <div class="col-12">
-                                                                                        <label>{{$model->created_at->format('j F Y H:i:s')}}</label><br>
-                                                                                        <p>SPT Dibuat oleh {{$model->employee->nama}} ({{$model->employee->jabatan}})</p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        <span class="badge {{$bg[$model->hasAction($histori->user_id)->status]}}">{{$status[$model->hasAction($histori->user_id)->status]}}</span>
                                                     @endif
                                                     </td>
                                                     <td>
@@ -652,6 +628,36 @@
                                                             <i class="material-icons">visibility</i>
                                                             
                                                         </a>
+                                                        <p></p>
+                                                        <a href="javascript:void(0)" class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-his-{{$model->id}}">Lihat Histori</a>
+                                                        <div class="modal fade" id="modal-his-{{$model->id}}" tabindex="-1" role="dialog">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title" id="defaultModalLabel">Histori SPT</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="box">
+                                                                            <div class="container">
+                                                                                <div class="row">
+                                                                                    @foreach($model->historis()->orderby('id','desc')->get() as $histori)
+                                                                                    <div class="col-12">
+                                                                                        <label>{{$histori->created_at->format('j F Y H:i:s')}}</label><br>
+                                                                                        <p>{{$status[$histori->status].' '.$histori->employee->nama}} ({{$histori->employee->jabatan}})</p>
+                                                                                    </div>
+                                                                                    @endforeach
+
+                                                                                    <div class="col-12">
+                                                                                        <label>{{$model->created_at->format('j F Y H:i:s')}}</label><br>
+                                                                                        <p>SPT Dibuat oleh {{$model->employee->nama}} ({{$model->employee->jabatan}})</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                                 @endforeach

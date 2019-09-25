@@ -114,9 +114,6 @@
                                             {{$model->tanggal->formatLocalized("%d %B %Y")}}<br>
                                             @if($model->lastHistori)
                                                 <span class="badge {{$bg[$model->lastHistori->status]}}">{{$status[$model->lastHistori->status]}}</span><br>
-                                                @if($model->lastHistori->status == 2)
-                                                    {{$model->lastHistori->keterangan}}<br>
-                                                @endif
                                                 <p></p>
                                             @endif
                                             @if($model->arsip_operator)
@@ -267,6 +264,37 @@
                                                 <a href="{{route('pegawai.spt-role.cetak',$model->id)}}" class="btn btn-primary waves-effect">
 				                                    <i class="material-icons">visibility</i>
 				                                </a>
+
+                                                <p></p>
+                                                        <a href="javascript:void(0)" class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-his-{{$model->id}}">Lihat Histori</a>
+                                                        <div class="modal fade" id="modal-his-{{$model->id}}" tabindex="-1" role="dialog">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title" id="defaultModalLabel">Histori SPT</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="box">
+                                                                            <div class="container">
+                                                                                <div class="row">
+                                                                                    @foreach($model->historis()->orderby('id','desc')->get() as $histori)
+                                                                                    <div class="col-12">
+                                                                                        <label>{{$histori->created_at->format('j F Y H:i:s')}}</label><br>
+                                                                                        <p>{{$status[$histori->status].' '.$histori->employee->nama}} ({{$histori->employee->jabatan}})</p>
+                                                                                    </div>
+                                                                                    @endforeach
+
+                                                                                    <div class="col-12">
+                                                                                        <label>{{$model->created_at->format('j F Y H:i:s')}}</label><br>
+                                                                                        <p>SPT Dibuat oleh {{$model->employee->nama}} ({{$model->employee->jabatan}})</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                             </td>
                                         </tr>
                                         @endforeach
