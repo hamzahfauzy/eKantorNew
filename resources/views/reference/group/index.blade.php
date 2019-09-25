@@ -57,15 +57,21 @@
                                             <td>{{$no++}}</td>
                                             <td>{{$model->nama}}</td>
                                             <td>
+                                                @if(!empty($model->kepala_id))
                                             	<a href="{{route('reference.employee.show',$model->kepala_id)}}">
-                                            	{{$model->kepala_id}}
+                                            	{{$model->kepala->nama}}
                                             	</a>
+                                                @else
+                                                <i>Tidak ada Kepala</i>
+                                                @endif
                                             </td>
                                             <td>
+                                                @if(!empty($model->kepala_id))
                                             	<a href="{{route('reference.group.show',$model->id)}}" class="btn btn-info waves-effect">
 				                                    <i class="material-icons">web_asset</i>
 				                                    <span>Lihat</span>
 				                                </a>
+                                                @endif
 
                                             	<a href="{{route('reference.group.edit',$model->id)}}" class="btn btn-warning waves-effect">
 				                                    <i class="material-icons">create</i>
