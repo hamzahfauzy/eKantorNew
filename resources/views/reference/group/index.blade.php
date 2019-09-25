@@ -58,7 +58,7 @@
                                             <td>{{$model->nama}}</td>
                                             <td>
                                             	<a href="{{route('reference.employee.show',$model->kepala_id)}}">
-                                            	{{$model->kepala->nama}}
+                                            	{{$model->kepala_id}}
                                             	</a>
                                             </td>
                                             <td>
