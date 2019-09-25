@@ -62,7 +62,7 @@
                                             	{{$model->kepala->nama}}
                                             	</a>
                                                 @else
-                                                <i>Tidak ada Kepala</i>
+                                                <i>Tidak ada Pimpinan</i>
                                                 @endif
                                             </td>
                                             <td>
