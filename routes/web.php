@@ -195,6 +195,22 @@ Route::middleware('auth')->group(function(){
 			Route::delete('delete','SuratKeluarController@destroy')->name('pegawai.surat-keluar.delete');
 		});
 
+		Route::prefix('surat-keputusan')->group(function(){
+			Route::get('/','SuratKeputusanController@index')->name('pegawai.surat-keputusan.index');
+			Route::get('create','SuratKeputusanController@create')->name('pegawai.surat-keputusan.create');
+			Route::get('edit/{surat}','SuratKeputusanController@edit')->name('pegawai.surat-keputusan.edit');
+			Route::get('show/{surat}','SuratKeputusanController@show')->name('pegawai.surat-keputusan.show');
+			Route::get('decline-editor/{histori}','SuratKeputusanController@declineEditor')->name('pegawai.surat-keputusan.decline-editor');
+			Route::get('decline-viewer/{histori}','SuratKeputusanController@declineViewer')->name('pegawai.surat-keputusan.decline-viewer');
+			Route::post('insert','SuratKeputusanController@store')->name('pegawai.surat-keputusan.insert');
+			Route::post('accept','SuratKeputusanController@accept')->name('pegawai.surat-keputusan.accept');
+			Route::post('decline','SuratKeputusanController@decline')->name('pegawai.surat-keputusan.decline');
+			Route::post('arsip','SuratKeputusanController@arsip')->name('pegawai.surat-keputusan.arsip');
+			Route::post('set-agenda','SuratKeputusanController@setAgendaSurat')->name('pegawai.surat-keputusan.set-agenda');
+			Route::put('update','SuratKeputusanController@update')->name('pegawai.surat-keputusan.update');
+			Route::delete('delete','SuratKeputusanController@destroy')->name('pegawai.surat-keputusan.delete');
+		});
+
 		Route::prefix('spt')->group(function(){
 			Route::get('/','SptController@index')->name('pegawai.spt.index');
 			Route::get('rekapitulasi','SptController@rekapitulasi')->name('pegawai.spt.rekapitulasi');

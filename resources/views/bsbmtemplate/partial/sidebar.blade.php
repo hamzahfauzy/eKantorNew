@@ -137,7 +137,7 @@
                                     </a>
                                 </li>
                                 <li class="@yield('surat-keputusan-active')">
-                                    <a href="#">
+                                    <a href="{{route('pegawai.surat-keputusan.index')}}">
                                         Surat Keputusan
                                     </a>
                                 </li>
