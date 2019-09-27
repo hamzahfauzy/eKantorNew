@@ -51,7 +51,7 @@ class SuratKeluarController extends Controller
     {
         //
         $this->validate($request,[
-            'no_surat' => 'required|unique:surat_masuks',
+            'no_sk' => 'required|unique:surat_masuks',
             'tanggal_surat' => 'required',
             'sub_group_id' => 'required',
             'tujuan' => 'required',
@@ -68,7 +68,7 @@ class SuratKeluarController extends Controller
         }
 
         $this->model->create([
-            'no_surat' => $request->no_surat,
+            'no_sk' => $request->no_surat,
             'tanggal' => $request->tanggal_surat,
             'sub_group_id' => $request->sub_group_id,
             'tujuan' => $request->tujuan,

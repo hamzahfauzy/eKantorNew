@@ -37,13 +37,13 @@
                             <ul class="nav nav-tabs" role="tablist">
                                 <li role="presentation" class="active">
                                     <a href="#own_with_icon_title" data-toggle="tab">
-                                        <i class="material-icons">email</i> Surat Anda
+                                        <i class="material-icons">email</i> SK Anda
                                     </a>
                                 </li>
                                 @if(!auth()->user()->employee->staffGroup)
                                 <li role="presentation">
                                     <a href="#staff_with_icon_title" data-toggle="tab">
-                                        <i class="material-icons">email</i> Surat Staff
+                                        <i class="material-icons">email</i> SK Staff
                                     </a>
                                 </li>
                                 @endif
@@ -51,7 +51,7 @@
                                 @if(auth()->user()->employee->inSpecialRole())
                                 <li role="presentation">
                                     <a href="#staff_with_icon_title" data-toggle="tab">
-                                        <i class="material-icons">email</i> Surat Staff
+                                        <i class="material-icons">email</i> SK Staff
                                     </a>
                                 </li>
                                 @endif
@@ -88,7 +88,11 @@
                                                 <tr>
                                                     <td>{{$no++}}</td>
                                                     <td>
+                                                        @if($model->no_sk)
                                                         <b>{{$model->no_sk}}</b>
+                                                        @else
+                                                        <i>Belum ada nomor SK</i>
+                                                        @endif
                                                         @if($model->arsip_pegawai)
                                                             <br>No. Arsip : {{$model->arsip_pegawai->no_arsip}}
                                                         @else
@@ -215,11 +219,18 @@
                                                     @if(in_array($histori->surat_id,$suratid))
                                                         @continue;
                                                     @endif
+                                                    @if(empty($model))
+                                                        @continue;
+                                                    @endif
                                                 <?php $suratid[] = $histori->surat_id; ?>
                                                 <tr>
                                                     <td>{{$no++}}</td>
                                                     <td>
+                                                        @if($model->no_sk)
                                                         <b>{{$model->no_sk}}</b>
+                                                        @else
+                                                        <i>Belum ada nomor SK</i>
+                                                        @endif
 
                                                         @if(!empty($model->no_agenda))
                                                             <br>
@@ -332,11 +343,57 @@
                                                     @if(in_array($histori->surat_id,$suratid))
                                                         @continue;
                                                     @endif
+                                                    @if(empty($model))
+                                                        @continue;
+                                                    @endif
                                                 <?php $suratid[] = $histori->surat_id; ?>
                                                 <tr>
                                                     <td>{{$no++}}</td>
                                                     <td>
-                                                        <b>{{$model->no_sk}}</b>  
+                                                        @if($model->no_sk)
+                                                        <b>{{$model->no_sk}}</b>
+                                                        @else
+                                                        <i>Belum ada nomor SK</i>
+                                                            @if($model->need_action == -1)
+                                                            <br>
+                                                            <a href="javascript:void(0)" class="btn btn-danger waves-effect" data-toggle="modal" data-target="#modalSk{{$model->id}}">Set No SK</a>
+                                                            <div class="modal fade" id="modalSk{{$model->id}}" tabindex="-1" role="dialog">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title" id="defaultModalLabel">Set No SK</h4>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <form id="form_validation" method="POST" action="{{route('pegawai.surat-keputusan.set-no-sk')}}">
+                                                                                {{csrf_field()}}
+                                                                                <input type="hidden" name="id" value="{{$model->id}}">
+                                                                                <div class="form-group form-float">
+                                                                                    <label>No. SK</label>
+                                                                                    <div class="form-line">
+                                                                                        <input type="text" class="form-control" name="no_sk" required>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group form-float">
+                                                                                    <br>
+                                                                                    <label>File Surat (yang sudah ditanda tangani)</label>
+                                                                                    <input type="file" name="file_surat" class="form-control" style="height: auto;">
+                                                                                    @if ($errors->has('file_surat'))
+                                                                                        <span class="invalid-feedback" role="alert">
+                                                                                            <strong>{{ $errors->first('file_surat') }}</strong>
+                                                                                        </span>
+                                                                                    @endif
+                                                                                </div>
+                                                                                <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
+                                                                                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @endif
+                                                        @endif
                                                         @if($model->arsip_operator)
                                                             <br>
                                                             No. Arsip : {{$model->arsip_operator->no_arsip}}
@@ -534,6 +591,24 @@ function acceptAlert(id)
     },function (isConfirm) {
         if (isConfirm) {
             $("#form-acc-"+id).submit()
+        }
+    });
+}
+
+function deleteAlert(id)
+{
+    swal({
+        title: 'Apakah anda yakin akan menghapus surat ini?',
+        text: "Perubahan tidak dapat dikembalikan!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya!',
+        confirmCancelText: 'Batal!'
+    },function (isConfirm) {
+        if (isConfirm) {
+            $("#form-delete-"+id).submit()
         }
     });
 }

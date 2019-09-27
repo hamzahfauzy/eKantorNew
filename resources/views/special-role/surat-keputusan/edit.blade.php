@@ -22,18 +22,7 @@
                                 <input type="hidden" name="id" value="{{$surat->id}}">
                                 <div class="form-group form-float">
                                     <div class="form-line">
-                                        <input type="text" class="form-control" name="no_surat" required value="{{old('no_surat') ? old('no_surat') : $surat->no_surat}}">
-                                        <label class="form-label">No. SK</label>
-                                    </div>
-                                    @if ($errors->has('no_surat'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('no_surat') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group form-float">
-                                    <div class="form-line">
-                                        <label>Tanggal Surat</label>
+                                        <label>Tanggal SK</label>
                                         <input type="text" class="datepicker form-control" name="tanggal_surat" placeholder="Tanggal Surat" required="" value="{{old('tanggal_surat') ? old('tanggal_surat') : $surat->tanggal->format('Y-m-d')}}">
                                     </div>
                                     @if ($errors->has('tanggal_surat'))

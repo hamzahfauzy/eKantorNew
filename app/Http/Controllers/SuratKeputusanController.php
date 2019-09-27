@@ -55,7 +55,6 @@ class SuratKeputusanController extends Controller
     {
         //
         $this->validate($request,[
-            'no_surat' => 'required|unique:surat_keputusans',
             'tanggal_surat' => 'required',
             'tentang' => 'required',
             'tahun' => 'required',
@@ -66,10 +65,11 @@ class SuratKeputusanController extends Controller
         $path = $uploadedFile->store('public/surat_keputusan');
 
         $model = $this->model->create([
-            'no_sk' => $request->no_surat,
+            'no_sk' => '',
             'tanggal' => $request->tanggal_surat,
-            'tentang' => $request->tujuan,
-            'tahun' => $request->perihal,
+            'tentang' => $request->tentang,
+            'tahun' => $request->tahun,
+            'file_sk_fix_url' => '',
             'file_sk_url' => $path,
             'pegawai_id' => auth()->user()->employee->id,
         ]);
@@ -130,7 +130,7 @@ class SuratKeputusanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(SuratKeluar $surat)
+    public function show(SuratKeputusan $surat)
     {
         //
         return view('special-role.surat-keputusan.show',[
@@ -144,7 +144,7 @@ class SuratKeputusanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(SuratKeluar $surat)
+    public function edit(SuratKeputusan $surat)
     {
         //
         return view('special-role.surat-keputusan.edit',[
@@ -164,7 +164,6 @@ class SuratKeputusanController extends Controller
     {
         //
         $this->validate($request,[
-            'no_surat' => 'required|unique:surat_keputusans,no_surat,'.$request->id.',id,no_surat,'.$request->no_surat,
             'tanggal_surat' => 'required',
             'tentang' => 'required',
             'tahun' => 'required',
@@ -184,10 +183,10 @@ class SuratKeputusanController extends Controller
         }
 
         $this->model->find($request->id)->update([
-            'no_sk' => $request->no_surat,
             'tanggal' => $request->tanggal_surat,
-            'tentang' => $request->tujuan,
-            'tahun' => $request->perihal,
+            'tentang' => $request->tentang,
+            'tahun' => $request->tahun,
+            'file_sk_fix_url' => '',
             'pegawai_id' => auth()->user()->employee->id,
         ]);
 
@@ -319,7 +318,7 @@ class SuratKeputusanController extends Controller
             $notification->user_id = $pimpinan_id;
             $notification->status = 0;
             $notification->url_to = route('pegawai.surat-keputusan.show',$histori->surat_id);
-            $notification->deskripsi = "Surat Keluar - Dari ".$histori->suratKeluar->employee->nama." (".$histori->suratKeluar->employee->jabatan.")";
+            $notification->deskripsi = "Surat Keluar - Dari ".$histori->suratKeputusan->employee->nama." (".$histori->suratKeputusan->employee->jabatan.")";
             $notification->save();
         }
         else
@@ -398,6 +397,27 @@ class SuratKeputusanController extends Controller
         }
 
         return redirect()->route('pegawai.surat-keputusan.index')->with(['success'=>'Surat Berhasil diagendakan']);
+    }
+
+    public function setNoSk(Request $request)
+    {
+        $this->validate($request,[
+            'no_sk' => 'required'
+        ]);
+        // return $request->no_agenda;
+        $surat = SuratKeputusan::find($request->id);
+        $surat->no_sk = $request->no_sk;
+        $surat->save();
+
+        if(!empty($request->file('file_surat')))
+        {
+            $uploadedFile = $request->file('file_surat');
+            $path = $uploadedFile->store('public/surat_keputusan');
+            $surat->file_sk_fix_url = $path;
+            $surat->save();
+        }
+
+        return redirect()->route('pegawai.surat-keputusan.index')->with(['success'=>'No SK Berhasil disimpan']);
     }
 
     public function arsip(Request $request)

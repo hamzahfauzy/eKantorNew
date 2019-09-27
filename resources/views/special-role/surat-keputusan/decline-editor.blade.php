@@ -70,7 +70,7 @@
 <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="form_tolak" method="POST" action="{{route('pegawai.surat-keluar.decline')}}">
+            <form id="form_tolak" method="POST" action="{{route('pegawai.surat-keputusan.decline')}}">
                 <div class="modal-header">
                     <h4 class="modal-title" id="defaultModalLabel">Tolak Surat</h4>
                 </div>
@@ -109,7 +109,7 @@
 <!-- Bootstrap Core Js -->
 <script src="{{asset('template/bsbm/plugins/bootstrap/js/bootstrap.js')}}"></script>
 <script type="text/javascript">
-const pdfFileUrl = '{{Storage::url($surat->file_surat_url)}}';
+const pdfFileUrl = '{{Storage::url($surat->file_sk_url)}}';
 
 var pdfData = [];
 var enableText = false;
@@ -287,7 +287,7 @@ $("#form_tolak").submit(() => {
         _token:'{{csrf_token()}}'
     },res => {
 		alert('Surat berhasil ditolak');
-		location='{{route("pegawai.surat-keluar.index")}}'
+		location='{{route("pegawai.surat-keputusan.index")}}'
         console.log(res)
     })
 })

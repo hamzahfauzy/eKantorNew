@@ -21,7 +21,7 @@ class CreateSuratKeputusansTable extends Migration
             $table->string('tentang');
             $table->string('tahun');
             $table->text('file_sk_url');
-            $table->text('file_sk_fix_url');
+            $table->text('file_sk_fix_url')->nullable();
             $table->integer('need_action')->default(0);
             $table->string('no_agenda')->default(0);
             $table->timestamps();

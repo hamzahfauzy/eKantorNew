@@ -206,6 +206,7 @@ Route::middleware('auth')->group(function(){
 			Route::post('accept','SuratKeputusanController@accept')->name('pegawai.surat-keputusan.accept');
 			Route::post('decline','SuratKeputusanController@decline')->name('pegawai.surat-keputusan.decline');
 			Route::post('arsip','SuratKeputusanController@arsip')->name('pegawai.surat-keputusan.arsip');
+			Route::post('set-no-sk','SuratKeputusanController@setNoSk')->name('pegawai.surat-keputusan.set-no-sk');
 			Route::post('set-agenda','SuratKeputusanController@setAgendaSurat')->name('pegawai.surat-keputusan.set-agenda');
 			Route::put('update','SuratKeputusanController@update')->name('pegawai.surat-keputusan.update');
 			Route::delete('delete','SuratKeputusanController@destroy')->name('pegawai.surat-keputusan.delete');
