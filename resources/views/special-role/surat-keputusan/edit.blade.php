@@ -54,6 +54,17 @@
                                     @endif
                                 </div>
                                 <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <textarea class="form-control" name="keterangan" required>{{old('keterangan') ? old('keterangan') : $surat->keterangan}}</textarea>
+                                        <label class="form-label">Keterangan</label>
+                                    </div>
+                                    @if ($errors->has('keterangan'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('keterangan') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group form-float">
                                     <label>File Surat (*Kosongkan jika tidak diubah)</label>
                                     <br>
                                     <a href="{{Storage::url($surat->file_surat_url)}}">Lihat Surat</a>

@@ -52,6 +52,17 @@
                                     @endif
                                 </div>
                                 <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <textarea class="form-control" name="keterangan" required>{{old('keterangan')}}</textarea>
+                                        <label class="form-label">Keterangan</label>
+                                    </div>
+                                    @if ($errors->has('keterangan'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('keterangan') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group form-float">
                                     <label>File Surat</label>
                                     <input type="file" name="file_surat" class="form-control" style="height: auto;">
                                     @if ($errors->has('file_surat'))

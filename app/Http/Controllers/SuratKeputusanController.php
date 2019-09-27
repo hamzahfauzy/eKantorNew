@@ -58,6 +58,7 @@ class SuratKeputusanController extends Controller
             'tanggal_surat' => 'required',
             'tentang' => 'required',
             'tahun' => 'required',
+            'keterangan' => 'required',
             'file_surat' => 'required|mimes:pdf',
         ]);
 
@@ -69,6 +70,7 @@ class SuratKeputusanController extends Controller
             'tanggal' => $request->tanggal_surat,
             'tentang' => $request->tentang,
             'tahun' => $request->tahun,
+            'keterangan' => $request->keterangan,
             'file_sk_fix_url' => '',
             'file_sk_url' => $path,
             'pegawai_id' => auth()->user()->employee->id,
@@ -166,6 +168,7 @@ class SuratKeputusanController extends Controller
         $this->validate($request,[
             'tanggal_surat' => 'required',
             'tentang' => 'required',
+            'keterangan' => 'required',
             'tahun' => 'required',
         ]);
 
@@ -186,6 +189,7 @@ class SuratKeputusanController extends Controller
             'tanggal' => $request->tanggal_surat,
             'tentang' => $request->tentang,
             'tahun' => $request->tahun,
+            'keterangan' => $request->keterangan,
             'file_sk_fix_url' => '',
             'pegawai_id' => auth()->user()->employee->id,
         ]);
