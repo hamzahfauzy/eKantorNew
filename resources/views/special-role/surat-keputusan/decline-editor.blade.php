@@ -99,7 +99,7 @@
 	<button class="btn btn-default" id="fontBtn"><i class="fa fa-font"></i></button>
 	<button class="btn btn-default" id="trashBtn"><i class="fa fa-trash"></i></button>
 	<button class="btn btn-default" id="scrollBtn"><i class="fa fa-hand-stop-o"></i></button>
-	<a href="{{route('pegawai.surat-keluar.index')}}" class="btn btn-default" id="backBtn"><i class="fa fa-arrow-left"></i></a>
+	<a href="{{route('pegawai.surat-keputusan.index')}}" class="btn btn-default" id="backBtn"><i class="fa fa-arrow-left"></i></a>
 </div>
 <div class="scroll-pad"></div>
 <div class="canvas-wrapper" id="canvas-wrapper"></div>
