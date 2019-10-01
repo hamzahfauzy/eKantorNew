@@ -58,7 +58,7 @@
 	<!-- <button id="pdfData">PDF Data</button>
 	<button id="loadPDFData">Load PDF Data</button> -->
 	<button id="saveBtn" class="btn btn-default" data-toggle="modal" data-target="#defaultModal"><i class="fa fa-file"></i> Catatan</button>
-	<a href="{{route('pegawai.surat-keluar.index')}}" class="btn btn-default" id="backBtn"><i class="fa fa-arrow-left"></i> Kembali</a>
+	<a href="{{route('pegawai.surat-keputusan.index')}}" class="btn btn-default" id="backBtn"><i class="fa fa-arrow-left"></i> Kembali</a>
 </div>
 <div class="canvas-wrapper" id="canvas-wrapper"></div>
 <!-- Jquery Core Js -->
@@ -67,7 +67,7 @@
 <!-- Bootstrap Core Js -->
 <script src="{{asset('template/bsbm/plugins/bootstrap/js/bootstrap.js')}}"></script>
 <script type="text/javascript">
-const pdfFileUrl = '{{Storage::url($surat->file_surat_url)}}';
+const pdfFileUrl = '{{Storage::url($surat->file_sk_url)}}';
 
 var pdfJSON = '<?= json_encode(unserialize($histori->pdf_serialize)) ?>'
 var pdfData = [];
