@@ -2,7 +2,7 @@
 @section('surat-active','active')
 @section('surat-keputusan-active','active')
 @section('content')
-<?php $status = ['Surat Dikirim ke','Surat Di ACC oleh','Surat Ditolak Oleh']; $bg = ["","bg-teal","bg-pink"] ?>
+<?php $status = ['SK Dikirim ke','SK Di ACC oleh','SK Ditolak Oleh']; $bg = ["","bg-teal","bg-pink"] ?>
 		<div class="container-fluid">
             <div class="block-header">
                 <h2>
@@ -82,7 +82,7 @@
 
                                     <div class="col-12">
                                         <label>{{$surat->created_at->format('j F Y H:i:s')}}</label><br>
-                                        <p>Surat Dibuat oleh {{$surat->employee->nama}} ({{$surat->employee->jabatan}})</p>
+                                        <p>SK Dibuat oleh {{$surat->employee->nama}} ({{$surat->employee->jabatan}})</p>
                                     </div>
                                 </div>
                             </div>

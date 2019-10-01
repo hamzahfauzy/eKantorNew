@@ -23,7 +23,7 @@ class CreateHistoriSuratKeputusansTable extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('surat_id')->references('id')->on('surat_keluars')->onDelete('cascade');
+            $table->foreign('surat_id')->references('id')->on('surat_keputusans')->onDelete('cascade');
         });
     }
 
