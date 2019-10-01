@@ -202,6 +202,7 @@ $('input[name=tanggal_awal]').bootstrapMaterialDatePicker({
     var lama = $('input[name=lama_waktu]').val()
     lama = lama - 1
     $('input[name=tanggal_akhir]').val(moment(date).add(lama, 'day').format('YYYY-MM-DD'));
+    $("select.pengikut").find('option').remove();
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
