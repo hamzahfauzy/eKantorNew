@@ -2,7 +2,7 @@
 @section('surat-active','active')
 @section('surat-keluar-active','active')
 @section('content')
-<?php $status = ['Surat Dikirim ke','Surat Di ACC oleh','Surat Ditolak Oleh']; $bg = ["","bg-teal","bg-pink"] ?>
+<?php $status = ['Surat Dikirim ke','Surat Di ACC oleh','Surat Ditolak Oleh','Surat Diagendakan Oleh', 'Surat diarsipkan Oleh']; $bg = ["","bg-teal","bg-pink"] ?>
 		<div class="container-fluid">
             <div class="block-header">
                 <h2>

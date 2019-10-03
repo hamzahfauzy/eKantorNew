@@ -661,6 +661,12 @@ class SptController extends Controller
         $arsip->jenis_surat = "SPT";
         $arsip->tipe_arsip = $request->tipe_arsip;
         $arsip->save();
+        HistoriSptList::create([
+            'user_id' => auth()->user()->employee->id,
+            'spt_id' => $request->id,
+            'posisi' => 0,
+            'status' => 4
+        ]);
         return redirect()->route('pegawai.spt.index')->with(['success'=>'Surat telah di arsipkan']);
     }
 }

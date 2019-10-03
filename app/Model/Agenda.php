@@ -9,6 +9,8 @@ class Agenda extends Model
 {
     //
     protected $guarded = [];
+    protected $dates = ['tanggal_awal','tanggal_akhir'];
+
 
     function employee()
     {

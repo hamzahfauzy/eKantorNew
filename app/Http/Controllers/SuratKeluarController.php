@@ -401,6 +401,13 @@ class SuratKeluarController extends Controller
             $surat->save();
         }
 
+        HistoriSuratKeluar::create([
+            'user_id' => auth()->user()->employee->id,
+            'surat_id' => $request->id,
+            'posisi' => 0,
+            'status' => 3
+        ]);
+
         return redirect()->route('pegawai.surat-keluar.index')->with(['success'=>'Surat Berhasil diagendakan']);
     }
 
@@ -412,6 +419,12 @@ class SuratKeluarController extends Controller
         $arsip->jenis_surat = "Surat Keluar";
         $arsip->tipe_arsip = $request->tipe_arsip;
         $arsip->save();
+        HistoriSuratKeluar::create([
+            'user_id' => auth()->user()->employee->id,
+            'surat_id' => $request->id,
+            'posisi' => 0,
+            'status' => 4
+        ]);
         return redirect()->route('pegawai.surat-keluar.index')->with(['success'=>'Surat telah di arsipkan']);
     }
 }

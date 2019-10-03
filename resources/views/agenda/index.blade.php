@@ -64,10 +64,10 @@
                                             <td>{{$no++}}</td>
                                             <td>
                                                 <span>Mulai</span><br>
-                                                {{$model->tanggal_awal}}<br><br>
+                                                {{$model->tanggal_awal->format('d/m/Y')}}<br><br>
                                                 
                                                 <span>Selesai</span><br>
-                                                {{$model->tanggal_akhir}} 
+                                                {{$model->tanggal_akhir->format('d/m/Y')}} 
                                             </td>
                                             <td>
                                                 <span>Mulai</span><br>

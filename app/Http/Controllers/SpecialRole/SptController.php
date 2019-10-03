@@ -236,6 +236,13 @@ class SptController extends Controller
             $surat->save();
         }
 
+        HistoriSptList::create([
+            'user_id' => auth()->user()->employee->id,
+            'spt_id' => $request->id,
+            'posisi' => 0,
+            'status' => 3
+        ]);
+
         return redirect()->route('pegawai.spt-role.index')->with(['success'=>'No SPT berhasil di tambahkan']);
     }
 
@@ -310,6 +317,13 @@ class SptController extends Controller
         $arsip->jenis_surat = "SPT";
         $arsip->tipe_arsip = $request->tipe_arsip;
         $arsip->save();
+
+        HistoriSptList::create([
+            'user_id' => auth()->user()->employee->id,
+            'spt_id' => $request->id,
+            'posisi' => 0,
+            'status' => 4
+        ]);
         return redirect()->route('pegawai.spt-role.index')->with(['success'=>'Surat telah di arsipkan']);
     }
 }
