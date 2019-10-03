@@ -223,7 +223,8 @@ class SptController extends Controller
     public function setNoSpt(Request $request)
     {
         SptList::find($request->id)->update([
-            'no_spt' => $request->no_spt
+            'no_spt' => $request->no_spt,
+            'tanggal' => $request->tanggal,
         ]);
 
         $surat = SptList::find($request->id);

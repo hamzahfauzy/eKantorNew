@@ -159,7 +159,7 @@
                                             @endif
                                             
                                             @if($model->need_action == -1 && empty($model->no_spt))
-                                                <br>
+                                                <p></p>
                                                 <a href="javascript:void(0)" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#modalNoSpt{{$model->id}}">Set No SPT</a>
                                                 <div class="modal fade" id="modalNoSpt{{$model->id}}" tabindex="-1" role="dialog">
                                                     <div class="modal-dialog" role="document">
@@ -179,10 +179,16 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group form-float">
+                                                                        <label>Tanggal</label>
+                                                                        <div class="form-line">
+                                                                            <input type="text" class="datepicker form-control" name="tanggal" required="">
+                                                                            <label class="form-label">Tanggal</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group form-float">
                                                                         <label>File SPT</label>
                                                                         <div class="form-line">
                                                                             <input type="file" class="form-control" name="file_spt_fix_url" required>
-                                                                            <label class="form-label">File SPT</label>
                                                                         </div>
                                                                     </div>
                                                                     <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
@@ -321,6 +327,11 @@
 <script src="{{asset('template/bsbm/plugins/jquery-datatable/extensions/export/buttons.html5.min.js')}}"></script>
 <script src="{{asset('template/bsbm/plugins/jquery-datatable/extensions/export/buttons.print.min.js')}}"></script>
 
+<!-- Moment Plugin Js -->
+<script src="{{asset('template/bsbm/plugins/momentjs/moment.js')}}"></script>
+<!-- Bootstrap Material Datetime Picker Plugin Js -->
+<script src="{{asset('template/bsbm/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
+
 <!-- Sweet Alert Plugin Js -->
 <script src="{{asset('template/bsbm/plugins/sweetalert/sweetalert.min.js')}}"></script>
 <script type="text/javascript">
@@ -328,6 +339,12 @@ $(function () {
     $('.js-basic-example').DataTable({
         responsive: true
     });
+});
+
+$('input[name=tanggal]').bootstrapMaterialDatePicker({
+    clearButton: true,
+    weekStart: 1,
+    time: false
 });
 
 function deleteAlert(id)
