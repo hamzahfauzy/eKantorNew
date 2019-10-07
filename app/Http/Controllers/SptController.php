@@ -159,6 +159,49 @@ class SptController extends Controller
             ]);
         }
 
+        // For first run only
+        // it's temporary and it will be deleted soon
+
+        $setting = Setting::find(1);
+        $pimpinan_id = $setting->pimpinan_id;
+        $posisi = 1;
+
+        $histori = HistoriSptList::create([
+            'user_id' => $pimpinan_id,
+            'spt_id' => $sptModel->id,
+            'posisi' => $posisi,
+            'status' => 1
+        ]);
+
+        $notification = new Notification;
+        $notification->user_id = auth()->user()->employee->id;
+        $notification->status = 0;
+        $notification->url_to = route('pegawai.spt.cetak',$sptModel->id);
+        $notification->deskripsi = "SPT Diterima oleh ".$histori->employee->nama." (".$histori->employee->jabatan.")";
+        $notification->save();
+        
+        $sptModel->update(['need_action' => -1]);
+        foreach($sptModel->employees as $employee)
+        {
+            $agenda = new Agenda;
+            $agenda->create([
+                'employee_id' => $employee->employee_id,
+                'tanggal_awal' => $sptModel->tanggal_awal,
+                'tanggal_akhir' => $sptModel->tanggal_akhir,
+                'waktu_mulai' => '',
+                'waktu_selesai' => '',
+                'kegiatan' => $sptModel->maksud_tujuan,
+                'tempat' => $sptModel->tempat_tujuan,
+                'keterangan' => '',
+                'file_url' => '',
+                'status' => 1
+            ]); 
+        }
+
+        return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
+
+        // end
+
         $pimpinan_id = 0;
         $posisi = 4;
         if(auth()->user()->employee->staffGroup)
@@ -459,9 +502,9 @@ class SptController extends Controller
                     'waktu_selesai' => '',
                     'kegiatan' => $surat->maksud_tujuan,
                     'tempat' => $surat->tempat_tujuan,
-                'keterangan' => '',
-                'file_url' => '',
-                'status' => 1
+                    'keterangan' => '',
+                    'file_url' => '',
+                    'status' => 1
                 ]); 
             }
             return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
