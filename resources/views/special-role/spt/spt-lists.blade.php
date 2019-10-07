@@ -2,7 +2,9 @@
 @section('spt-sppd-active','active')
 @section('spt-active','active')
 @section('content')
-<?php $status = ['SPT Dikirim Ke','SPT Diterima Oleh','SPT Ditolak Oleh','SPT Di Nomori Oleh','SPT Di Arsipkan Oleh']; $bg = ["","bg-teal","bg-pink"] ?>
+<?php 
+$status = ['SPT Dikirim','SPT Diterima','SPT Ditolak','SPT Di Nomori','SPT Di Arsipkan']; 
+$bg = ["","bg-teal","bg-pink"] ?>
 		<div class="container-fluid">
             <div class="block-header">
                 <h2>
