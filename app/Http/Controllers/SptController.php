@@ -192,7 +192,7 @@ class SptController extends Controller
                 'waktu_selesai' => '',
                 'kegiatan' => $sptModel->maksud_tujuan,
                 'tempat' => $sptModel->tempat_tujuan,
-                'keterangan' => '',
+                'keterangan' => 'PT',
                 'file_url' => '',
                 'status' => 1
             ]); 
@@ -552,7 +552,7 @@ class SptController extends Controller
                         'waktu_selesai' => '',
                         'kegiatan' => $surat->maksud_tujuan,
                         'tempat' => $surat->tempat_tujuan,
-                        'keterangan' => '',
+                        'keterangan' => 'SPT',
                         'file_url' => '',
                         'status' => 1
                     ]);
