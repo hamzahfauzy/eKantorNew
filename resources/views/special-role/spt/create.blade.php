@@ -18,7 +18,7 @@
                         <div class="body">
                             <form id="form_validation" method="POST" action="{{route('pegawai.spt.insert')}}">
                             	{{csrf_field()}}
-                                {{-- 
+                                <!-- sementara -->
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="text" class="form-control" name="no_spt" required value="{{old('no_spt')}}">
@@ -30,7 +30,8 @@
                                         </span>
                                     @endif
                                 </div>
-                                --}}
+                                <!-- sementara -->
+                                
                                 <div class="form-group form-float">
                                     <select class="form-control show-tick" name="wilayah_id" required="" data-live-search="true">
                                         <option value="">Pilih Wilayah Tujuan</option>
