@@ -46,7 +46,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group form-float">
-                                    <select class="form-control show-tick" name="pimpinan_id" required="" data-live-search="true" onchange="$('.nm_pimpinan').css.display('none'); if(this.value == -1){ $('.nm_pimpinan').css.display('block') } ">
+                                    <select class="form-control show-tick" name="pimpinan_id" required="" data-live-search="true" onchange="$('.nm_pimpinan').css('display','none'); if(this.value == -1){ $('.nm_pimpinan').css('display','block') } ">
                                         <option value="">Yang Menugaskan</option>
 										<option value="-1">Lainnya</option>
                                         @foreach($employees as $model)
