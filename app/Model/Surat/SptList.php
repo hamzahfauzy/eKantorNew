@@ -8,7 +8,7 @@ use App\Model\Reference\{Employee,WilayahTujuan};
 class SptList extends Model
 {
     //
-    protected $fillable = ['wilayah_id','pimpinan_id','no_spt','tanggal','lama_waktu','tanggal_awal','tanggal_akhir','tempat_tujuan','maksud_tujuan','dasar1','dasar2','dasar3','need_action','file_spt_fix_url','employee_id'];
+    protected $fillable = ['wilayah_id','pimpinan_id','no_spt','tanggal','lama_waktu','tanggal_awal','tanggal_akhir','tempat_tujuan','maksud_tujuan','dasar1','dasar2','dasar3','need_action','file_spt_fix_url','employee_id','nama_pimpinan'];
     protected $dates = ['tanggal','tanggal_awal','tanggal_akhir'];
 
     function employees()

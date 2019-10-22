@@ -110,144 +110,215 @@ class SptController extends Controller
         $customMessages = [
             'unique' => ':attribute sudah digunakan.'
         ];
+		
+		if($request->pimpinan_id == -1)
+		{
+			$this->validate($request,[
+				// 'no_spt' => 'required|unique:spt_lists',
+				'wilayah_id' => 'required',
+				'tanggal' => 'required',
+				'lama_waktu' => 'required',
+				'tanggal_awal' => 'required',
+				'tanggal_akhir' => 'required',
+				'tempat_tujuan' => 'required',
+				'maksud_tujuan' => 'required',
+				'dasar1' => 'required',
+				'dasar2' => 'required',
+				'dasar3' => 'required',
+			],$customMessages);
+			
+			$sptModel = $this->model->create([
+				'no_spt' => '',
+				'nama_pimpinan' => $request->nama_pimpinan,
+				'wilayah_id' => $request->wilayah_id,
+				'tanggal' => $request->tanggal,
+				'lama_waktu' => $request->lama_waktu,
+				'tanggal_awal' => $request->tanggal_awal,
+				'tanggal_akhir' => $request->tanggal_akhir,
+				'tempat_tujuan' => $request->tempat_tujuan,
+				'maksud_tujuan' => $request->maksud_tujuan,
+				'dasar1' => $request->dasar1,
+				'dasar2' => $request->dasar2,
+				'dasar3' => $request->dasar3,
+				'employee_id' => auth()->user()->employee->id,
+			]);
+			
+			if(!in_array(auth()->user()->employee->id, $request->pengikut))
+			{
+				$sptEmployee = new SptEmployee;
+				$sptEmployee->create([
+					'spt_id' => $sptModel->id,
+					'employee_id' => auth()->user()->employee->id,
+				]);
+			}
+			
+			foreach($request->pengikut as $pengikut)
+			{
+				$sptEmployee = new SptEmployee;
+				$sptEmployee->create([
+					'spt_id' => $sptModel->id,
+					'employee_id' => $pengikut,
+				]);
+			}
+			
+			foreach($sptModel->employees as $employee)
+			{
+				$agenda = new Agenda;
+				$agenda->create([
+					'employee_id' => $employee->employee_id,
+					'tanggal_awal' => $sptModel->tanggal_awal,
+					'tanggal_akhir' => $sptModel->tanggal_akhir,
+					'waktu_mulai' => '',
+					'waktu_selesai' => '',
+					'kegiatan' => $sptModel->maksud_tujuan,
+					'tempat' => $sptModel->tempat_tujuan,
+					'keterangan' => 'SPT',
+					'file_url' => '',
+					'status' => 1
+				]); 
+			}
+			
+		}
+		else
+		{
+			$this->validate($request,[
+				// 'no_spt' => 'required|unique:spt_lists',
+				'wilayah_id' => 'required',
+				'tanggal' => 'required',
+				'lama_waktu' => 'required',
+				'tanggal_awal' => 'required',
+				'tanggal_akhir' => 'required',
+				'tempat_tujuan' => 'required',
+				'maksud_tujuan' => 'required',
+				'dasar1' => 'required',
+				'dasar2' => 'required',
+				'dasar3' => 'required',
+			],$customMessages);
 
-        $this->validate($request,[
-            // 'no_spt' => 'required|unique:spt_lists',
-            'wilayah_id' => 'required',
-            'tanggal' => 'required',
-            'lama_waktu' => 'required',
-            'tanggal_awal' => 'required',
-            'tanggal_akhir' => 'required',
-            'tempat_tujuan' => 'required',
-            'maksud_tujuan' => 'required',
-            'dasar1' => 'required',
-            'dasar2' => 'required',
-            'dasar3' => 'required',
-        ],$customMessages);
+			$sptModel = $this->model->create([
+				'no_spt' => '',
+				'pimpinan_id' => $request->pimpinan_id,
+				'wilayah_id' => $request->wilayah_id,
+				'tanggal' => $request->tanggal,
+				'lama_waktu' => $request->lama_waktu,
+				'tanggal_awal' => $request->tanggal_awal,
+				'tanggal_akhir' => $request->tanggal_akhir,
+				'tempat_tujuan' => $request->tempat_tujuan,
+				'maksud_tujuan' => $request->maksud_tujuan,
+				'dasar1' => $request->dasar1,
+				'dasar2' => $request->dasar2,
+				'dasar3' => $request->dasar3,
+				'employee_id' => auth()->user()->employee->id,
+			]);
 
-        $sptModel = $this->model->create([
-            'no_spt' => '',
-            'pimpinan_id' => $request->pimpinan_id,
-            'wilayah_id' => $request->wilayah_id,
-            'tanggal' => $request->tanggal,
-            'lama_waktu' => $request->lama_waktu,
-            'tanggal_awal' => $request->tanggal_awal,
-            'tanggal_akhir' => $request->tanggal_akhir,
-            'tempat_tujuan' => $request->tempat_tujuan,
-            'maksud_tujuan' => $request->maksud_tujuan,
-            'dasar1' => $request->dasar1,
-            'dasar2' => $request->dasar2,
-            'dasar3' => $request->dasar3,
-            'employee_id' => auth()->user()->employee->id,
-        ]);
+			if(!in_array(auth()->user()->employee->id, $request->pengikut))
+			{
+				$sptEmployee = new SptEmployee;
+				$sptEmployee->create([
+					'spt_id' => $sptModel->id,
+					'employee_id' => auth()->user()->employee->id,
+				]);
+			}
 
-        if(!in_array(auth()->user()->employee->id, $request->pengikut))
-        {
-            $sptEmployee = new SptEmployee;
-            $sptEmployee->create([
-                'spt_id' => $sptModel->id,
-                'employee_id' => auth()->user()->employee->id,
-            ]);
-        }
+			foreach($request->pengikut as $pengikut)
+			{
+				$sptEmployee = new SptEmployee;
+				$sptEmployee->create([
+					'spt_id' => $sptModel->id,
+					'employee_id' => $pengikut,
+				]);
+			}
 
-        foreach($request->pengikut as $pengikut)
-        {
-            $sptEmployee = new SptEmployee;
-            $sptEmployee->create([
-                'spt_id' => $sptModel->id,
-                'employee_id' => $pengikut,
-            ]);
-        }
+			// For first run only
+			// it's temporary and it will be deleted soon
 
-        // For first run only
-        // it's temporary and it will be deleted soon
+			$setting = Setting::find(1);
+			$pimpinan_id = $setting->pimpinan_id;
+			$posisi = 1;
 
-        $setting = Setting::find(1);
-        $pimpinan_id = $setting->pimpinan_id;
-        $posisi = 1;
+			$histori = HistoriSptList::create([
+				'user_id' => $pimpinan_id,
+				'spt_id' => $sptModel->id,
+				'posisi' => $posisi,
+				'status' => 1
+			]);
 
-        $histori = HistoriSptList::create([
-            'user_id' => $pimpinan_id,
-            'spt_id' => $sptModel->id,
-            'posisi' => $posisi,
-            'status' => 1
-        ]);
+			$notification = new Notification;
+			$notification->user_id = auth()->user()->employee->id;
+			$notification->status = 0;
+			$notification->url_to = route('pegawai.spt.cetak',$sptModel->id);
+			$notification->deskripsi = "SPT Diterima oleh ".$histori->employee->nama." (".$histori->employee->jabatan.")";
+			$notification->save();
+			 
+			$sptModel->update(['need_action' => -1, 'no_spt' => $request->no_spt]);
+			foreach($sptModel->employees as $employee)
+			{
+				$agenda = new Agenda;
+				$agenda->create([
+					'employee_id' => $employee->employee_id,
+					'tanggal_awal' => $sptModel->tanggal_awal,
+					'tanggal_akhir' => $sptModel->tanggal_akhir,
+					'waktu_mulai' => '',
+					'waktu_selesai' => '',
+					'kegiatan' => $sptModel->maksud_tujuan,
+					'tempat' => $sptModel->tempat_tujuan,
+					'keterangan' => 'SPT',
+					'file_url' => '',
+					'status' => 1
+				]); 
+			}
 
-        $notification = new Notification;
-        $notification->user_id = auth()->user()->employee->id;
-        $notification->status = 0;
-        $notification->url_to = route('pegawai.spt.cetak',$sptModel->id);
-        $notification->deskripsi = "SPT Diterima oleh ".$histori->employee->nama." (".$histori->employee->jabatan.")";
-        $notification->save();
-         
-        $sptModel->update(['need_action' => -1, 'no_spt' => $request->no_spt]);
-        foreach($sptModel->employees as $employee)
-        {
-            $agenda = new Agenda;
-            $agenda->create([
-                'employee_id' => $employee->employee_id,
-                'tanggal_awal' => $sptModel->tanggal_awal,
-                'tanggal_akhir' => $sptModel->tanggal_akhir,
-                'waktu_mulai' => '',
-                'waktu_selesai' => '',
-                'kegiatan' => $sptModel->maksud_tujuan,
-                'tempat' => $sptModel->tempat_tujuan,
-                'keterangan' => 'PT',
-                'file_url' => '',
-                'status' => 1
-            ]); 
-        }
+			return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
 
-        return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
+			// end
 
-        // end
+			$pimpinan_id = 0;
+			$posisi = 4;
+			if(auth()->user()->employee->staffGroup)
+			{
+				$pimpinan_id = auth()->user()->employee->staffGroup->subGroups->kepala_id;            
+			}
+			elseif (auth()->user()->employee->kepala_sub_group) 
+			{
+				$pimpinan_id = auth()->user()->employee->kepala_sub_group->group->kepala_id;
+				$posisi = 3;
+			}
+			elseif (auth()->user()->employee->kepala_group) 
+			{
+				$employees = Employee::get();
+				foreach ($employees as $employee) {
+					if($employee->kepala_group_special_role())
+					{
+						$pimpinan_id = $employee->id;
+						break;
+					}
+				}
+				if(auth()->user()->employee->id != $pimpinan_id)
+					$posisi = 2;
+				else
+				{
+					$setting = Setting::find(1);
+					$pimpinan_id = $setting->pimpinan_id;
+					$posisi = 1;
+				}
+			}
 
-        $pimpinan_id = 0;
-        $posisi = 4;
-        if(auth()->user()->employee->staffGroup)
-        {
-            $pimpinan_id = auth()->user()->employee->staffGroup->subGroups->kepala_id;            
-        }
-        elseif (auth()->user()->employee->kepala_sub_group) 
-        {
-            $pimpinan_id = auth()->user()->employee->kepala_sub_group->group->kepala_id;
-            $posisi = 3;
-        }
-        elseif (auth()->user()->employee->kepala_group) 
-        {
-            $employees = Employee::get();
-            foreach ($employees as $employee) {
-                if($employee->kepala_group_special_role())
-                {
-                    $pimpinan_id = $employee->id;
-                    break;
-                }
-            }
-            if(auth()->user()->employee->id != $pimpinan_id)
-                $posisi = 2;
-            else
-            {
-                $setting = Setting::find(1);
-                $pimpinan_id = $setting->pimpinan_id;
-                $posisi = 1;
-            }
-        }
+			HistoriSptList::create([
+				'user_id' => $pimpinan_id,
+				'spt_id' => $sptModel->id,
+				'posisi' => $posisi,
+				'status' => 0
+			]);
 
-        HistoriSptList::create([
-            'user_id' => $pimpinan_id,
-            'spt_id' => $sptModel->id,
-            'posisi' => $posisi,
-            'status' => 0
-        ]);
+			$this->model->find($sptModel->id)->update(['need_action' => $posisi]);
 
-        $this->model->find($sptModel->id)->update(['need_action' => $posisi]);
-
-        $notification = new Notification;
-        $notification->user_id = $pimpinan_id;
-        $notification->status = 0;
-        $notification->url_to = route('pegawai.spt.cetak',$sptModel->id);
-        $notification->deskripsi = "SPT - Dari ".auth()->user()->name." (".auth()->user()->employee->jabatan.")";
-        $notification->save();
+			$notification = new Notification;
+			$notification->user_id = $pimpinan_id;
+			$notification->status = 0;
+			$notification->url_to = route('pegawai.spt.cetak',$sptModel->id);
+			$notification->deskripsi = "SPT - Dari ".auth()->user()->name." (".auth()->user()->employee->jabatan.")";
+			$notification->save();
+		}
 
         return redirect()->route('pegawai.spt.index')->with(['success'=>'Data berhasil disimpan']);
 
