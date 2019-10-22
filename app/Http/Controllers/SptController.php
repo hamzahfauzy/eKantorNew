@@ -179,7 +179,7 @@ class SptController extends Controller
         $notification->url_to = route('pegawai.spt.cetak',$sptModel->id);
         $notification->deskripsi = "SPT Diterima oleh ".$histori->employee->nama." (".$histori->employee->jabatan.")";
         $notification->save();
-        
+         
         $sptModel->update(['need_action' => -1, 'no_spt' => $request->no_spt]);
         foreach($sptModel->employees as $employee)
         {
