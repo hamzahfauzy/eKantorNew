@@ -261,7 +261,7 @@ $bg = ["","bg-teal","bg-pink"] ?>
                                                             <i class="material-icons">visibility</i>
                                                         </a>
 
-                                                        @if($model->employee_id == auth()->user()->employee->id && $model->pimpinan_id != null)
+                                                        @if($model->employee_id == auth()->user()->employee->id)
                                                         <a href="{{route('pegawai.spt.edit',$model->id)}}" class="btn btn-warning waves-effect" title="Edit SPT">
                                                             <i class="material-icons">create</i>
                                                         </a>
