@@ -47,8 +47,9 @@
                                     @endif
                                 </div>
                                 <div class="form-group form-float">
-                                    <select class="form-control show-tick" name="pimpinan_id" required="" data-live-search="true">
+                                    <select class="form-control show-tick" name="pimpinan_id" required="" data-live-search="true" onchange="$('.nm_pimpinan').css('display','none'); if(this.value == -1){ $('.nm_pimpinan').css('display','block') } ">
                                         <option value="">Yang Menugaskan</option>
+                                        <option value="-1">Lainnya</option>
                                         @foreach($employees as $model)
                                         <option value="{{$model->id}}" {{$sptModel->pimpinan_id == $model->id ? 'selected=""' : '' }}>{{$model->nama}}</option>
                                         @endforeach
@@ -56,6 +57,17 @@
                                     @if ($errors->has('wilayah_id'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('wilayah_id') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group form-float nm_pimpinan" style="display:none">
+                                    <div class="form-line">
+                                        <input type="text" class="form-control" name="nama_pimpinan" required value="{{old('nama_pimpinan') ? old('nama_pimpinan') : $model->nama_pimpinan}}">
+                                        <label class="form-label">Nama Pimpinan</label>
+                                    </div>
+                                    @if ($errors->has('nama_pimpinan'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('nama_pimpinan') }}</strong>
                                         </span>
                                     @endif
                                 </div>
