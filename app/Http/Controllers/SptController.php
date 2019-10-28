@@ -143,14 +143,14 @@ class SptController extends Controller
 				'employee_id' => auth()->user()->employee->id,
 			]);
 			
-			if(!in_array(auth()->user()->employee->id, $request->pengikut))
-			{
-				$sptEmployee = new SptEmployee;
-				$sptEmployee->create([
-					'spt_id' => $sptModel->id,
-					'employee_id' => auth()->user()->employee->id,
-				]);
-			}
+			// if(!in_array(auth()->user()->employee->id, $request->pengikut))
+			// {
+			// 	$sptEmployee = new SptEmployee;
+			// 	$sptEmployee->create([
+			// 		'spt_id' => $sptModel->id,
+			// 		'employee_id' => auth()->user()->employee->id,
+			// 	]);
+			// }
 			
 			foreach($request->pengikut as $pengikut)
 			{
@@ -211,14 +211,14 @@ class SptController extends Controller
 				'employee_id' => auth()->user()->employee->id,
 			]);
 
-			if(!in_array(auth()->user()->employee->id, $request->pengikut))
-			{
-				$sptEmployee = new SptEmployee;
-				$sptEmployee->create([
-					'spt_id' => $sptModel->id,
-					'employee_id' => auth()->user()->employee->id,
-				]);
-			}
+			// if(!in_array(auth()->user()->employee->id, $request->pengikut))
+			// {
+			// 	$sptEmployee = new SptEmployee;
+			// 	$sptEmployee->create([
+			// 		'spt_id' => $sptModel->id,
+			// 		'employee_id' => auth()->user()->employee->id,
+			// 	]);
+			// }
 
 			foreach($request->pengikut as $pengikut)
 			{
@@ -420,14 +420,14 @@ class SptController extends Controller
         ]);
 
         SptEmployee::where('spt_id',$request->id)->delete();
-        if(!in_array(auth()->user()->employee->id, $request->pengikut))
-        {
-            $sptEmployee = new SptEmployee;
-            $sptEmployee->create([
-                'spt_id' => $sptModel->id,
-                'employee_id' => auth()->user()->employee->id,
-            ]);
-        }
+        // if(!in_array(auth()->user()->employee->id, $request->pengikut))
+        // {
+        //     $sptEmployee = new SptEmployee;
+        //     $sptEmployee->create([
+        //         'spt_id' => $sptModel->id,
+        //         'employee_id' => auth()->user()->employee->id,
+        //     ]);
+        // }
         foreach($request->pengikut as $pengikut)
         {
             $sptEmployee = new SptEmployee;
