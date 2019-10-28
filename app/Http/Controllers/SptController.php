@@ -440,7 +440,7 @@ class SptController extends Controller
 			{
 				$sptEmployee = new SptEmployee;
 				$sptEmployee->create([
-					'spt_id' => $model->id,
+					'spt_id' => $request->id,
 					'employee_id' => $pengikut,
 				]);
 			}
