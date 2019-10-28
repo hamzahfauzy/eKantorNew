@@ -24,15 +24,18 @@ class SptController extends Controller
         //
         $sptEmployee = SptEmployee::where('employee_id',auth()->user()->employee->id)->get();
         $model = [];
+        $existing_id = [];
         foreach($sptEmployee as $spt)
         {
             $model[] = $spt->list;
+            $existing_id[] = $spt->list->id;
         }
 
         $sptAll = SptList::where('employee_id',auth()->user()->employee->id)->get();
         foreach($sptAll as $spt)
         {
-            $model[] = $spt;
+            if(!in_array($spt->id, $existing_id))
+                $model[] = $spt;
         }
 
         $histori_surat = HistoriSptList::where('user_id',auth()->user()->employee->id)->where('status',0)->orderby('id','desc')->get();
@@ -178,7 +181,7 @@ class SptController extends Controller
 					'waktu_selesai' => '',
 					'kegiatan' => $sptModel->maksud_tujuan,
 					'tempat' => $sptModel->tempat_tujuan,
-					'keterangan' => 'SPT',
+					'keterangan' => 'SPT - No SPT. '.$request->no_spt,
 					'file_url' => '',
 					'status' => 1
 				]); 
@@ -412,6 +415,7 @@ class SptController extends Controller
                 'dasar3' => 'required',
             ]);
 
+            $oldModel = $this->model->find($request->id);
             $model = $this->model->find($request->id)->update([
                 'no_spt' => $request->no_spt,
 				'nama_pimpinan' => $request->nama_pimpinan,
@@ -444,23 +448,24 @@ class SptController extends Controller
 					'employee_id' => $pengikut,
 				]);
 			}
-			
-			// foreach($sptModel->employees as $employee)
-			// {
-			// 	$agenda = new Agenda;
-			// 	$agenda->create([
-			// 		'employee_id' => $employee->employee_id,
-			// 		'tanggal_awal' => $sptModel->tanggal_awal,
-			// 		'tanggal_akhir' => $sptModel->tanggal_akhir,
-			// 		'waktu_mulai' => '',
-			// 		'waktu_selesai' => '',
-			// 		'kegiatan' => $sptModel->maksud_tujuan,
-			// 		'tempat' => $sptModel->tempat_tujuan,
-			// 		'keterangan' => 'SPT',
-			// 		'file_url' => '',
-			// 		'status' => 1
-			// 	]); 
-			// }
+            
+            Agenda::where('keterangan','SPT - No. SPT '.$oldModel->no_spt)->delete();
+			foreach($sptModel->employees as $employee)
+			{
+				$agenda = new Agenda;
+				$agenda->create([
+					'employee_id' => $employee->employee_id,
+					'tanggal_awal' => $sptModel->tanggal_awal,
+					'tanggal_akhir' => $sptModel->tanggal_akhir,
+					'waktu_mulai' => '',
+					'waktu_selesai' => '',
+					'kegiatan' => $sptModel->maksud_tujuan,
+					'tempat' => $sptModel->tempat_tujuan,
+					'keterangan' => 'SPT',
+					'file_url' => '',
+					'status' => 1
+				]); 
+			}
 			
         }
         else
