@@ -391,7 +391,7 @@ class SptController extends Controller
     {
         //
         $this->validate($request,[
-            // 'no_spt' => 'required|unique:spt_lists,no_spt,'.$request->id.',id',
+            'no_spt' => 'required|unique:spt_lists,no_spt,'.$request->id.',id',
             'wilayah_id' => 'required',
             'tanggal' => 'required',
             'lama_waktu' => 'required',
@@ -405,7 +405,7 @@ class SptController extends Controller
         ]);
 
         $model = $this->model->find($request->id)->update([
-            'no_spt' => '',
+            'no_spt' => $request->no_spt,
             'pimpinan_id' => $request->pimpinan_id,
             'wilayah_id' => $request->wilayah_id,
             'tanggal' => $request->tanggal,
