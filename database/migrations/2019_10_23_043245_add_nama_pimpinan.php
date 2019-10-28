@@ -15,7 +15,7 @@ class AddNamaPimpinan extends Migration
     {
         Schema::table('spt_lists', function (Blueprint $table) {
             //
-			$table->string('nama_pimpinan');
+			$table->string('nama_pimpinan')->nullable();
         });
     }
 

@@ -20,7 +20,7 @@
                             	{{csrf_field()}}
                                 <input type="hidden" name="_method" value="PUT">
                                 <input type="hidden" name="id" value="{{$sptModel->id}}">
-                                {{-- 
+                                
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <input type="text" class="form-control" name="no_spt" required value="{{$sptModel->no_spt}}">
@@ -32,7 +32,7 @@
                                         </span>
                                     @endif
                                 </div>
-                                --}}
+                                
                                 <div class="form-group form-float">
                                     <select class="form-control show-tick" name="wilayah_id" required="" data-live-search="true">
                                         <option value="">Pilih Wilayah Tujuan</option>
