@@ -4,7 +4,7 @@
 @section('content')
 <?php 
 $status = ['SPT Dikirim','SPT Diterima','SPT Ditolak','SPT Di Nomori','SPT Di Arsipkan']; 
-$bg = ["","bg-teal","bg-pink"] ?>
+$bg = ["","bg-teal","bg-pink",'',''] ?>
 		<div class="container-fluid">
             <div class="block-header">
                 <h2>

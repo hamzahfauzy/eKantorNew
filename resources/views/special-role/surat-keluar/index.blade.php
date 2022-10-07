@@ -2,7 +2,7 @@
 @section('surat-active','active')
 @section('surat-keluar-active','active')
 @section('content')
-<?php $status = ['Sent','Accepted','Declined']; $bg = ["","bg-teal","bg-pink"] ?>
+<?php $status = ['Sent','Accepted','Declined','']; $bg = ["","bg-teal","bg-pink",''] ?>
 		<div class="container-fluid">
             <div class="block-header">
                 <h2>
@@ -182,7 +182,7 @@
                                 </div>
 
                                 @if(!auth()->user()->employee->staffGroup)
-                                <?php $status = ['Received','Accepted','Declined']; $bg = ["","bg-teal","bg-pink"] ?>
+                                <?php $status = ['Received','Accepted','Declined','']; $bg = ["","bg-teal","bg-pink",''] ?>
                                 <div role="tabpanel" class="tab-pane fade" id="staff_with_icon_title">
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
@@ -300,7 +300,7 @@
                                 @endif
 
                                 @if(auth()->user()->employee->inSpecialRole())
-                                <?php $status = ['Received','Accepted','Declined']; $bg = ["","bg-teal","bg-pink"] ?>
+                                <?php $status = ['Received','Accepted','Declined','']; $bg = ["","bg-teal","bg-pink",''] ?>
                                 <div role="tabpanel" class="tab-pane fade" id="staff_with_icon_title">
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-striped table-hover js-basic-example dataTable">

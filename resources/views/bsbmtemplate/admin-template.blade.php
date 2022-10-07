@@ -51,6 +51,13 @@
     .dropdown-menu ul.menu li {
         list-style-type: none;
     }
+    .dropdown-menu.open {
+        overflow: inherit !important;
+    }
+    .bootstrap-select .bs-searchbox .form-control {
+        margin-left: 0px;
+        padding-left: 40px;
+    }
     </style>
 </head>
 

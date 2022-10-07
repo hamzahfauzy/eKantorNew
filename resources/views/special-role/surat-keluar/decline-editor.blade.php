@@ -8,8 +8,8 @@
     <link href="{{asset('template/bsbm/plugins/bootstrap/css/bootstrap.css')}}" rel="stylesheet">
 	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.1.266/build/pdf.min.js"></script>
-	<!-- <script src="{{asset('js/fabric.min.js')}}"></script> -->
-	<script src="http://fabricjs.com/lib/fabric_with_gestures.js"></script>
+	<script src="{{asset('js/fabric_with_gestures.js')}}"></script>
+	<!-- <script src="https://fabricjs.com/lib/fabric_with_gestures.js"></script> -->
 	<style type="text/css">
 	html, body {
 		-webkit-overflow-scrolling: auto;

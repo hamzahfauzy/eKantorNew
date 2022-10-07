@@ -101,11 +101,11 @@ class SubGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Group $group, Request $request)
     {
         //
         $this->validate($request,[
-            'nama' => 'required|unique:sub_groups,nama,'.$request->id.',id,nama,'.$request->nama,
+            'nama' => 'required',
             'kepala_id' => 'required',
             'group_id' => 'required',
         ]);
